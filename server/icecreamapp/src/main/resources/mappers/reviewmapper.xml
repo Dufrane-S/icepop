@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->
+<mapper namespace="com.ssafy.icecreamapp.model.dao.ReviewDao">
+    <insert id="insertReview" parameterType="Review"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO review
+        (
+        order_id,
+        member_id,
+        rate,
+        date,
+        content)
+        VALUES
+        ( #{orderId},
+        #{memberId},
+        #{rate},
+        #{date},
+        #{content})
+    </insert>
+
+
+    <select id="selectReviewsByMemberId" parameterType="ReviewCon" resultType="Review">
+        SELECT id,
+        order_id,
+        member_id,
+        rate,
+        date,
+        content
+        FROM review
+        <where>
+            <if test="memberId!=0">
+                AND member_id=#{memberId}
+            </if>
+            <if test="orderId!=0">
+                AND order_id=#{orderId}
+            </if>
+        </where>
+        <if test="isRecent==true">
+            LIMIT 5
+        </if>
+    </select>
+
+
+</mapper>
