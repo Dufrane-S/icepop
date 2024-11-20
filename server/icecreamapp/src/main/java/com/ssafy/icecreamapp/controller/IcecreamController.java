@@ -1,6 +1,6 @@
 package com.ssafy.icecreamapp.controller;
 
-import com.ssafy.icecreamapp.model.dto.IceSelectCon;
+import com.ssafy.icecreamapp.model.dto.request.IceSelectCon;
 import com.ssafy.icecreamapp.model.dto.Icecream;
 import com.ssafy.icecreamapp.model.service.IcecreamService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,8 +25,7 @@ public class IcecreamController {
 
     @GetMapping("/list-with-con")
     @Operation(summary = "아이스크림 리스트", description = "아이스크림 종류 String type, 할인율 int eventRate, 인기순인지 확인하는 isRecommend를 받음 \n 다 비워져있으면 모든 아이스크림 반환")
-    public List<Icecream> iceWithCon(@RequestParam(required = false) String type, @RequestParam(required = false, defaultValue = "0") int eventRate, @RequestParam(defaultValue = "false") boolean isRecommend) {
-        IceSelectCon iceSelectCon = new IceSelectCon(type, eventRate, isRecommend);
+    public List<Icecream> iceWithCon(@RequestBody IceSelectCon iceSelectCon) {
         return icecreamService.getIcecreamsWithCon(iceSelectCon);
     }
 

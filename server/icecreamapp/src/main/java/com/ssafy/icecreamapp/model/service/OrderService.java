@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    int makeOrder(String email, OrderRequestResponse orderRequestResponse);
+    int makeOrder(OrderRequestResponse orderRequestResponse);
 
     List<OrderRequestResponse> selectOrderById(String email, Boolean isRecent);
 }

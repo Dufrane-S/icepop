@@ -25,10 +25,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public int makeOrder(String email, OrderRequestResponse orderRequestResponse) {
+    public int makeOrder( OrderRequestResponse orderRequestResponse) {
         orderRequestResponse.setDate(System.currentTimeMillis());
 
-        Member member =memberDao.selectByEmail(email);
+        Member member =memberDao.selectByEmail(orderRequestResponse.getEmail());
         int memberId  = member.getId();
         orderRequestResponse.setMemberId(memberId);
         List<OrderDetail> list = orderRequestResponse.getDetails();
@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetailDao.insertDetail(detail);
         }
 
-        int result = memberDao.updateSum(email, sumPrice);
+        int result = memberDao.updateSum(orderRequestResponse.getEmail(), sumPrice);
         return result;
     }
 

@@ -1,7 +1,7 @@
 package com.ssafy.icecreamapp.model.service;
 
 import com.ssafy.icecreamapp.model.dao.IcecreamDao;
-import com.ssafy.icecreamapp.model.dto.IceSelectCon;
+import com.ssafy.icecreamapp.model.dto.request.IceSelectCon;
 import com.ssafy.icecreamapp.model.dto.Icecream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

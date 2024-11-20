@@ -14,5 +14,6 @@ public class OrderRequestResponse {
     private int spoon;
     private int dryice;
     private int priceSum;
+    private String email;
     private List<OrderDetail> details;
 }

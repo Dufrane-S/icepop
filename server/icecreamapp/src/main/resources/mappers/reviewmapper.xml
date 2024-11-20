@@ -21,7 +21,7 @@
     </insert>
 
 
-    <select id="selectReviewsByMemberId" parameterType="ReviewCon" resultType="Review">
+    <select id="selectReviewsByMemberId"  resultType="Review">
         SELECT id,
         order_id,
         member_id,
@@ -33,11 +33,11 @@
             <if test="memberId!=0">
                 AND member_id=#{memberId}
             </if>
-            <if test="orderId!=0">
-                AND order_id=#{orderId}
+            <if test="reviewCon.orderId!=0">
+                AND order_id=#{reviewCon.orderId}
             </if>
         </where>
-        <if test="isRecent==true">
+        <if test="reviewCon.isRecent==true">
             LIMIT 5
         </if>
     </select>

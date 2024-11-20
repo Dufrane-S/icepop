@@ -2,6 +2,7 @@ package com.ssafy.icecreamapp.controller;
 
 import com.ssafy.icecreamapp.model.dto.OrderRequestResponse;
 import com.ssafy.icecreamapp.model.service.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,9 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/makeOrder")
-    public Boolean makeOrder(@RequestBody OrderRequestResponse orderRequestResponse, @RequestParam String email) {
-        if (orderService.makeOrder(email, orderRequestResponse) != 0) {
+    @Operation(summary = "주문", description = "id, memberId,date, priceSum 제외 모두 채워줘야함 ")
+    public Boolean makeOrder(@RequestBody OrderRequestResponse orderRequestResponse) {
+        if (orderService.makeOrder(orderRequestResponse) != 0) {
             return true;
         } else {
             return false;

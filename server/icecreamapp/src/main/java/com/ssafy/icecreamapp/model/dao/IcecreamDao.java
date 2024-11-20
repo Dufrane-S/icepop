@@ -1,6 +1,6 @@
 package com.ssafy.icecreamapp.model.dao;
 
-import com.ssafy.icecreamapp.model.dto.IceSelectCon;
+import com.ssafy.icecreamapp.model.dto.request.IceSelectCon;
 import com.ssafy.icecreamapp.model.dto.Icecream;
 import org.apache.ibatis.annotations.Mapper;
 
