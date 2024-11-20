@@ -12,6 +12,7 @@ public class MemberInfo {
     int gender;
     int age;
     int nextLvRemain;
+    float discountRate;
 
     public MemberInfo(Member member) {
         this.name = member.getName();
@@ -33,5 +34,19 @@ public class MemberInfo {
         }
         this.nextLvRemain = 50000 - (purchaseSum % 50000);
         if (this.level.equals("나무")) nextLvRemain = 0;
+
+        if (this.level.equals("씨앗")) {
+            this.discountRate = 0.99f;
+        } else if (this.level.equals("꽃")) {
+            this.discountRate = 0.97f;
+        } else if (this.level.equals("열매")) {
+            this.discountRate = 0.95f;
+        } else if (this.level.equals("커피콩")) {
+            this.discountRate = 0.93f;
+        } else {
+            this.discountRate = 0.91f;
+        }
+
     }
+
 }

@@ -27,7 +27,9 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public int makeOrder(String email, OrderRequestResponse orderRequestResponse) {
         orderRequestResponse.setDate(System.currentTimeMillis());
-        int memberId = memberDao.selectByEmail(email).getId();
+
+        Member member =memberDao.selectByEmail(email);
+        int memberId  = member.getId();
         orderRequestResponse.setMemberId(memberId);
         List<OrderDetail> list = orderRequestResponse.getDetails();
         int sumPrice = 0;
@@ -37,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
             icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity());
             sumPrice += detail.getQuantity() * price;
         }
+        float discountRate =new MemberInfo(member).getDiscountRate();
+        sumPrice = (int) (sumPrice*discountRate);
+
         orderRequestResponse.setPriceSum(sumPrice);
         orderDao.insertOrder(orderRequestResponse);
         for (OrderDetail detail : list) {

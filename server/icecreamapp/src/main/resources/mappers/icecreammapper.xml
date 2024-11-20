@@ -11,15 +11,18 @@
 
     <select id="selectIcecreamsByCon" parameterType="IceSelectCon" resultType="Icecream">
         SELECT *
-        FROM <icecream></icecream>
+        FROM icecream
         <where>
             <if test="type != null">
                 AND type = #{type}
             </if>
             <if test="rate != null">
-                AND isEvent >= ${rate}
+                AND isEvent >= #{rate}
             </if>
         </where>
+        <if test="isRecommend == true">
+            ORDER BY count desc
+        </if>
     </select>
 
     <update id="updateIcecreamById">

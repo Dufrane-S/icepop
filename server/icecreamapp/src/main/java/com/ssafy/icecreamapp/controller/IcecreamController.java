@@ -24,14 +24,14 @@ public class IcecreamController {
     private final IcecreamService icecreamService;
 
     @GetMapping("/list-with-con")
-    @Operation(summary = "아이스크림 리스트", description = "아이스크림 종류 String type, 할인율 int eventRate을 받음 \n 둘 다 비워져있으면 모든 아이스크림 반환")
-    public List<Icecream> iceWithCon(@RequestParam(required = false) String type, @RequestParam(required = false, defaultValue = "0") int eventRate) {
-        IceSelectCon iceSelectCon = new IceSelectCon(type, eventRate);
+    @Operation(summary = "아이스크림 리스트", description = "아이스크림 종류 String type, 할인율 int eventRate, 인기순인지 확인하는 isRecommend를 받음 \n 다 비워져있으면 모든 아이스크림 반환")
+    public List<Icecream> iceWithCon(@RequestParam(required = false) String type, @RequestParam(required = false, defaultValue = "0") int eventRate, @RequestParam(defaultValue = "false") boolean isRecommend) {
+        IceSelectCon iceSelectCon = new IceSelectCon(type, eventRate, isRecommend);
         return icecreamService.getIcecreamsWithCon(iceSelectCon);
     }
 
     @GetMapping("/img/{name}")
-    @Operation(summary = "제품 이미지 반환",description = "아이스크림 정보의 img를 넣으면 img를 반환")
+    @Operation(summary = "제품 이미지 반환", description = "아이스크림 정보의 img를 넣으면 img를 반환")
     public ResponseEntity<byte[]> img(@PathVariable String name) throws IOException {
         Resource resource = new ClassPathResource("img/" + name + ".png");
         InputStream inputStream = resource.getInputStream();
@@ -43,7 +43,7 @@ public class IcecreamController {
 
     @GetMapping("/{id}")
     @Operation(summary = "아이스크림 정보", description = "아이스크림 아이디를 입력하여 아이스크림 정보 획득")
-    public Icecream icecream(@PathVariable int id){
+    public Icecream icecream(@PathVariable int id) {
         return icecreamService.getIcecreamById(id);
     }
 }
