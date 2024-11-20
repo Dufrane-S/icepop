@@ -3,11 +3,13 @@ package com.ssafy.icecreamapp.model.service;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dao.ReviewDao;
 import com.ssafy.icecreamapp.model.dto.Review;
-import com.ssafy.icecreamapp.model.dto.ReviewCon;
+import com.ssafy.icecreamapp.model.dto.request.ReviewCon;
 import com.ssafy.icecreamapp.model.dto.request.InitReview;
+import com.ssafy.icecreamapp.model.dto.respond.ReviewInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,9 +27,16 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public List<Review> selectReviews(ReviewCon reviewCon) {
+    public List<ReviewInfo> selectReviews(ReviewCon reviewCon) {
         int memberId = memberDao.selectByEmail(reviewCon.getEmail()).getId();
-        return reviewDao.selectReviewsByMemberId(reviewCon,memberId);
+        List<ReviewInfo>reviewInfoList = new ArrayList<>();
+        List<Review>reviewList = reviewDao.selectReviewsByMemberId(reviewCon,memberId);
+        for(Review review:reviewList){
+            ReviewInfo reviewInfo = new ReviewInfo(review);
+            reviewInfo.setMemberEmail(reviewCon.getEmail());
+            reviewInfoList.add(reviewInfo);
+        }
+        return reviewInfoList;
     }
 
 

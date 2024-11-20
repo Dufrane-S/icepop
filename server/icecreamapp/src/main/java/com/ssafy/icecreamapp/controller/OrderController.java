@@ -18,7 +18,7 @@ public class OrderController {
     @PostMapping("/makeOrder")
     @Operation(summary = "주문", description = "id, memberId,date, priceSum 제외 모두 채워줘야함 ")
     public Boolean makeOrder(@RequestBody OrderRequestResponse orderRequestResponse) {
-        if (orderService.makeOrder(orderRequestResponse) != 0) {
+        if(orderService.makeOrder(orderRequestResponse) != 0) {
             return true;
         } else {
             return false;

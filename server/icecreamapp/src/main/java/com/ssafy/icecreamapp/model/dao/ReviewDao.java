@@ -1,7 +1,7 @@
 package com.ssafy.icecreamapp.model.dao;
 
 import com.ssafy.icecreamapp.model.dto.Review;
-import com.ssafy.icecreamapp.model.dto.ReviewCon;
+import com.ssafy.icecreamapp.model.dto.request.ReviewCon;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -23,7 +23,7 @@ import java.util.List;
 public class IcecreamController {
     private final IcecreamService icecreamService;
 
-    @GetMapping("/list-with-con")
+    @PostMapping("/list-with-con")
     @Operation(summary = "아이스크림 리스트", description = "아이스크림 종류 String type, 할인율 int eventRate, 인기순인지 확인하는 isRecommend를 받음 \n 다 비워져있으면 모든 아이스크림 반환")
     public List<Icecream> iceWithCon(@RequestBody IceSelectCon iceSelectCon) {
         return icecreamService.getIcecreamsWithCon(iceSelectCon);

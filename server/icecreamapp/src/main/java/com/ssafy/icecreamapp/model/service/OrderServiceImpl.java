@@ -5,6 +5,7 @@ import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dao.OrderDao;
 import com.ssafy.icecreamapp.model.dao.OrderDetailDao;
 import com.ssafy.icecreamapp.model.dto.*;
+import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public int makeOrder( OrderRequestResponse orderRequestResponse) {
+    public int makeOrder(OrderRequestResponse orderRequestResponse) {
         orderRequestResponse.setDate(System.currentTimeMillis());
 
-        Member member =memberDao.selectByEmail(orderRequestResponse.getEmail());
-        int memberId  = member.getId();
+        Member member = memberDao.selectByEmail(orderRequestResponse.getEmail());
+        int memberId = member.getId();
         orderRequestResponse.setMemberId(memberId);
         List<OrderDetail> list = orderRequestResponse.getDetails();
         int sumPrice = 0;
@@ -39,8 +40,8 @@ public class OrderServiceImpl implements OrderService {
             icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity());
             sumPrice += detail.getQuantity() * price;
         }
-        float discountRate =new MemberInfo(member).getDiscountRate();
-        sumPrice = (int) (sumPrice*discountRate);
+        float discountRate = new MemberInfo(member).getDiscountRate();
+        sumPrice = (int) (sumPrice * discountRate);
 
         orderRequestResponse.setPriceSum(sumPrice);
         orderDao.insertOrder(orderRequestResponse);

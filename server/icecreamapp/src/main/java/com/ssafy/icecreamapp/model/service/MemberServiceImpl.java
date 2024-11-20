@@ -2,7 +2,8 @@ package com.ssafy.icecreamapp.model.service;
 
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Member;
-import com.ssafy.icecreamapp.model.dto.MemberInfo;
+import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
+import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,8 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public int join(Member member) {
-        return memberDao.insert(member);
+    public int join(InitMember initMember) {
+        return memberDao.insert(new Member(initMember));
     }
 
     @Override

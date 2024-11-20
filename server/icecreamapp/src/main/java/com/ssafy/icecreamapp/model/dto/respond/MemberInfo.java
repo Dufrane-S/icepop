@@ -1,5 +1,6 @@
-package com.ssafy.icecreamapp.model.dto;
+package com.ssafy.icecreamapp.model.dto.respond;
 
+import com.ssafy.icecreamapp.model.dto.Member;
 import lombok.Getter;
 import lombok.Setter;
 

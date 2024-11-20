@@ -1,4 +1,4 @@
-package com.ssafy.icecreamapp.model.dto;
+package com.ssafy.icecreamapp.model.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

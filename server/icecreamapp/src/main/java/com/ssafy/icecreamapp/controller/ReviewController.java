@@ -1,8 +1,9 @@
 package com.ssafy.icecreamapp.controller;
 
 import com.ssafy.icecreamapp.model.dto.Review;
-import com.ssafy.icecreamapp.model.dto.ReviewCon;
+import com.ssafy.icecreamapp.model.dto.request.ReviewCon;
 import com.ssafy.icecreamapp.model.dto.request.InitReview;
+import com.ssafy.icecreamapp.model.dto.respond.ReviewInfo;
 import com.ssafy.icecreamapp.model.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ReviewController {
 
     @PostMapping("/getReviews")
     @Operation(summary = "리뷰 리스트", description = "parameter 없이 이용가능(모두 반환) isRecent : true일시 최근 5개 반환, email : member 기준 반환, orderId : orderId의 리뷰 반환")
-    public List<Review> getReviews(@RequestBody ReviewCon reviewCon) {
+    public List<ReviewInfo> getReviews(@RequestBody ReviewCon reviewCon) {
         return reviewService.selectReviews(reviewCon);
     }
 }
