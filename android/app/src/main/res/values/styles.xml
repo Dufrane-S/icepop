@@ -42,5 +42,15 @@
         <item name="android:background">@color/primary_color</item>
     </style>
 
+    <!-- 활성 상태 텍스트 스타일 -->
+    <style name="BottomNavTextLargeActive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
+    <!-- 비활성 상태 텍스트 스타일 -->
+    <style name="BottomNavTextLargeInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

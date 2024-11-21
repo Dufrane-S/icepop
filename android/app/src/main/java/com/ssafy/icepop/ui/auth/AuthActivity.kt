@@ -11,7 +11,7 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_layout, LoginFragment())
+            .replace(R.id.auth_fragment_layout, LoginFragment())
             .commit()
     }
 
@@ -47,12 +47,12 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
                 startActivity(intent)
             }
             SIGN_UP_FRAGMENT -> {
-                transaction.replace(R.id.fragment_layout, SignupFragment())
+                transaction.replace(R.id.auth_fragment_layout, SignupFragment())
                     .addToBackStack(null)
             }
             LOGIN_FRAGMENT -> {
                 supportFragmentManager.popBackStack()
-                transaction.replace(R.id.fragment_layout, LoginFragment())
+                transaction.replace(R.id.auth_fragment_layout, LoginFragment())
             }
         }
         transaction.commit()

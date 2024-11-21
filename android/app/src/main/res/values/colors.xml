@@ -6,4 +6,7 @@
     <color name="secondary_color">#feccd5</color>
     <color name="title_color">#A4133C</color>
     <color name="hint_color">#737076</color>
+
+    <color name="nav_selected_color">#A4133C</color>
+    <color name="nav_default_color">#FECCD5</color>
 </resources>
