@@ -32,6 +32,12 @@
         <item>50 ~</item>
     </string-array>
 
+    <!-- fragment_ice_cream_list.xml -->
+
+    <string name="tab_type">타입별</string>
+    <string name="tab_famous_type">인기순</string>
+    <string name="tab_ai_recommend_type">AI 추천</string>
+
     <!-- menu/bottom.nav.xml-->
     <string name="home">Home</string>
     <string name="list">List</string>

@@ -53,4 +53,11 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <!-- TabLayout 스타일 -->
+    <style name="TabTextStyle">
+        <item name="android:textSize">14sp</item>  <!-- 텍스트 크기 -->
+        <item name="android:fontFamily">@font/meet_me</item>  <!-- 폰트 패밀리 -->
+        <item name="android:textStyle">bold</item>  <!-- 텍스트 굵게 -->
+    </style>
 </resources>
