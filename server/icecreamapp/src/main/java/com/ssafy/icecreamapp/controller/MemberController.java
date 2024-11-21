@@ -41,8 +41,8 @@ public class MemberController {
     @PostMapping("/join")
     @Operation(summary = "회원가입", description = "성공시 true return 실패시 false")
     public ResponseEntity<String> join(@RequestBody InitMember initmember) {
-        if (memberService.join(initmember) == 1) return new ResponseEntity<>(HttpStatus.CREATED);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        memberService.join(initmember);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/isUsed/{email}")
@@ -51,6 +51,7 @@ public class MemberController {
         if (memberService.isUsedEmail(email)) {
             return ResponseEntity.ok(Boolean.TRUE);
         }
+        ResponseEntity.accepted().build();
         return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
     }
 

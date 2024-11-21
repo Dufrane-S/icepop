@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.model.service;
 
+import com.ssafy.icecreamapp.exception.NoSuchMemberException;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Member;
 import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
@@ -39,8 +40,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfo infoByEmail(String email) {
         Member selected = memberDao.selectByEmail(email);
-        if(selected==null){
-            return null;
+        if (selected == null) {
+            throw new NoSuchMemberException("입력된 email : " + email);
         }
         return new MemberInfo(selected);
     }
