@@ -35,10 +35,28 @@
     </select>
 
     <!--<select id="selectOrderByEmailResultmap" resultMap="">
+        SELECT id,
+        member_id,
+        date,
+        spoon,
+        dryice,
+        price_sum
+        FROM `order`
+        <where>
+            <if test="memberId!=null">
+                AND member_id=#{memberId}
+            </if>
+            <if test="orderId!=null">
+                AND order_id=#{orderId}
+            </if>
+        </where>
+        <if test="isRecent==true">
+            LIMIT 5
+        </if>
+    </select>-->
 
-    </select>
 
-     <select id="selectOrderInfo" parameterType="int" resultMap="OrderResult">
+     <!-- <select id="selectOrderInfo" parameterType="int" resultMap="OrderResult">
          select
          o.o_id id
          , o.user_id
@@ -50,7 +68,13 @@
 
          where o_id = #{oid};
      </select>
+-->
 
+    <!--<select id="selectOrderDetails" resultType="OrderDetail">
+        SELECT order_id
+        FROM order_detail
+        WHERE
+    </select>
 
     <select id="getOrderDetailInfo" parameterType="int" resultType="OrderDetailInfo">
         select
@@ -73,7 +97,7 @@
     <resultMap id="OrderResult" type="OrderInfo">
         <collection property="details" javaType="ArrayList" column="order_id" ofType="OrderDetailInfo"
                     select="getOrderDetailInfo"/>
-    </resultMap>-->
-
+    </resultMap>
+-->
 
 </mapper>

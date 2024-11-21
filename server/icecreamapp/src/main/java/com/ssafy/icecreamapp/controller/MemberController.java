@@ -51,7 +51,7 @@ public class MemberController {
         if (memberService.isUsedEmail(email)) {
             return ResponseEntity.ok(Boolean.TRUE);
         }
-        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
     }
 
     @GetMapping("/info/{email}")
