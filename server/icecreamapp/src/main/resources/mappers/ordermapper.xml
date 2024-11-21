@@ -34,7 +34,11 @@
         </if>
     </select>
 
-    <!-- <select id="selectOrderInfo" parameterType="int" resultMap="OrderResult">
+    <select id="selectOrderByEmailResultmap" resultMap="">
+
+    </select>
+
+     <select id="selectOrderInfo" parameterType="int" resultMap="OrderResult">
          select
          o.o_id id
          , o.user_id
@@ -45,10 +49,10 @@
          from t_order o
 
          where o_id = #{oid};
-     </select>-->
+     </select>
 
 
-    <!--<select id="getOrderDetailInfo" parameterType="int" resultType="OrderDetailInfo">
+    <select id="getOrderDetailInfo" parameterType="int" resultType="OrderDetailInfo">
         select
         d.d_id as id
         , o.o_id as order_id
@@ -69,7 +73,7 @@
     <resultMap id="OrderResult" type="OrderInfo">
         <collection property="details" javaType="ArrayList" column="order_id" ofType="OrderDetailInfo"
                     select="getOrderDetailInfo"/>
-    </resultMap>-->
+    </resultMap>
 
 
 </mapper>
