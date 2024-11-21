@@ -10,4 +10,7 @@ import retrofit2.http.POST
 interface UserService {
     @POST("member/login")
     suspend fun login(@Body user: User): Member
+
+    @POST("member/join")
+    suspend fun signup(@Body user : User)
 }

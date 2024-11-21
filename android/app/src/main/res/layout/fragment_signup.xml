@@ -9,7 +9,6 @@
     android:gravity="center"
     tools:context=".ui.auth.SignupFragment">
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,7 +91,6 @@
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
             android:fontFamily="@font/meet_me" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +109,7 @@
         app:hintTextColor="@color/primary_color"
         app:boxStrokeColor="@color/primary_color">
         <AutoCompleteTextView
-            android:id="@+id/auto_complete_text_view"
+            android:id="@+id/age_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -125,11 +123,14 @@
         android:layout_height="30dp"/>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/gender_toggle_group"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:singleSelection="true">
+        app:singleSelection="true"
+        app:checkedButton="@+id/male_button">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/male_button"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -141,6 +142,7 @@
             app:cornerRadius="5dp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/female_button"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

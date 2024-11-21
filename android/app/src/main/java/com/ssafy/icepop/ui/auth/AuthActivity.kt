@@ -63,5 +63,9 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
 
         const val LOGIN_FRAGMENT = 2
         const val SIGN_UP_FRAGMENT = 3
+
+        const val MALE = 1
+        const val FEMALE = 2
+        const val NOTHING = -1
     }
 }
