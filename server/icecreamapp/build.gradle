@@ -34,6 +34,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 	implementation group: 'org.springframework', name: 'spring-webflux'
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
+
 }
 
 tasks.named('test') {

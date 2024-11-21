@@ -31,27 +31,32 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public int makeOrder(OrderRequest orderRequest) {
         Order order = new Order(orderRequest);
+        log.info("makeOrder : {}", orderRequest);
 
 //      이메일로 멤버 id 정보 획득
         Member member = memberDao.selectByEmail(orderRequest.getEmail());
         int memberId = member.getId();
         order.setMemberId(memberId);
+        log.info("makeOrder : {}", member);
 
 //      orderdetail 추출하여 합계 생성
-        List<OrderDetailRequest>requestList = orderRequest.getDetails();
+        List<OrderDetailRequest> requestList = orderRequest.getDetails();
         List<OrderDetail> list = new ArrayList<>();
-        for(OrderDetailRequest request : requestList){
+        for (OrderDetailRequest request : requestList) {
             list.add(new OrderDetail(request));
         }
+        log.info("makeOrder : {}", list);
 
         int sumPrice = 0;
-//      아이스크림 정보 불러와서 계싼
+
+//      아이스크림 정보 불러와서 계산
         for (OrderDetail detail : list) {
             Icecream icecream = icecreamDao.selectIcecreamById(detail.getProductId());
             int price = (int) (icecream.getPrice() * ((100.0f - icecream.getIsEvent()) / 100.0f));
-            icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity());
+            icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity(), member.getAge(), member.getGender());
             sumPrice += detail.getQuantity() * price;
         }
+
 //      멤버 정보로 할인율 계산
         float discountRate = new MemberInfo(member).getDiscountRate();
         sumPrice = (int) (sumPrice * discountRate);
@@ -59,18 +64,19 @@ public class OrderServiceImpl implements OrderService {
 //      order부터 insert
         order.setPriceSum(sumPrice);
         orderDao.insertOrder(order);
+
 //      detail insert
         for (OrderDetail detail : list) {
             detail.setOrderId(order.getId());
             orderDetailDao.insertDetail(detail);
         }
-
+        log.info("makeOrder "+ orderRequest);
         int result = memberDao.updateSum(orderRequest.getEmail(), sumPrice);
         return result;
     }
 
     @Override
-    public List<OrderInfo> selectOrderById(String email, Boolean isRecent) {
+    public List<OrderInfo> selectOrdersByEmail(String email, Boolean isRecent) {
         Member member = memberDao.selectByEmail(email);
         List<Order> orderList = orderDao.selectOrderByEmail(member.getId(), isRecent);
 

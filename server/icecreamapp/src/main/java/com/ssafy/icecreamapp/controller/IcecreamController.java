@@ -24,9 +24,10 @@ public class IcecreamController {
     private final IcecreamService icecreamService;
 
     @PostMapping("/list-with-con")
-    @Operation(summary = "아이스크림 리스트", description = "아이스크림 종류 String type, 할인율 int eventRate, 인기순인지 확인하는 isRecommend를 받음 \n 다 비워져있으면 모든 아이스크림 반환")
-    public List<Icecream> iceWithCon(@RequestBody IceSelectCon iceSelectCon) {
-        return icecreamService.getIcecreamsWithCon(iceSelectCon);
+    @Operation(summary = "아이스크림 리스트", description = "아이스크림 종류 String type, 할인율 int eventRate 받음 //// 다 비워져있으면 모든 아이스크림 반환 ////" +
+            "age 와 gender가 채워져 있을 경우 인기순 반영 (둘 다 있어야 인기순 ex)age:10, gender:1 => 10대남성인기순)")
+    public ResponseEntity<List<Icecream>> iceWithCon(@RequestBody IceSelectCon iceSelectCon) {
+        return ResponseEntity.ok(icecreamService.getIcecreamsWithCon(iceSelectCon));
     }
 
     @GetMapping("/img/{name}")
@@ -42,7 +43,7 @@ public class IcecreamController {
 
     @GetMapping("/{id}")
     @Operation(summary = "아이스크림 정보", description = "아이스크림 아이디를 입력하여 아이스크림 정보 획득")
-    public Icecream icecream(@PathVariable int id) {
-        return icecreamService.getIcecreamById(id);
+    public ResponseEntity<Icecream> icecream(@PathVariable int id) {
+        return ResponseEntity.ok(icecreamService.getIcecreamById(id));
     }
 }

@@ -13,5 +13,5 @@ public interface IcecreamDao {
 
     List<Icecream> selectIcecreamsByCon(IceSelectCon iceSelectCon);
 
-    void updateIcecreamById(int id, int count);
+    void updateIcecreamById(int id, int quantity, int age, int gender);
 }

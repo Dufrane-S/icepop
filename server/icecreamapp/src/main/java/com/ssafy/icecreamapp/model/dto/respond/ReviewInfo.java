@@ -3,9 +3,11 @@ package com.ssafy.icecreamapp.model.dto.respond;
 import com.ssafy.icecreamapp.model.dto.Review;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class ReviewInfo {
     int orderId;
     String memberEmail;
