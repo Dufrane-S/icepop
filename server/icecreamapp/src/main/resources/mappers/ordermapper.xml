@@ -34,7 +34,7 @@
         </if>
     </select>
 
-    <select id="selectOrderByEmailResultmap" resultMap="">
+    <!--<select id="selectOrderByEmailResultmap" resultMap="">
 
     </select>
 
@@ -73,7 +73,7 @@
     <resultMap id="OrderResult" type="OrderInfo">
         <collection property="details" javaType="ArrayList" column="order_id" ofType="OrderDetailInfo"
                     select="getOrderDetailInfo"/>
-    </resultMap>
+    </resultMap>-->
 
 
 </mapper>
