@@ -3,6 +3,7 @@ package com.ssafy.icepop.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.ssafy.icepop.data.model.dto.Member
 
 class SharedPreferencesUtil (context: Context) {
     val SHARED_PREFERENCES_NAME = "smartstore_preference"
@@ -14,6 +15,19 @@ class SharedPreferencesUtil (context: Context) {
 
     var preferences: SharedPreferences =
         context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+    fun addEmail(member: Member) {
+        val editor = preferences.edit()
+
+        editor.putString("email", member.email)
+        editor.apply()
+    }
+
+    fun getEmail() : String {
+        val email = preferences.getString("email", "")
+
+        return email ?: ""
+    }
 
 //    //사용자 정보 저장
 //    fun addUser(user: User){

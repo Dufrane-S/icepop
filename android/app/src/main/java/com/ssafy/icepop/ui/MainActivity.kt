@@ -1,5 +1,6 @@
 package com.ssafy.icepop.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
@@ -15,9 +16,5 @@ private const val TAG = "MainActivity_ssafy"
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_layout, LoginFragment())
-            .commit()
     }
 }

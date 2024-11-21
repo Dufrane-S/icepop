@@ -33,6 +33,7 @@
         android:hint="@string/login_text_hint"
         style="@style/customMaterialTextField">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/meet_me" />
@@ -46,18 +47,21 @@
         android:hint="@string/password_text_hint"
         style="@style/customMaterialTextField">
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/meet_me" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_btn"
         android:layout_width="@dimen/material_textinput_default_width"
         android:layout_height="wrap_content"
         android:text="@string/login_text"
         style="@style/customMaterialButtonStyle" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/signup_btn"
         android:layout_width="@dimen/material_textinput_default_width"
         android:layout_height="wrap_content"
         android:text="@string/sign_up_text"
