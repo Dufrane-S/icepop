@@ -28,9 +28,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="@dimen/material_textinput_default_width"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
         android:layout_gravity="center_horizontal"
-        android:hint="@string/login_text_hint"
+        android:hint="@string/login_input_hint"
         style="@style/customMaterialTextField">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_id"
@@ -42,14 +41,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="@dimen/material_textinput_default_width"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
         android:layout_gravity="center_horizontal"
-        android:hint="@string/password_text_hint"
+        android:hint="@string/password_input_hint"
         style="@style/customMaterialTextField">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:fontFamily="@font/meet_me" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,7 +56,7 @@
         android:id="@+id/login_btn"
         android:layout_width="@dimen/material_textinput_default_width"
         android:layout_height="wrap_content"
-        android:text="@string/login_text"
+        android:text="@string/login"
         style="@style/customMaterialButtonStyle" />
 
     <com.google.android.material.button.MaterialButton

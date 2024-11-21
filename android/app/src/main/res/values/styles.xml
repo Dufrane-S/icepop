@@ -38,5 +38,9 @@
         <item name="strokeWidth">0dp</item>
     </style>
 
+    <style name="BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="android:background">@color/primary_color</item>
+    </style>
+
 
 </resources>

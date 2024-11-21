@@ -37,14 +37,22 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::infl
 //        transaction.commit()
 //    }
 
-    fun changeFragment(int: Int) {
+    fun changeFragment(viewInt: Int) {
         val transaction = supportFragmentManager.beginTransaction()
-        when(int){
+        when (viewInt) {
             MAIN_ACTIVITY -> {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent)
+            }
+            SIGN_UP_FRAGMENT -> {
+                transaction.replace(R.id.fragment_layout, SignupFragment())
+                    .addToBackStack(null)
+            }
+            LOGIN_FRAGMENT -> {
+                supportFragmentManager.popBackStack()
+                transaction.replace(R.id.fragment_layout, LoginFragment())
             }
         }
         transaction.commit()

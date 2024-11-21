@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.ssafy.icepop.R
-import com.ssafy.icepop.data.local.SharedPreferencesUtil
 import com.ssafy.icepop.data.model.dto.User
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentLoginBinding
@@ -34,6 +33,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
         initEvent()
     }
 
+    /** 버튼 이벤트 처리하는 로직 **/
     private fun initEvent() {
         binding.loginBtn.setOnClickListener {
             val id = binding.etId.text.toString()
@@ -42,6 +42,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             Log.d(TAG, "initEvent: $id $password")
 
             login(id, password)
+        }
+
+        //회원가입 클릭시
+        binding.signupBtn.setOnClickListener {
+            authActivity.changeFragment(AuthActivity.SIGN_UP_FRAGMENT)
         }
     }
 
