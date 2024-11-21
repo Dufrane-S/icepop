@@ -23,7 +23,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/login")
-    @Operation(summary = "로그인", description = "email, pass를 받음, 로그인 성공시 Member Dto를 반환, 로그인 실패시 null반환")
+    @Operation(summary = "로그인", description = "email, pass를 받음, 로그인 성공시 MemberInfo와 MemberEmail을 담은 쿠키를 반환, 로그인 실패시 null반환")
     public MemberInfo login(@RequestBody LoginMember loginMember, HttpServletResponse response) throws UnsupportedEncodingException {
         Member selected = memberService.login(loginMember.getEmail(), loginMember.getPassword());
         if (selected != null) {
@@ -37,26 +37,21 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    @Operation(summary = "회원가입", description = "성공시 true return 실패시 false\n" +
-            "String name;\n" +
-            "String email;\n" +
-            "String password;\n" +
-            "int gender; 1=남 2=여\n" +
-            "int age;")
+    @Operation(summary = "회원가입", description = "성공시 true return 실패시 false")
     public Boolean join(@RequestBody InitMember initmember) {
         if (memberService.join(initmember) == 1) return true;
         return false;
     }
 
     @GetMapping("/isUsed/{email}")
-    @Operation(summary = "email중복체크", description = "eamil 전달시 사용 중이면 False 아니면 True")
+    @Operation(summary = "email중복체크", description = "email 전달시 사용 중이면 False 아니면 True")
     public Boolean isUsed(@PathVariable String email) {
-        return memberService.isUsedId(email);
+        return memberService.isUsedEmail(email);
     }
 
     @GetMapping("/info/{email}")
     @Operation(summary = "회원정보", description = "email을 넣으면 회원 정보를 반환")
     public MemberInfo memberInfo(@PathVariable String email) {
-        return memberService.info(email);
+        return memberService.infoByEmail(email);
     }
 }

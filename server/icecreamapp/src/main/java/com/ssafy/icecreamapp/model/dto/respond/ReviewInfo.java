@@ -11,6 +11,7 @@ public class ReviewInfo {
     String memberEmail;
     long date;
     float rate;
+    String name;
     String content;
 
     public ReviewInfo(Review review) {

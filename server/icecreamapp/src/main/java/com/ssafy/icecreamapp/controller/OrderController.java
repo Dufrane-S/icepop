@@ -1,6 +1,7 @@
 package com.ssafy.icecreamapp.controller;
 
-import com.ssafy.icecreamapp.model.dto.OrderRequestResponse;
+import com.ssafy.icecreamapp.model.dto.request.OrderRequest;
+import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import com.ssafy.icecreamapp.model.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class OrderController {
 
     @PostMapping("/makeOrder")
     @Operation(summary = "주문", description = "id, memberId,date, priceSum 제외 모두 채워줘야함 ")
-    public Boolean makeOrder(@RequestBody OrderRequestResponse orderRequestResponse) {
-        if(orderService.makeOrder(orderRequestResponse) != 0) {
+    public Boolean makeOrder(@RequestBody OrderRequest orderRequest) {
+        if(orderService.makeOrder(orderRequest) != 0) {
             return true;
         } else {
             return false;
@@ -26,12 +27,12 @@ public class OrderController {
     }
 
     @GetMapping("/byMember/{email}")
-    public List<OrderRequestResponse> byMember(@PathVariable String email) {
+    public List<OrderInfo> byMember(@PathVariable String email) {
         return orderService.selectOrderById(email,false);
     }
 
     @GetMapping("/recentByMember/{email}")
-    public List<OrderRequestResponse> recenrByMember(@PathVariable String email){
+    public List<OrderInfo> recentByMember(@PathVariable String email){
         return orderService.selectOrderById(email, true);
     }
 }

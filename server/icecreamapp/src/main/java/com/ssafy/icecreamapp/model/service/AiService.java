@@ -6,7 +6,7 @@ import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Icecream;
 import com.ssafy.icecreamapp.model.dto.Member;
 import com.ssafy.icecreamapp.model.dto.OrderDetail;
-import com.ssafy.icecreamapp.model.dto.OrderRequestResponse;
+import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class AiService {
 
         WebClient webClient = WebClient.create();
         List<Icecream> icecreamList = icecreamDao.selectIcecreamsByCon(null);
-        List<OrderRequestResponse> orderList = orderService.selectOrderById(email, true);
+        List<OrderInfo> orderList = orderService.selectOrderById(email, true);
         log.info(orderList.toString());
         String content = setContent(icecreamList, member, orderList);
         String requestBody = "{\n" +
@@ -54,6 +54,7 @@ public class AiService {
                 .bodyToMono(JsonNode.class)
                 .map(jsonNode -> jsonNode.path("choices").get(0).path("message").path("content").asText())
                 .block();
+        log.info("ai 응답 : " + response);
         StringTokenizer st = new StringTokenizer(response,",");
         List<Icecream> icecreams = new ArrayList<>();
         while(st.hasMoreTokens()){
@@ -66,7 +67,7 @@ public class AiService {
 
     }
 
-    private static String setContent(List<Icecream> list, Member member, List<OrderRequestResponse> orderList) {
+    private static String setContent(List<Icecream> list, Member member, List<OrderInfo> orderList) {
         StringBuilder sb = new StringBuilder();
 //      메뉴
         for (Icecream icecream : list) {
@@ -85,8 +86,8 @@ public class AiService {
         if (orderList.isEmpty()) {
             sb.append("없는 신규회원인");
         } else {
-            for (OrderRequestResponse response : orderList) {
-                for (OrderDetail detail : response.getDetails()) {
+            for (OrderInfo infos : orderList) {
+                for (OrderDetail detail : infos.getDetails()) {
                     sb.append(" 아이스크림 코드 : ");
                     sb.append(detail.getProductId());
                     sb.append(" 주문 수량 : ");
@@ -104,7 +105,7 @@ public class AiService {
         }
 //
         sb.append("최근 주문 정보와 성별, 나이대를 바탕으로 추천할만한 아이스크림의 코드를 5가지 가장 추천하는 순서대로 다음과 같은 형식으로 반환해 무조건 아이스크림 코드를 csv 형식으로 반환해 이외에 다른 설명은 하지마");
-        sb.append("예시 : 2,3,5,7,8");
+        sb.append("예시 : 2,3,5,7,8 ");
         String content = sb.toString();
 
         return content;

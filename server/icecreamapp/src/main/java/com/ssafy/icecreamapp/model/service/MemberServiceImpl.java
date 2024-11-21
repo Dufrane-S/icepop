@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    private final MemberDao memberDao;
 
+    private final MemberDao memberDao;
 
     @Override
     public int join(InitMember initMember) {
@@ -30,15 +30,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean isUsedId(String id) {
-        Member member = memberDao.selectByEmail(id);
-        if(member == null)return true;
+    public boolean isUsedEmail(String email) {
+        Member member = memberDao.selectByEmail(email);
+        if (member == null) return true;
         return false;
     }
 
     @Override
-    public MemberInfo info(String email) {
+    public MemberInfo infoByEmail(String email) {
         Member selected = memberDao.selectByEmail(email);
         return new MemberInfo(selected);
+    }
+
+    @Override
+    public MemberInfo infoById(int id) {
+        return new MemberInfo(memberDao.selectById(id));
     }
 }

@@ -9,7 +9,9 @@ public interface MemberService {
 
     public Member login(String id, String pass);
 
-    public boolean isUsedId(String id);
+    public boolean isUsedEmail(String id);
 
-    public MemberInfo info(String email);
+    public MemberInfo infoByEmail(String email);
+
+    public MemberInfo infoById(int id);
 }

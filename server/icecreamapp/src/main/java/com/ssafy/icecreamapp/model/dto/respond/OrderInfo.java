@@ -1,5 +1,6 @@
-package com.ssafy.icecreamapp.model.dto;
+package com.ssafy.icecreamapp.model.dto.respond;
 
+import com.ssafy.icecreamapp.model.dto.OrderDetail;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +8,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class OrderRequestResponse {
+public class OrderInfo {
     private int id;
-    private int memberId;
     private long date;
     private int spoon;
     private int dryice;

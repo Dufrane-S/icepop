@@ -3,16 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->
 <mapper namespace="com.ssafy.icecreamapp.model.dao.MemberDao">
-    <insert id="insert" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="InitMember" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO member
-        (id,
+        (
         name,
         email,
         password,
         gender,
         age)
         VALUES
-        (#{id},
+        (
         #{name},
         #{email},
         #{password},
@@ -31,6 +31,12 @@
         WHERE email = #{email}
         and password = #{password}
     </select>
+
+    <select id="selectById" parameterType="int" resultType="Member">
+        SELECT * FROM member
+        WHERE id = #{id}
+    </select>
+
 
     <update id="updateSum">
         UPDATE member

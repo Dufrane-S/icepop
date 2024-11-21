@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->
 <mapper namespace="com.ssafy.icecreamapp.model.dao.OrderDao">
-    <insert id="insertOrder" parameterType="OrderRequestResponse"
+    <insert id="insertOrder" parameterType="Order"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `order`
         (
@@ -65,7 +65,7 @@
         join t_order_detail d on o.o_id = d.order_id
         join t_product p on d.product_id = p.id
         where o_id = #{order_id}
-        orderRequestResponse by d.d_id asc;
+        orderRequest by d.d_id asc;
     </select>
 
     <resultMap id="OrderResult" type="OrderInfo">

@@ -2,19 +2,23 @@ package com.ssafy.icecreamapp.model.service;
 
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dao.ReviewDao;
+import com.ssafy.icecreamapp.model.dto.Member;
 import com.ssafy.icecreamapp.model.dto.Review;
 import com.ssafy.icecreamapp.model.dto.request.ReviewCon;
 import com.ssafy.icecreamapp.model.dto.request.InitReview;
+import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.respond.ReviewInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewDao reviewDao;
     private final MemberDao memberDao;
@@ -28,12 +32,21 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<ReviewInfo> selectReviews(ReviewCon reviewCon) {
-        int memberId = memberDao.selectByEmail(reviewCon.getEmail()).getId();
-        List<ReviewInfo>reviewInfoList = new ArrayList<>();
-        List<Review>reviewList = reviewDao.selectReviewsByMemberId(reviewCon,memberId);
-        for(Review review:reviewList){
+        Member member = new Member();
+
+        if (reviewCon.getEmail() != null) {
+            member = memberDao.selectByEmail(reviewCon.getEmail());
+        }
+        List<ReviewInfo> reviewInfoList = new ArrayList<>();
+        List<Review> reviewList = reviewDao.selectReviewsByMemberId(reviewCon, member.getId());
+
+        for (Review review : reviewList) {
+            if (member.getId() != review.getMemberId()) {
+                member = memberDao.selectById(review.getMemberId());
+            }
             ReviewInfo reviewInfo = new ReviewInfo(review);
-            reviewInfo.setMemberEmail(reviewCon.getEmail());
+            reviewInfo.setMemberEmail(member.getEmail());
+            reviewInfo.setName(member.getName());
             reviewInfoList.add(reviewInfo);
         }
         return reviewInfoList;
