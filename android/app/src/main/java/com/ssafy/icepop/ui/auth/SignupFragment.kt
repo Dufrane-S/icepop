@@ -19,6 +19,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding> (
 ) {
     private lateinit var authActivity: AuthActivity
 
+    private var isEmailChecked = false
     private var selectGender = 1
 
     override fun onAttach(context: Context) {
@@ -56,19 +57,59 @@ class SignupFragment : BaseFragment<FragmentSignupBinding> (
 
             Log.d(TAG, "$email $password $name $age $gender")
 
-            signUp(User(email, password, name, age, gender))
+            if (isEmailChecked) {
+                signUp(User(email, password, name, age, gender))
+            }
+            //이메일 중복 확인을 누르지 않았을 경우,
+            else {
+                showToast(getString(R.string.msg_email_check))
+            }
+        }
+
+        binding.idDuplicateBtn.setOnClickListener {
+            val email = binding.etId.text.toString()
+
+            if (email.isEmpty()) {
+                showToast(getString(R.string.msg_email_edittext_empty))
+            }
+            else {
+                requestEmailDuplicationCheck(email)
+            }
         }
     }
 
-    private fun signUp(user : User) {
+    private fun signUp(user: User) {
         lifecycleScope.launch {
             runCatching {
                 RetrofitUtil.userService.signup(user)
             }.onSuccess {
                 authActivity.changeFragment(AuthActivity.LOGIN_FRAGMENT)
             }.onFailure {
-                showToast("회원가입에 실패했습니다.")
+                showToast(getString(R.string.msg_signup_fail))
             }
+        }
+    }
+
+    //false => 사용 중이다, true면 사용 가능하다.
+    private fun requestEmailDuplicationCheck(email: String) {
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.userService.isUsedEmail(email)
+            }.onSuccess {
+                handleDuplicateEmail(it)
+            }.onFailure {
+                showToast(getString(R.string.msg_email_duplication_check_fail))
+            }
+        }
+    }
+
+    private fun handleDuplicateEmail(isUsing: Boolean) {
+        if (isUsing) {
+            isEmailChecked = true
+            showToast(getString(R.string.msg_email_available))
+        }
+        else {
+            showToast(getString(R.string.msg_email_duplicate))
         }
     }
 }

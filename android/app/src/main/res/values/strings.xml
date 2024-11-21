@@ -17,6 +17,13 @@
     <string name="female">여자</string>
     <string name="join">가입하기</string>
 
+    <string name="msg_email_edittext_empty">이메일이 비어있어서, 중복확인이 불가합니다.</string>
+    <string name="msg_email_duplication_check_fail">이메일 중복확인에 실패했습니다.</string>
+    <string name="msg_signup_fail">회원가입에 실패했습니다.</string>
+    <string name="msg_email_check">중복확인 버튼을 눌러주세요.</string>
+    <string name="msg_email_duplicate">중복된 이메일 입니다. 다시 입력해주세요.</string>
+    <string name="msg_email_available">사용 가능한 이메일 입니다.</string>
+
     <string-array name="age_items" translatable="false">
         <item>10</item>
         <item>20</item>
