@@ -2,16 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.icecreamapp.model.dao.IcecreamDao">
-
+<!--아이스크림 단건 조회-->
     <select id="selectIcecreamById" parameterType="int" resultType="Icecream">
-        SELECT *
+        SELECT id, name, price, isEvent, type, kcal, img, content,count_total as count
         FROM icecream
         WHERE id = #{id}
     </select>
 
+<!-- 아이스크림 리스트 반환-->
     <select id="selectIcecreamsByCon" parameterType="IceSelectCon" resultType="Icecream">
-        SELECT *
+        SELECT id, name, price, isEvent, type, kcal, img, content,
+        <choose>
+            <when test="gender==1 and age!=null"><!--남자일 때-->
+                <choose><!--나이에 따라 적절한 count를 select-->
+                    <when test="age &lt;20">
+                        count_male_one as count
+                    </when>
+                    <when test="age &lt;30">
+                        count_male_two as count
+                    </when>
+                    <when test="age &lt;40">
+                        count_male_three as count
+                    </when>
+                    <otherwise>
+                        count_male_fourover as count
+                    </otherwise>
+                </choose>
+            </when>
+            <when test="gender==2 and age!=null"><!--여자일 때-->
+                <choose>
+                    <when test="age &lt;20"><!--나이에 따라 적절한 count를 select-->
+                        count_female_one as count
+                    </when>
+                    <when test="age &lt;30">
+                        count_female_two as count
+                    </when>
+                    <when test="age &lt;40">
+                        count_female_three as count
+                    </when>
+                    <otherwise>
+                        count_female_fourover as count
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                count_total as count
+            </otherwise>
+        </choose>
+
+
         FROM icecream
+
+<!--     제품 유형, 할인율 조건-->
         <where>
             <if test="type != null">
                 AND type = #{type}
@@ -19,15 +61,89 @@
             <if test="rate != null">
                 AND isEvent >= #{rate}
             </if>
+
         </where>
-        <if test="isRecommend == true">
-            ORDER BY count desc
+
+<!--     gender, age에 따라 순위   -->
+        <if test="gender!=null and age != null">
+            <if test="gender==1">
+                <choose>
+                    <when test="age &lt;20">
+                        ORDER BY count_male_one desc
+                    </when>
+                    <when test="age &lt;30">
+                        ORDER BY count_male_two desc
+                    </when>
+                    <when test="age &lt;40">
+                        ORDER BY count_male_three desc
+                    </when>
+                    <otherwise>
+                        ORDER BY count_male_fourover desc
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="gender==2">
+                <choose>
+                    <when test="age &lt;20">
+                        ORDER BY count_female_one desc
+                    </when>
+                    <when test="age &lt;30">
+                        ORDER BY count_female_two desc
+                    </when>
+                    <when test="age &lt;40">
+                        ORDER BY count_female_three desc
+                    </when>
+                    <otherwise>
+                        ORDER BY count_female_fourover desc
+                    </otherwise>
+                </choose>
+            </if>
         </if>
     </select>
 
+<!--아이스크림 구매시 수량 업데이트-->
     <update id="updateIcecreamById">
         update icecream
-        set count = count + #{count}
+        <set>
+            <if test="gender==1">
+                <choose>
+                    <when test="age &lt;20">
+                        count_male_one = count_male_one + #{quantity},
+                    </when>
+                    <when test="age &lt;30">
+                        count_male_two = count_male_two + #{quantity},
+                    </when>
+                    <when test="age &lt;40">
+                        count_male_three = count_male_three + #{quantity},
+                    </when>
+                    <otherwise>
+                        count_male_fourover = count_male_fourover + #{quantity},
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="gender==2">
+                <choose>
+                    <when test="age &lt;20">
+                        count_female_one = count_female_one + #{quantity},
+                    </when>
+                    <when test="age &lt;30">
+                        count_female_two = count_female_two + #{quantity},
+                    </when>
+                    <when test="age &lt;40">
+                        count_female_three = count_female_three + #{quantity},
+                    </when>
+                    <otherwise>
+                        count_female_fourover = count_female_fourover + #{quantity},
+                    </otherwise>
+                </choose>
+            </if>
+
+          count_total = count_total + #{quantity}
+
+        </set>
+
+
+
         where id = #{id}
     </update>
 

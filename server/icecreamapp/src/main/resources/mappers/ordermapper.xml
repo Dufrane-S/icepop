@@ -34,20 +34,18 @@
         </if>
     </select>
 
+    <!-- <select id="selectOrderInfo" parameterType="int" resultMap="OrderResult">
+         select
+         o.o_id id
+         , o.user_id
+         , o.order_table
+         , o.order_time
+         , o.completed
+         , o.o_id as order_id
+         from t_order o
 
-   <!-- <select id="selectOrderInfo" parameterType="int" resultMap="OrderResult">
-        select
-        o.o_id id
-        , o.user_id
-        , o.order_table
-        , o.order_time
-        , o.completed
-        , o.o_id as order_id
-        from t_order o
-
-        where o_id = #{oid};
-    </select>-->
-
+         where o_id = #{oid};
+     </select>-->
 
 
     <!--<select id="getOrderDetailInfo" parameterType="int" resultType="OrderDetailInfo">

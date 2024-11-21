@@ -39,6 +39,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfo infoByEmail(String email) {
         Member selected = memberDao.selectByEmail(email);
+        if(selected==null){
+            return null;
+        }
         return new MemberInfo(selected);
     }
 

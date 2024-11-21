@@ -3,9 +3,11 @@ package com.ssafy.icecreamapp.model.dto.respond;
 import com.ssafy.icecreamapp.model.dto.Member;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class MemberInfo {
     String name;
     String email;

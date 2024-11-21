@@ -9,5 +9,5 @@ import java.util.List;
 public interface OrderDao {
     int insertOrder(Order order);
 
-    List<Order> selectOrderByEmail(int memberId, Boolean isRecent);
+    List<Order> selectOrderByEmail(int memberId, Boolean isRecent,int orderId);
 }

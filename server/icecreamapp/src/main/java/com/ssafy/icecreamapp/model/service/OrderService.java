@@ -9,5 +9,5 @@ public interface OrderService {
 
     int makeOrder(OrderRequest orderRequest);
 
-    List<OrderInfo> selectOrderById(String email, Boolean isRecent);
+    List<OrderInfo> selectOrdersByEmail(String email, Boolean isRecent);
 }

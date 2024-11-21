@@ -5,6 +5,8 @@ import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import com.ssafy.icecreamapp.model.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,21 +20,23 @@ public class OrderController {
 
     @PostMapping("/makeOrder")
     @Operation(summary = "주문", description = "id, memberId,date, priceSum 제외 모두 채워줘야함 ")
-    public Boolean makeOrder(@RequestBody OrderRequest orderRequest) {
+    public ResponseEntity<String> makeOrder(@RequestBody OrderRequest orderRequest) {
         if(orderService.makeOrder(orderRequest) != 0) {
-            return true;
+            return new ResponseEntity<>("주문 성공", HttpStatus.CREATED);
         } else {
-            return false;
+            return new ResponseEntity<>("주문 실패",HttpStatus.BAD_GATEWAY);
         }
     }
 
     @GetMapping("/byMember/{email}")
-    public List<OrderInfo> byMember(@PathVariable String email) {
-        return orderService.selectOrderById(email,false);
+    @Operation(summary = "주문 목록 전부",description = "email만 넣으면 됨")
+    public  ResponseEntity<List<OrderInfo>> byMember(@PathVariable String email) {
+        return  ResponseEntity.ok(orderService.selectOrdersByEmail(email,false));
     }
 
     @GetMapping("/recentByMember/{email}")
-    public List<OrderInfo> recentByMember(@PathVariable String email){
-        return orderService.selectOrderById(email, true);
+    @Operation(summary = "주문목록 최근 5개",description = "eamil만 넣으면 됨")
+    public ResponseEntity<List<OrderInfo>> recentByMember(@PathVariable String email){
+        return ResponseEntity.ok(orderService.selectOrdersByEmail(email, true));
     }
 }
