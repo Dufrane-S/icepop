@@ -1,8 +1,15 @@
 package com.ssafy.icepop.ui.list
 
+import android.app.AlertDialog
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.NumberPicker
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -118,6 +125,10 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
                     TYPE -> {
                         binding.optionArea.visibility = View.VISIBLE
                         getAllIceCream()
+
+                        binding.filterButton.setOnClickListener {
+                            showTextPickerDialog()
+                        }
                     }
                     POPULARITY -> {
                         binding.optionArea.visibility = View.VISIBLE
@@ -134,11 +145,66 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
         })
     }
 
+    private fun showTextPickerDialog() {
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_type_picker, null)
+
+        val items = resources.getStringArray(R.array.type_array)
+
+        val numberPicker = view.findViewById<NumberPicker>(R.id.numberPicker).apply {
+            minValue = 0
+            maxValue = items.size - 1
+            value = 0
+            displayedValues = items
+        }
+
+        // API 29 이상에서만 setTextColor 사용
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            numberPicker.textColor = Color.BLACK
+            numberPicker.textSize = 50F
+        } else {
+            val pickerChildCount = numberPicker.childCount
+
+            for (i in 0 until pickerChildCount) {
+                val child = numberPicker.getChildAt(i)
+
+                if (child is TextView) {
+                    child.setTextColor(Color.BLACK)
+                    child.textSize = 50F
+                }
+            }
+        }
+
+        // AlertDialog 생성
+        val dialog = AlertDialog.Builder(requireContext(), R.style.AppAlertDialogTheme)
+            .setView(view)
+            .setTitle("타입을 선택하세요")
+            .setPositiveButton("OK") { _, _ ->
+                // OK 버튼 클릭 시 동작
+                val selectedItem = numberPicker.value
+                Log.d(TAG, "Selected Item: ${numberPicker.displayedValues[selectedItem]}")
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .create()
+
+
+
+//
+//        dialog.setOnShowListener {
+//            val titleTextView = dialog.findViewById<TextView>(android.R.id.title)
+//            titleTextView?.apply {
+//                typeface = ResourcesCompat.getFont(context, R.font.meet_me)  // 폰트 지정
+//                setTextColor(Color.BLACK)  // 텍스트 색상
+//            }
+//        }
+
+        // 다이얼로그 표시
+        dialog.show()
+    }
+
     private fun setNotifyRecyclerView(iceCreamList: List<IceCream>) {
         iceCreamAdapter.iceCreamList = iceCreamList
         iceCreamAdapter.notifyDataSetChanged()
     }
-
 
     companion object {
         const val TYPE = 0

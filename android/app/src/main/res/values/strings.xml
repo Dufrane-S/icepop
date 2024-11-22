@@ -33,7 +33,6 @@
     </string-array>
 
     <!-- fragment_ice_cream_list.xml -->
-
     <string name="tab_type">타입별</string>
     <string name="tab_famous_type">인기순</string>
     <string name="tab_ai_recommend_type">AI 추천</string>
@@ -42,4 +41,18 @@
     <string name="home">Home</string>
     <string name="list">List</string>
     <string name="my_page">Mypage</string>
+
+    <!-- type_array, fragment_ice_cream_list.xml -->
+    <string name="ice_cream">아이스크림</string>
+    <string name="cake">케이크</string>
+    <string name="ready_pack">레디팩</string>
+    <string name="init">초기화</string>
+
+    <string-array name="type_array">
+        <item>@string/ice_cream</item>
+        <item>@string/cake</item>
+        <item>@string/ready_pack</item>
+        <item>@string/init</item>
+    </string-array>
+
 </resources>
