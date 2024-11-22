@@ -3,6 +3,7 @@
     <style name="Base.Theme.Icepop" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorSecondaryContainer">@color/primary_color</item>
 
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
         <item name="android:buttonStyle">@style/customButtonFontStyle</item>
