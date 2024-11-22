@@ -4,12 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.ssafy.icepop.R
 import com.ssafy.icepop.data.model.dto.IceCream
+import com.ssafy.icepop.data.model.dto.IceCreamCartItem
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentIceCreamDetailBinding
+import com.ssafy.icepop.ui.ActivityViewModel
 import com.ssafy.icepop.ui.MainActivity
 import com.ssafy.smartstore_jetpack.base.ApplicationClass.Companion.ICE_CREAM_IMAGE_BASE_URL
 import com.ssafy.smartstore_jetpack.base.BaseFragment
@@ -23,6 +26,9 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
 ){
     private lateinit var mainActivity: MainActivity
 
+    private val activityViewModel: ActivityViewModel by activityViewModels()
+
+    var count : Int = 1
     var iceCreamId : Int = -1
 
     override fun onAttach(context: Context) {
@@ -35,8 +41,6 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
         mainActivity.hideBottomNav(true)
 
         iceCreamId = arguments?.getInt(ARG_ID) ?: -1
-
-        Log.d(TAG, "onCreate: $id")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,9 +74,38 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
         binding.iceCreamPrice.text = CommonUtils.makeComma(iceCream.price)
         binding.iceCreamKcal.text = CommonUtils.makeKcal(iceCream.kcal)
         binding.iceCreamType.text = iceCream.type
-        binding.iceCreamOrderCount.text = "1"
+        binding.iceCreamOrderCount.text = count.toString()
 
         binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCream.price)}"
+
+        initListener(iceCream)
+    }
+
+    private fun initListener(iceCream: IceCream) {
+        binding.shoppingCartBtn.setOnClickListener {
+            val iceCreamCartItem = IceCreamCartItem(
+                productId = iceCream.id,
+                name = iceCream.name,
+                price = iceCream.price,
+                quantity = count
+            )
+
+            activityViewModel.addToCart(iceCreamCartItem)
+        }
+
+        binding.countPlusBtn.setOnClickListener {
+            count++
+
+            binding.iceCreamOrderCount.text = count.toString()
+            binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCream.price * count)}"
+        }
+
+        binding.countMinusBtn.setOnClickListener {
+            if (count != 0) count--
+
+            binding.iceCreamOrderCount.text = count.toString()
+            binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCream.price * count)}"
+        }
     }
 
     companion object {
