@@ -2,10 +2,6 @@ package com.ssafy.icepop.ui.list
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.ssafy.icepop.R
 import com.ssafy.icepop.databinding.FragmentIceCreamOrderBinding
 import com.ssafy.icepop.ui.MainActivity

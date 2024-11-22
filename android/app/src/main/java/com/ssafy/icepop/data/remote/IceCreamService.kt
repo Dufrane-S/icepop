@@ -13,4 +13,7 @@ interface IceCreamService {
 
     @GET("ai/recommand/{email}")
     suspend fun getIceCreamByAI(@Path("email") email: String) : List<IceCream>
+
+    @GET("ice/{id}")
+    suspend fun getIceCreamById(@Path("id") id: Int) : IceCream
 }
