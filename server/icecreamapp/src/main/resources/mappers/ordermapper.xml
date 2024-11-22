@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->
+
 <mapper namespace="com.ssafy.icecreamapp.model.dao.OrderDao">
     <insert id="insertOrder" parameterType="Order"
             useGeneratedKeys="true" keyProperty="id">
@@ -34,5 +34,40 @@
         </if>
     </select>
 
+
+    <select id="selectWithResultmap" parameterType="OrderCon" resultMap="OrderAndOrderDetails">
+        select o.id,o.date, o.spoon,o.dryice,o.price_sum,od.id as od_id, od.order_id, od.product_id, od.quantity, m.email
+        from `order` as o
+        left join order_detail as od
+        on o.id = od.order_id
+        left join member as m
+        on o.member_id = m.id
+        <where>
+            <if test="memberId!=0">
+                AND o.member_id=#{memberId};
+            </if>
+            <if test="orderId!=0">
+                AND o.id=#{orderId};
+            </if>
+        </where>
+        <if test="isRecent==true">
+            LIMIT 10
+        </if>
+    </select>
+
+    <resultMap id="OrderAndOrderDetails" type="OrderInfo">
+        <id property="id" column="id"/>
+        <result property="date" column="date"/>
+        <result property="spoon" column="spoon"/>
+        <result property="dryice" column="dryice"/>
+        <result property="priceSum" column="price_sum"/>
+        <result property="email" column="email"/>
+        <collection property="details" ofType="OrderDetail">
+            <id property="id" column="od_id"/>
+            <result property="orderId" column="order_id"/>
+            <result property="productId" column="product_id"/>
+            <result property="quantity" column="quantity"/>
+        </collection>
+    </resultMap>
 
 </mapper>

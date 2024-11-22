@@ -1,6 +1,7 @@
 package com.ssafy.icecreamapp.model.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.ssafy.icecreamapp.exception.AiRequestErrorException;
 import com.ssafy.icecreamapp.model.dao.IcecreamDao;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Icecream;
@@ -46,26 +47,36 @@ public class AiService {
 
         log.debug(requestBody);
 
-//      요청
-        String response = webClient.post()
-                .uri("https://api.openai.com/v1/chat/completions")
-                .header("Authorization", "Bearer " + apiKey)
-                .header("Content-Type", "application/json")
-                .bodyValue(requestBody)
-                .retrieve()
-                .bodyToMono(JsonNode.class)
-                .map(jsonNode -> jsonNode.path("choices").get(0).path("message").path("content").asText())
-                .block();
-
-
-        log.info("ai 응답 : " + response);
-//      응답 ,로 parse 후 아이스크림 리스트 생성
-        StringTokenizer st = new StringTokenizer(response,",");
         List<Icecream> icecreams = new ArrayList<>();
-        while(st.hasMoreTokens()){
-            int icecreamId= Integer.parseInt(st.nextToken());
-            Icecream icecream = icecreamDao.selectIcecreamById(icecreamId);
-            icecreams.add(icecream);
+        String response = "";
+        boolean check = true;
+        while (check) {
+            try {
+                //요청
+                response = webClient.post()
+                        .uri("https://api.openai.com/v1/chat/completions")
+                        .header("Authorization", "Bearer " + apiKey)
+                        .header("Content-Type", "application/json")
+                        .bodyValue(requestBody)
+                        .retrieve()
+                        .bodyToMono(JsonNode.class)
+                        .map(jsonNode -> jsonNode.path("choices").get(0).path("message").path("content").asText())
+                        .block();
+
+
+                log.info("ai 응답 : " + response);
+                //응답 ,로 parse 후 아이스크림 리스트 생성
+                StringTokenizer st = new StringTokenizer(response, ",");
+                while (st.hasMoreTokens()) {
+                    int icecreamId = Integer.parseInt(st.nextToken());
+                    Icecream icecream = icecreamDao.selectIcecreamById(icecreamId);
+                    icecreams.add(icecream);
+                }
+                check = false;
+            } catch (AiRequestErrorException e) {
+                log.error("ai의 답변 error");
+                log.error(response);
+            }
         }
 
         return icecreams;
@@ -109,7 +120,7 @@ public class AiService {
             sb.append("여자에게");
         }
 //
-        sb.append("최근 주문 정보와 성별, 나이대를 바탕으로 추천할만한 아이스크림의 코드를 10가지 가장 추천하는 순서대로 다음과 같은 형식으로 반환해 무조건 아이스크림 코드를 csv 형식으로 반환해 이외에 다른 설명은 하지마");
+        sb.append("최근 주문 정보와 성별, 나이대를 바탕으로 추천할만한 아이스크림의 코드를 10가지 가장 추천하는 순서대로 다음과 같은 형식으로 반환해 무조건 아이스크림 코드를 csv 형식으로 반환해 이외에 다른 설명은 하지마 cvs 내부에 공백은 없게 반환해");
         sb.append("예시 : 20,12,3,15,7,8,10,5,11,25 ");
         String content = sb.toString();
 

@@ -5,6 +5,7 @@ import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dao.OrderDao;
 import com.ssafy.icecreamapp.model.dao.OrderDetailDao;
 import com.ssafy.icecreamapp.model.dto.*;
+import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.request.OrderDetailRequest;
 import com.ssafy.icecreamapp.model.dto.request.OrderRequest;
 import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
@@ -79,7 +80,6 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfo> selectOrdersByEmail(String email, Boolean isRecent) {
         Member member = memberDao.selectByEmail(email);
         List<Order> orderList = orderDao.selectOrderByEmail(member.getId(), isRecent);
-
         List<OrderInfo> result = new ArrayList<>();
         for (Order order : orderList) {
             log.debug(String.valueOf(order.getPriceSum()));
@@ -94,5 +94,10 @@ public class OrderServiceImpl implements OrderService {
             result.add(dto);
         }
         return result;
+    }
+
+    @Override
+    public List<OrderInfo> selectOrdersWithCon(OrderCon orderCon) {
+        return orderDao.selectWithResultmap(orderCon);
     }
 }

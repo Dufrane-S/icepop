@@ -1,6 +1,5 @@
 package com.ssafy.icecreamapp.model.service;
 
-import com.ssafy.icecreamapp.model.dto.Review;
 import com.ssafy.icecreamapp.model.dto.request.ReviewCon;
 import com.ssafy.icecreamapp.model.dto.request.InitReview;
 import com.ssafy.icecreamapp.model.dto.respond.ReviewInfo;

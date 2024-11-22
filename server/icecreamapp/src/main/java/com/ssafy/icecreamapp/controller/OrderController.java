@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.controller;
 
+import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.request.OrderRequest;
 import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import com.ssafy.icecreamapp.model.service.OrderService;
@@ -28,7 +29,8 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/byMember/{email}")
+    //db에 order와 orderdetail을 각각 조회하여 spring단에서 합치는 쓰레기 코드들
+    /*@GetMapping("/byMember/{email}")
     @Operation(summary = "주문 목록 전부",description = "email만 넣으면 됨")
     public  ResponseEntity<List<OrderInfo>> byMember(@PathVariable String email) {
         return  ResponseEntity.ok(orderService.selectOrdersByEmail(email,false));
@@ -38,5 +40,11 @@ public class OrderController {
     @Operation(summary = "주문목록 최근 5개",description = "eamil만 넣으면 됨")
     public ResponseEntity<List<OrderInfo>> recentByMember(@PathVariable String email){
         return ResponseEntity.ok(orderService.selectOrdersByEmail(email, true));
+    }*/
+
+    @PostMapping("/withmap")
+    @Operation(summary = "주문 내역 조회", description = "memberId = 0 이면 멤버 조건 안걸기, orderId=0이면 orderId조건 안걸기 isRecent->최근 주문한 아이스크림 종류 10가지 주문 반환")
+    public List<OrderInfo>orderInfoListWithCon(@RequestBody OrderCon orderCon){
+        return orderService.selectOrdersWithCon(orderCon);
     }
 }
