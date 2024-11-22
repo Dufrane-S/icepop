@@ -50,13 +50,32 @@ public class OrderServiceImpl implements OrderService {
 
         int sumPrice = 0;
 
-//      아이스크림 정보 불러와서 계산
-        for (OrderDetail detail : list) {
+//      아이스크림 정보 불러와서 계산 일일히 조회
+        /*for (OrderDetail detail : list) {
             Icecream icecream = icecreamDao.selectIcecreamById(detail.getProductId());
             int price = (int) (icecream.getPrice() * ((100.0f - icecream.getIsEvent()) / 100.0f));
             icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity(), member.getAge(), member.getGender());
             sumPrice += detail.getQuantity() * price;
+        }*/
+
+        //      아이스크림 정보 불러와서 계산 한번에
+        List<Integer> idList = new ArrayList<>();
+        for (OrderDetail detail : list) {
+            idList.add(detail.getProductId());
         }
+        List<Icecream> icecreamList = icecreamDao.selectIcecreamsByIds(idList);
+        for (OrderDetail detail : list) {
+            for (Icecream icecream : icecreamList) {
+                if (detail.getProductId() == icecream.getId()) {
+                    int price = (int) (icecream.getPrice() * ((100.0f - icecream.getIsEvent()) / 100.0f));
+                    icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity(), member.getAge(), member.getGender());
+                    sumPrice += detail.getQuantity() * price;
+                    break;
+                }
+            }
+        }
+
+
 
 //      멤버 정보로 할인율 계산
         float discountRate = new MemberInfo(member).getDiscountRate();
