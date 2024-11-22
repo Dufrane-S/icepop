@@ -4,9 +4,10 @@ data class IceCreamRequest(
     val age: Int,
     val gender: Int,
     val rate: Int,
-    val type: String?
+    val type: String
 ) {
     // 기본 생성자(빈 객체를 생성하고 싶을 때)
-    constructor() : this(0, 0, 0, null)
-    constructor(age: Int, gender: Int) : this(age, gender, 0, null)
+    constructor() : this(0, 0, 0, "")
+    constructor(type: String) : this(0, 0, 0, type)
+    constructor(age: Int, gender: Int) : this(age, gender, 0, "")
 }

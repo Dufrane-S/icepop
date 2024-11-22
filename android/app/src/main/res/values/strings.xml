@@ -24,14 +24,6 @@
     <string name="msg_email_duplicate">중복된 이메일 입니다. 다시 입력해주세요.</string>
     <string name="msg_email_available">사용 가능한 이메일 입니다.</string>
 
-    <string-array name="age_items" translatable="false">
-        <item>10</item>
-        <item>20</item>
-        <item>30</item>
-        <item>40</item>
-        <item>50 ~</item>
-    </string-array>
-
     <!-- fragment_ice_cream_list.xml -->
     <string name="tab_type">타입별</string>
     <string name="tab_famous_type">인기순</string>
@@ -42,11 +34,28 @@
     <string name="list">List</string>
     <string name="my_page">Mypage</string>
 
+    <string name="ten">10</string>
+    <string name="twenty">20</string>
+    <string name="thirty">30</string>
+    <string name="forty_over">40 ~</string>
+
     <!-- type_array, fragment_ice_cream_list.xml -->
     <string name="ice_cream">아이스크림</string>
     <string name="cake">케이크</string>
     <string name="ready_pack">레디팩</string>
     <string name="init">초기화</string>
+
+    <string-array name="gender_items">
+        <item>@string/male</item>
+        <item>@string/female</item>
+    </string-array>
+
+    <string-array name="age_items" translatable="false">
+        <item>@string/ten</item>
+        <item>@string/twenty</item>
+        <item>@string/thirty</item>
+        <item>@string/forty_over</item>
+    </string-array>
 
     <string-array name="type_array">
         <item>@string/ice_cream</item>

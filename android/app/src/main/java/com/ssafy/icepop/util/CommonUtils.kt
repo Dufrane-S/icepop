@@ -1,5 +1,8 @@
 package com.ssafy.smartstore_jetpack.util
 
+import android.content.Context
+import androidx.core.content.ContextCompat
+import com.ssafy.icepop.R
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -40,6 +43,23 @@ object CommonUtils {
             "꽃" -> 15
             "열매" -> 20
             "커피콩" -> 25
+            else -> -1
+        }
+    }
+
+    fun getMaleNumber(gender: String) : Int {
+        return when (gender) {
+            "남자" -> 1
+            else -> 2
+        }
+    }
+
+    fun getAge(context: Context, age: String) : Int {
+        return when(age) {
+            context.getString(R.string.ten) -> 10
+            context.getString(R.string.twenty) -> 20
+            context.getString(R.string.thirty) -> 30
+            context.getString(R.string.forty_over) -> 40
             else -> -1
         }
     }

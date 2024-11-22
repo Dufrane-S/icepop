@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.NumberPicker
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +20,7 @@ import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentIceCreamListBinding
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import com.ssafy.smartstore_jetpack.base.BaseFragment
+import com.ssafy.smartstore_jetpack.util.CommonUtils
 import kotlinx.coroutines.launch
 
 private const val TAG = "IceCreamListFragment_ssafy"
@@ -117,6 +117,10 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
     }
 
     private fun initListener() {
+        binding.filterButton.setOnClickListener {
+            showTypePickerDialog()
+        }
+
         binding.tabLayout.addOnTabSelectedListener (object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 // 탭이 선택될 때 실행할 코드 (view 처리와, 서버 처리 로직을 분리)
@@ -127,12 +131,16 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
                         getAllIceCream()
 
                         binding.filterButton.setOnClickListener {
-                            showTextPickerDialog()
+                            showTypePickerDialog()
                         }
                     }
                     POPULARITY -> {
                         binding.optionArea.visibility = View.VISIBLE
                         getIceCreamByPopularity()
+
+                        binding.filterButton.setOnClickListener {
+                            showPersonInfoPickerDialog()
+                        }
                     }
                     AI_RECOMMEND -> {
                         binding.optionArea.visibility = View.GONE
@@ -145,16 +153,16 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
         })
     }
 
-    private fun showTextPickerDialog() {
+    private fun showTypePickerDialog() {
         val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_type_picker, null)
 
-        val items = resources.getStringArray(R.array.type_array)
+        val types = resources.getStringArray(R.array.type_array)
 
         val numberPicker = view.findViewById<NumberPicker>(R.id.numberPicker).apply {
             minValue = 0
-            maxValue = items.size - 1
+            maxValue = types.size - 1
             value = 0
-            displayedValues = items
+            displayedValues = types
         }
 
         // API 29 이상에서만 setTextColor 사용
@@ -181,24 +189,115 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
             .setPositiveButton("OK") { _, _ ->
                 // OK 버튼 클릭 시 동작
                 val selectedItem = numberPicker.value
-                Log.d(TAG, "Selected Item: ${numberPicker.displayedValues[selectedItem]}")
+                val type = numberPicker.displayedValues[selectedItem]
+
+                getIceCreamByType(type)
             }
             .setNegativeButton("Cancel") { _, _ -> }
             .create()
 
+        // 다이얼로그 표시
+        dialog.show()
+    }
 
+    private fun showPersonInfoPickerDialog() {
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_person_info_picker, null)
 
-//
-//        dialog.setOnShowListener {
-//            val titleTextView = dialog.findViewById<TextView>(android.R.id.title)
-//            titleTextView?.apply {
-//                typeface = ResourcesCompat.getFont(context, R.font.meet_me)  // 폰트 지정
-//                setTextColor(Color.BLACK)  // 텍스트 색상
-//            }
-//        }
+        val genders = resources.getStringArray(R.array.gender_items)
+        val ages = resources.getStringArray(R.array.age_items)
+
+        val agePicker = view.findViewById<NumberPicker>(R.id.agePicker).apply {
+            minValue = 0
+            maxValue = ages.size - 1
+            value = 0
+            displayedValues = ages
+        }
+
+        val genderPicker = view.findViewById<NumberPicker>(R.id.genderPicker).apply {
+            minValue = 0
+            maxValue = genders.size - 1
+            value = 0
+            displayedValues = genders
+        }
+
+        // API 29 이상에서만 setTextColor 사용
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            agePicker.textColor = Color.BLACK
+            agePicker.textSize = 50F
+
+            genderPicker.textColor = Color.BLACK
+            genderPicker.textSize = 50F
+        } else {
+            val agePickerChildCount = agePicker.childCount
+
+            for (i in 0 until agePickerChildCount) {
+                val child = agePicker.getChildAt(i)
+
+                if (child is TextView) {
+                    child.setTextColor(Color.BLACK)
+                    child.textSize = 50F
+                }
+            }
+
+            val genderPickerChildCount = genderPicker.childCount
+
+            for (i in 0 until agePickerChildCount) {
+                val child = genderPicker.getChildAt(i)
+
+                if (child is TextView) {
+                    child.setTextColor(Color.BLACK)
+                    child.textSize = 50F
+                }
+            }
+        }
+
+        // AlertDialog 생성
+        val dialog = AlertDialog.Builder(requireContext(), R.style.AppAlertDialogTheme)
+            .setView(view)
+            .setTitle("성별과 나이대를 선택하세요.")
+            .setPositiveButton("OK") { _, _ ->
+                // OK 버튼 클릭 시 동작
+                val genderSelectedItem = genderPicker.value
+                val genderStr = genderPicker.displayedValues[genderSelectedItem]
+                
+                val ageSelectedItem = agePicker.value
+                val ageStr = agePicker.displayedValues[ageSelectedItem]
+
+                val age = CommonUtils.getAge(requireContext(), ageStr)
+                val gender = CommonUtils.getMaleNumber(genderStr)
+
+                getIceCreamByPersonInfo(gender = gender, age = age)
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
+            .create()
 
         // 다이얼로그 표시
         dialog.show()
+    }
+
+    private fun getIceCreamByType(type: String) {
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.iceCreamService.getAllIceCream(IceCreamRequest(type = type))
+            }.onSuccess {
+                setNotifyRecyclerView(it)
+            }.onFailure {
+                Log.d(TAG, "실패")
+            }
+        }
+    }
+
+    private fun getIceCreamByPersonInfo(gender: Int, age: Int) {
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.iceCreamService.getAllIceCream(IceCreamRequest(gender = gender, age = age))
+            }.onSuccess {
+                Log.d(TAG, "getIceCreamByPersonInfo: $it")
+                setNotifyRecyclerView(it)
+            }.onFailure {
+                Log.d(TAG, "실패")
+            }
+        }
     }
 
     private fun setNotifyRecyclerView(iceCreamList: List<IceCream>) {
