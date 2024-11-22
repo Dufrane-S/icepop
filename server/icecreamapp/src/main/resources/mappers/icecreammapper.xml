@@ -13,7 +13,7 @@
     <select id="selectIcecreamsByCon" parameterType="IceSelectCon" resultType="Icecream">
         SELECT id, name, price, isEvent, type, kcal, img, content,
         <choose>
-            <when test="gender==1 and age!=null"><!--남자일 때-->
+            <when test="gender==1 and age!=0"><!--남자일 때-->
                 <choose><!--나이에 따라 적절한 count를 select-->
                     <when test="age &lt;20">
                         count_male_one as count
@@ -29,7 +29,7 @@
                     </otherwise>
                 </choose>
             </when>
-            <when test="gender==2 and age!=null"><!--여자일 때-->
+            <when test="gender==2 and age!=0"><!--여자일 때-->
                 <choose>
                     <when test="age &lt;20"><!--나이에 따라 적절한 count를 select-->
                         count_female_one as count
@@ -55,17 +55,17 @@
 
 <!--     제품 유형, 할인율 조건-->
         <where>
-            <if test="type != null">
+            <if test="type != ''">
                 AND type = #{type}
             </if>
-            <if test="rate != null">
+            <if test="rate != ''">
                 AND isEvent >= #{rate}
             </if>
 
         </where>
 
 <!--     gender, age에 따라 순위   -->
-        <if test="gender!=null and age != null">
+        <if test="gender!=0 and age != 0">
             <if test="gender==1">
                 <choose>
                     <when test="age &lt;20">

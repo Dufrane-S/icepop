@@ -1,7 +1,7 @@
 package com.ssafy.icecreamapp.controller;
 
 import com.ssafy.icecreamapp.model.dto.Icecream;
-import com.ssafy.icecreamapp.model.service.AiService;
+import com.ssafy.icecreamapp.service.AiService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

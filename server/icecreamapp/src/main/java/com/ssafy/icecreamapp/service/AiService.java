@@ -1,7 +1,6 @@
-package com.ssafy.icecreamapp.model.service;
+package com.ssafy.icecreamapp.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.ssafy.icecreamapp.exception.AiRequestErrorException;
 import com.ssafy.icecreamapp.model.dao.IcecreamDao;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Icecream;
@@ -73,7 +72,7 @@ public class AiService {
                     icecreams.add(icecream);
                 }
                 check = false;
-            } catch (AiRequestErrorException e) {
+            } catch (RuntimeException e) {
                 log.error("ai의 답변 error");
                 log.error(response);
             }

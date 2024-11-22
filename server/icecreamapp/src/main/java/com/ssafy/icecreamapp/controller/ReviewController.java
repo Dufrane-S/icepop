@@ -3,7 +3,7 @@ package com.ssafy.icecreamapp.controller;
 import com.ssafy.icecreamapp.model.dto.request.ReviewCon;
 import com.ssafy.icecreamapp.model.dto.request.InitReview;
 import com.ssafy.icecreamapp.model.dto.respond.ReviewInfo;
-import com.ssafy.icecreamapp.model.service.ReviewService;
+import com.ssafy.icecreamapp.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;

@@ -3,7 +3,7 @@ package com.ssafy.icecreamapp.controller;
 import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.request.OrderRequest;
 import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
-import com.ssafy.icecreamapp.model.service.OrderService;
+import com.ssafy.icecreamapp.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
