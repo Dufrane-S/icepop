@@ -15,4 +15,7 @@ public interface OrderDao {
     List<Order> selectOrderByEmail(int memberId, Boolean isRecent);
 
     List<OrderInfo> selectWithResultmap(@Param("orderCon") OrderCon orderCon, @Param("memberId") int memberId);
+
+    List<OrderInfo> selectWithResutmap2(@Param("memberId") int memberId);
+
 }

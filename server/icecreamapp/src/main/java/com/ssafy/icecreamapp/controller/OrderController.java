@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.controller;
 
+import com.ssafy.icecreamapp.model.dao.OrderDao;
 import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.request.OrderRequest;
 import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
@@ -18,7 +19,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-
+    private final OrderDao orderDao;
     @PostMapping("/makeOrder")
     @Operation(summary = "주문", description = "id, memberId,date, priceSum 제외 모두 채워줘야함 ")
     public ResponseEntity<String> makeOrder(@RequestBody OrderRequest orderRequest) {
@@ -42,9 +43,14 @@ public class OrderController {
         return ResponseEntity.ok(orderService.selectOrdersByEmail(email, true));
     }*/
 
-    @PostMapping("/withmap")
+    @PostMapping("/orderList")
     @Operation(summary = "주문 내역 조회", description = "email = '' 이면 멤버 조건 안걸기, orderId=0이면 orderId조건 안걸기 isRecent->최근 주문한 아이스크림 종류 10가지 주문 반환")
-    public List<OrderInfo>orderInfoListWithCon(@RequestBody OrderCon orderCon){
-        return orderService.selectOrdersWithCon(orderCon);
+    public ResponseEntity<List<OrderInfo>>orderInfoListWithCon(@RequestBody OrderCon orderCon){
+        return ResponseEntity.ok(orderService.selectOrdersWithCon(orderCon));
+    }
+
+    @PostMapping("/test")
+    public List<OrderInfo> test(@RequestBody OrderCon orderCon){
+        return orderDao.selectWithResutmap2(1);
     }
 }

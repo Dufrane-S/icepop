@@ -1,15 +1,17 @@
 package com.ssafy.icecreamapp.service;
 
-import com.ssafy.icecreamapp.exception.NoSuchMemberException;
+import com.ssafy.icecreamapp.exception.NoSuchElementsException;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Member;
 import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberDao memberDao;
@@ -41,7 +43,8 @@ public class MemberServiceImpl implements MemberService {
     public MemberInfo infoByEmail(String email) {
         Member selected = memberDao.selectByEmail(email);
         if (selected == null) {
-            throw new NoSuchMemberException("입력된 email : " + email);
+            log.error("없는 아이디 검색");
+            throw new NoSuchElementsException("입력된 email : " + email);
         }
         return new MemberInfo(selected);
     }

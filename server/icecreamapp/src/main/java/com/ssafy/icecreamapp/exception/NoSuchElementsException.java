@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class NoSuchMemberException extends RuntimeException{
-    public NoSuchMemberException(String message){
+public class NoSuchElementsException extends RuntimeException{
+    public NoSuchElementsException(String message){
         super(message);
     }
 

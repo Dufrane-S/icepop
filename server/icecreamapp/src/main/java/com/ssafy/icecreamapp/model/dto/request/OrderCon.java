@@ -8,8 +8,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class OrderCon {
-    boolean isRecent;
     String email;
     int orderId;
+    boolean isRecent;
 }
 

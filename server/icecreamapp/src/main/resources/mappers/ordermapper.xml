@@ -36,7 +36,8 @@
 
 
     <select id="selectWithResultmap" resultMap="OrderAndOrderDetails">
-        select o.id,o.date, o.spoon,o.dryice,o.price_sum,od.id as od_id, od.order_id, od.product_id, od.quantity, m.email
+        select o.id,o.date, o.spoon,o.dryice,o.price_sum,od.id as od_id, od.order_id, od.product_id, od.quantity,
+        m.email
         from `order` as o
         left join order_detail as od
         on o.id = od.order_id
@@ -69,5 +70,22 @@
             <result property="quantity" column="quantity"/>
         </collection>
     </resultMap>
+
+
+
+    <select id="selectDetails" parameterType="int" resultType="OrderDetail">
+        select * from order_detail where order_id = #{o_id}
+    </select>
+
+    <resultMap id="detailResult" type="OrderInfo">
+        <collection property="details" javaType="ArrayList" column="o_id" ofType="OrderDetail"
+                    select="selectDetails"/>
+    </resultMap>
+
+    <select id="selectWithResutmap2" parameterType="int" resultMap="detailResult">
+        select id, member_id, date, spoon, dryice, price_sum, id as o_id
+        from `order`
+        where member_id=#{memberId}
+    </select>
 
 </mapper>

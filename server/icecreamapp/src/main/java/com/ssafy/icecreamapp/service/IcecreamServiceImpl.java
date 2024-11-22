@@ -1,22 +1,30 @@
 package com.ssafy.icecreamapp.service;
 
+import com.ssafy.icecreamapp.exception.NoSuchElementsException;
 import com.ssafy.icecreamapp.model.dao.IcecreamDao;
 import com.ssafy.icecreamapp.model.dto.request.IceSelectCon;
 import com.ssafy.icecreamapp.model.dto.Icecream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class IcecreamServiceImpl implements IcecreamService{
+@Slf4j
+public class IcecreamServiceImpl implements IcecreamService {
 
     private final IcecreamDao icecreamDao;
 
     @Override
     public Icecream getIcecreamById(int id) {
-        return icecreamDao.selectIcecreamById(id);
+        Icecream icecream = icecreamDao.selectIcecreamById(id);
+        if (icecream == null) {
+            log.error("없는 아이디 검색");
+            throw new NoSuchElementsException("제품 없음. 제품 아이디 : " + id);
+        }
+        return icecream;
     }
 
     @Override
