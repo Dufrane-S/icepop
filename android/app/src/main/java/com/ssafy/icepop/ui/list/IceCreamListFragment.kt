@@ -43,6 +43,12 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
         mainActivity = context as MainActivity
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        mainActivity.hideBottomNav(false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -130,6 +136,10 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
     private fun initListener() {
         binding.filterButton.setOnClickListener {
             showTypePickerDialog()
+        }
+
+        binding.iceCreamShoppingCartFab.setOnClickListener {
+            mainActivity.openFragment(MainActivity.ICE_CREAM_ORDER_FRAGMENT)
         }
 
         binding.tabLayout.addOnTabSelectedListener (object : TabLayout.OnTabSelectedListener {

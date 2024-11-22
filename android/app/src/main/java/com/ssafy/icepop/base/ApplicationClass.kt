@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 private const val TAG = "ApplicationClass_싸피"
 class ApplicationClass : Application() {
     companion object{
-        const val SERVER_URL = "http://192.168.47.177:8080/"
+        const val SERVER_URL = "http://192.168.0.2:8080/"
         const val ICE_CREAM_IMAGE_BASE_URL = "${SERVER_URL}ice/img/"
 //        const val SERVER_URL = "http://localhost:8080/"
 //        const val MENU_IMGS_URL = "${SERVER_URL}imgs/menu/"
