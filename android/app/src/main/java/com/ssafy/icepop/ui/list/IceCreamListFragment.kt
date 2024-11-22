@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.ssafy.icepop.R
@@ -64,6 +65,12 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
             adapter = iceCreamAdapter
             layoutManager = LinearLayoutManager(context)
         }
+
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.iceCreamRv.context, DividerItemDecoration.VERTICAL
+        )
+
+        binding.iceCreamRv.addItemDecoration(dividerItemDecoration)
     }
 
     companion object {
