@@ -1,4 +1,4 @@
-package com.ssafy.icecreamapp.model.service;
+package com.ssafy.icecreamapp.service;
 
 import com.ssafy.icecreamapp.model.dto.request.ReviewCon;
 import com.ssafy.icecreamapp.model.dto.request.InitReview;

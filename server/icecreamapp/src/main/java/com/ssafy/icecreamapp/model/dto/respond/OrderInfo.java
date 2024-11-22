@@ -17,5 +17,6 @@ public class OrderInfo {
     private int dryice;
     private int priceSum;
     private String email;
+    private int purchaseSum;
     private List<OrderDetail> details;
 }

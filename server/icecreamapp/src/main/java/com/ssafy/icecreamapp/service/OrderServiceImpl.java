@@ -1,4 +1,4 @@
-package com.ssafy.icecreamapp.model.service;
+package com.ssafy.icecreamapp.service;
 
 import com.ssafy.icecreamapp.model.dao.IcecreamDao;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order(orderRequest);
         log.info("makeOrder : {}", orderRequest);
 
-//      이메일로 멤버 id 정보 획득
+//      이메일로 멤버 정보 획득
         Member member = memberDao.selectByEmail(orderRequest.getEmail());
         int memberId = member.getId();
         order.setMemberId(memberId);
@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
             detail.setOrderId(order.getId());
             orderDetailDao.insertDetail(detail);
         }
-        log.info("makeOrder "+ orderRequest);
+        log.info("makeOrder " + orderRequest);
         int result = memberDao.updateSum(orderRequest.getEmail(), sumPrice);
         return result;
     }

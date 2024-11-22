@@ -2,7 +2,7 @@ package com.ssafy.icecreamapp.controller;
 
 import com.ssafy.icecreamapp.model.dto.request.IceSelectCon;
 import com.ssafy.icecreamapp.model.dto.Icecream;
-import com.ssafy.icecreamapp.model.service.IcecreamService;
+import com.ssafy.icecreamapp.service.IcecreamService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;

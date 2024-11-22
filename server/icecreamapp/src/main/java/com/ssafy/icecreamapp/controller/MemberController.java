@@ -4,7 +4,7 @@ import com.ssafy.icecreamapp.model.dto.Member;
 import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import com.ssafy.icecreamapp.model.dto.request.LoginMember;
-import com.ssafy.icecreamapp.model.service.MemberService;
+import com.ssafy.icecreamapp.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
