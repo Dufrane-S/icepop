@@ -189,7 +189,9 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
             .setPositiveButton("OK") { _, _ ->
                 // OK 버튼 클릭 시 동작
                 val selectedItem = numberPicker.value
-                val type = numberPicker.displayedValues[selectedItem]
+                var type = numberPicker.displayedValues[selectedItem]
+
+                if (type == getString(R.string.init)) type = ""
 
                 getIceCreamByType(type)
             }
@@ -241,7 +243,7 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
 
             val genderPickerChildCount = genderPicker.childCount
 
-            for (i in 0 until agePickerChildCount) {
+            for (i in 0 until genderPickerChildCount) {
                 val child = genderPicker.getChildAt(i)
 
                 if (child is TextView) {
