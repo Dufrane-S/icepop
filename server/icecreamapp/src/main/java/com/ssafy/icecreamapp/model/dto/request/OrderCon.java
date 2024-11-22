@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class OrderCon {
     boolean isRecent;
-    int memberId;
+    String email;
     int orderId;
 }
 

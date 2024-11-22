@@ -43,7 +43,7 @@ public class OrderController {
     }*/
 
     @PostMapping("/withmap")
-    @Operation(summary = "주문 내역 조회", description = "memberId = 0 이면 멤버 조건 안걸기, orderId=0이면 orderId조건 안걸기 isRecent->최근 주문한 아이스크림 종류 10가지 주문 반환")
+    @Operation(summary = "주문 내역 조회", description = "email = '' 이면 멤버 조건 안걸기, orderId=0이면 orderId조건 안걸기 isRecent->최근 주문한 아이스크림 종류 10가지 주문 반환")
     public List<OrderInfo>orderInfoListWithCon(@RequestBody OrderCon orderCon){
         return orderService.selectOrdersWithCon(orderCon);
     }

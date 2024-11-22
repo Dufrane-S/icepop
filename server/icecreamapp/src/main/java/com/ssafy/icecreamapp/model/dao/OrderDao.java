@@ -4,6 +4,7 @@ import com.ssafy.icecreamapp.model.dto.Order;
 import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface OrderDao {
 
     List<Order> selectOrderByEmail(int memberId, Boolean isRecent);
 
-    List<OrderInfo> selectWithResultmap(OrderCon orderCon);
+    List<OrderInfo> selectWithResultmap(@Param("orderCon") OrderCon orderCon, @Param("memberId") int memberId);
 }

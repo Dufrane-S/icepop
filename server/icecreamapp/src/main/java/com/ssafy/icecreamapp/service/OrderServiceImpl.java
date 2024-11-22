@@ -76,7 +76,6 @@ public class OrderServiceImpl implements OrderService {
         }
 
 
-
 //      멤버 정보로 할인율 계산
         float discountRate = new MemberInfo(member).getDiscountRate();
         sumPrice = (int) (sumPrice * discountRate);
@@ -96,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderInfo> selectOrdersByEmail(String email, Boolean isRecent) {
+    public List<OrderInfo> selectOrdersByEmail(String email, boolean isRecent) {
         Member member = memberDao.selectByEmail(email);
         List<Order> orderList = orderDao.selectOrderByEmail(member.getId(), isRecent);
         List<OrderInfo> result = new ArrayList<>();
@@ -117,6 +116,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderInfo> selectOrdersWithCon(OrderCon orderCon) {
-        return orderDao.selectWithResultmap(orderCon);
+        int memberId = 0;
+        if(!orderCon.getEmail().isEmpty()) {
+             memberId = memberDao.selectByEmail(orderCon.getEmail()).getId();
+        }
+        return orderDao.selectWithResultmap(orderCon, memberId);
     }
 }
