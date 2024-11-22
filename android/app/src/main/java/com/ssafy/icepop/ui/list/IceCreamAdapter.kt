@@ -9,7 +9,7 @@ import com.ssafy.icepop.data.model.dto.IceCream
 import com.ssafy.smartstore_jetpack.base.ApplicationClass.Companion.ICE_CREAM_IMAGE_BASE_URL
 
 class IceCreamAdapter(
-    private val iceCreamList: List<IceCream>
+    var iceCreamList: List<IceCream>
 ) : RecyclerView.Adapter<IceCreamAdapter.IceCreamViewHolder>() {
 
     inner class IceCreamViewHolder(private val binding: ItemIcecreamBinding) :

@@ -55,7 +55,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             runCatching {
                 RetrofitUtil.userService.login(User(id, password))
             }.onSuccess {
-                ApplicationClass.sharedPreferencesUtil.addEmail(it)
+                ApplicationClass.sharedPreferencesUtil.addUser(it)
 
                 authActivity.changeFragment(AuthActivity.MAIN_ACTIVITY)
             }.onFailure {

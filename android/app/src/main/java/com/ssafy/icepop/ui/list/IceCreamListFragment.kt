@@ -12,6 +12,7 @@ import com.ssafy.icepop.data.model.dto.IceCream
 import com.ssafy.icepop.data.model.dto.request.IceCreamRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentIceCreamListBinding
+import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import com.ssafy.smartstore_jetpack.base.BaseFragment
 import kotlinx.coroutines.launch
 
@@ -20,20 +21,92 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
     FragmentIceCreamListBinding::bind,
     R.layout.fragment_ice_cream_list
 ){
+    private lateinit var iceCreamAdapter : IceCreamAdapter
+
+    private val iceCreamAllList = mutableListOf<IceCream>()
+    private val iceCreamListByPopularity = mutableListOf<IceCream>()
+    private val iceCreamListByAI = mutableListOf<IceCream>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initAdapter()
         initListener()
 
-        lifecycleScope.launch {
-            runCatching {
-                RetrofitUtil.iceCreamService.getAllIceCream(IceCreamRequest())
-            }.onSuccess {
-                setIceCreamAdapter(it)
-            }.onFailure {
-                Log.d(TAG, "실패")
+        getIceCreamByAI()
+        getIceCreamByPopularity()
+        getAllIceCream()
+    }
+
+    private fun getAllIceCream() {
+        if (iceCreamAllList.isEmpty()) {
+            lifecycleScope.launch {
+                runCatching {
+                    RetrofitUtil.iceCreamService.getAllIceCream(IceCreamRequest())
+                }.onSuccess {
+                    iceCreamAllList.addAll(it)
+                    setNotifyRecyclerView(it)
+                }.onFailure {
+                    Log.d(TAG, "실패")
+                }
             }
         }
+        else {
+            setNotifyRecyclerView(iceCreamAllList)
+        }
+    }
+
+    private fun getIceCreamByPopularity() {
+        val user = ApplicationClass.sharedPreferencesUtil.getUser()
+        if (iceCreamAllList.isEmpty()) {
+            lifecycleScope.launch {
+                runCatching {
+                    RetrofitUtil.iceCreamService.getAllIceCream(IceCreamRequest(age = user.age, gender = user.gender))
+                }.onSuccess {
+                    iceCreamListByPopularity.addAll(it)
+                }.onFailure {
+                    Log.d(TAG, "실패")
+                }
+            }
+        }
+        else {
+            setNotifyRecyclerView(iceCreamListByPopularity)
+        }
+    }
+
+    private fun getIceCreamByAI() {
+        val user = ApplicationClass.sharedPreferencesUtil.getUser()
+
+        if (iceCreamListByAI.isEmpty()) {
+            lifecycleScope.launch {
+                runCatching {
+                    RetrofitUtil.iceCreamService.getIceCreamByAI(user.email)
+                }.onSuccess {
+                    iceCreamListByAI.addAll(it)
+                }.onFailure {
+                    Log.d(TAG, "실패")
+                }
+            }
+        }
+        else {
+            setNotifyRecyclerView(iceCreamListByAI)
+        }
+    }
+
+    private fun initAdapter() {
+        iceCreamAdapter = IceCreamAdapter(mutableListOf())
+
+        binding.iceCreamRv.apply {
+            adapter = iceCreamAdapter
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+        }
+
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.iceCreamRv.context, DividerItemDecoration.VERTICAL
+        )
+
+        binding.iceCreamRv.addItemDecoration(dividerItemDecoration)
     }
 
     private fun initListener() {
@@ -44,12 +117,15 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
                 when (tab.position) {
                     TYPE -> {
                         binding.optionArea.visibility = View.VISIBLE
+                        getAllIceCream()
                     }
                     POPULARITY -> {
                         binding.optionArea.visibility = View.VISIBLE
+                        getIceCreamByPopularity()
                     }
                     AI_RECOMMEND -> {
                         binding.optionArea.visibility = View.GONE
+                        getIceCreamByAI()
                     }
                 }
             }
@@ -58,20 +134,11 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
         })
     }
 
-    private fun setIceCreamAdapter(iceCreamList : List<IceCream>) {
-        val iceCreamAdapter = IceCreamAdapter(iceCreamList)
-
-        binding.iceCreamRv.apply {
-            adapter = iceCreamAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
-
-        val dividerItemDecoration = DividerItemDecoration(
-            binding.iceCreamRv.context, DividerItemDecoration.VERTICAL
-        )
-
-        binding.iceCreamRv.addItemDecoration(dividerItemDecoration)
+    private fun setNotifyRecyclerView(iceCreamList: List<IceCream>) {
+        iceCreamAdapter.iceCreamList = iceCreamList
+        iceCreamAdapter.notifyDataSetChanged()
     }
+
 
     companion object {
         const val TYPE = 0

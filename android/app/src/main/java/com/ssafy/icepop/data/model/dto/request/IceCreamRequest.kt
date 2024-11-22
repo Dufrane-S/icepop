@@ -8,4 +8,5 @@ data class IceCreamRequest(
 ) {
     // 기본 생성자(빈 객체를 생성하고 싶을 때)
     constructor() : this(0, 0, 0, null)
+    constructor(age: Int, gender: Int) : this(age, gender, 0, null)
 }

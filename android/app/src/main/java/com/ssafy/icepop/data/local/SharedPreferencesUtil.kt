@@ -16,18 +16,28 @@ class SharedPreferencesUtil (context: Context) {
     var preferences: SharedPreferences =
         context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-    fun addEmail(member: Member) {
+    fun addUser(member: Member) {
         val editor = preferences.edit()
-
         editor.putString("email", member.email)
+        editor.putInt("age", member.age)
+        editor.putInt("gender", member.gender)
+
         editor.apply()
     }
 
-    fun getEmail() : String {
+    fun getUser() : Member {
         val email = preferences.getString("email", "")
 
-        return email ?: ""
+        if (email != "") {
+            val age = preferences.getInt("age", -1)
+            val gender = preferences.getInt("gender", -1)
+
+            return Member(email = email!!, age = age, gender = gender)
+        }
+
+        return Member()
     }
+
 
 //    //사용자 정보 저장
 //    fun addUser(user: User){
