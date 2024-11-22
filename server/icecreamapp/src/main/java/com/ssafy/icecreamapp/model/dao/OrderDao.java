@@ -16,6 +16,6 @@ public interface OrderDao {
 
     List<OrderInfo> selectWithResultmap(@Param("orderCon") OrderCon orderCon, @Param("memberId") int memberId);
 
-    List<OrderInfo> selectWithResutmap2(@Param("memberId") int memberId);
+    List<OrderInfo> selectWithResultmap2(@Param("orderCon") OrderCon orderCon, @Param("memberId") int memberId);
 
 }

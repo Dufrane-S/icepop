@@ -16,6 +16,7 @@ public class Order {
     long date;
     int spoon;
     int dryice;
+    int isForHere;
     int priceSum;
 
     public Order(OrderRequest orderRequest) {

@@ -13,4 +13,6 @@ public interface OrderService {
     List<OrderInfo> selectOrdersByEmail(String email, boolean isRecent);
 
     List<OrderInfo> selectOrdersWithCon(OrderCon orderCon);
+
+    List<OrderInfo> selectOrdersWithCon2(OrderCon orderCon);
 }

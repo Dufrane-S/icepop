@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.service;
 
+import com.ssafy.icecreamapp.exception.NoSuchElementsException;
 import com.ssafy.icecreamapp.model.dao.IcecreamDao;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dao.OrderDao;
@@ -117,9 +118,28 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderInfo> selectOrdersWithCon(OrderCon orderCon) {
         int memberId = 0;
-        if(!orderCon.getEmail().isEmpty()) {
-             memberId = memberDao.selectByEmail(orderCon.getEmail()).getId();
+        if (!orderCon.getEmail().isEmpty()) {
+            Member member = memberDao.selectByEmail(orderCon.getEmail());
+            if (member != null) {
+                memberId = member.getId();
+            } else {
+                throw new NoSuchElementsException("없는 사용자의 id : " + memberId);
+            }
         }
         return orderDao.selectWithResultmap(orderCon, memberId);
+    }
+
+    @Override
+    public List<OrderInfo> selectOrdersWithCon2(OrderCon orderCon) {
+        int memberId = 0;
+        if (!orderCon.getEmail().equals("")) {
+            Member member = memberDao.selectByEmail(orderCon.getEmail());
+            if (member != null) {
+                memberId = member.getId();
+            } else {
+                throw new NoSuchElementsException("없는 사용자의 id : " + memberId);
+            }
+        }
+        return orderDao.selectWithResultmap2(orderCon, memberId);
     }
 }

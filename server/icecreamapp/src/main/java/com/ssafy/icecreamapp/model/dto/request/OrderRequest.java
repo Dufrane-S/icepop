@@ -14,5 +14,6 @@ public class OrderRequest {
     private String email;
     private int spoon;
     private int dryice;
+    private int isForHere;
     private List<OrderDetailRequest> details;
 }

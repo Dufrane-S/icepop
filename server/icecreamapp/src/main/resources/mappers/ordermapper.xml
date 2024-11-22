@@ -6,18 +6,18 @@
     <insert id="insertOrder" parameterType="Order"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `order`
-        (
-        member_id,
-        date,
-        spoon,
-        dryice,
-        price_sum)
-        VALUES
-        (#{memberId},
-        #{date},
-        #{spoon},
-        #{dryice},
-        #{priceSum})
+        (member_id,
+         date,
+         spoon,
+         dryice,
+         isforhere,
+         price_sum)
+        VALUES (#{memberId},
+                #{date},
+                #{spoon},
+                #{dryice},
+                #{isForHere},
+                #{priceSum})
     </insert>
 
 
@@ -72,9 +72,10 @@
     </resultMap>
 
 
-
     <select id="selectDetails" parameterType="int" resultType="OrderDetail">
-        select * from order_detail where order_id = #{o_id}
+        select *
+        from order_detail
+        where order_id = #{o_id}
     </select>
 
     <resultMap id="detailResult" type="OrderInfo">
@@ -82,10 +83,23 @@
                     select="selectDetails"/>
     </resultMap>
 
-    <select id="selectWithResutmap2" parameterType="int" resultMap="detailResult">
-        select id, member_id, date, spoon, dryice, price_sum, id as o_id
-        from `order`
-        where member_id=#{memberId}
+    <select id="selectWithResultmap2" resultMap="detailResult">
+        select o.id, o.date, o.spoon, o.dryice, o.price_sum, o.isforhere , o.id as o_id , m.email
+        from `order` as o
+        left join member as m
+        on o.member_id = m.id
+        <where>
+            <if test="memberId!=``">
+                o.member_id=#{memberId}
+            </if>
+            <if test="orderCon.orderId!=0">
+                o.id =#{orderCon.orderId}
+            </if>
+        </where>
+        order by o.id desc
+        <if test="orderCon.isRecent==true">
+            limit 10
+        </if>
     </select>
 
 </mapper>

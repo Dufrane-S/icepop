@@ -19,14 +19,14 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderDao orderDao;
+
     @PostMapping("/makeOrder")
-    @Operation(summary = "주문", description = "id, memberId,date, priceSum 제외 모두 채워줘야함 ")
+    @Operation(summary = "주문", description = "모두 채워줘야함 ")
     public ResponseEntity<String> makeOrder(@RequestBody OrderRequest orderRequest) {
-        if(orderService.makeOrder(orderRequest) != 0) {
+        if (orderService.makeOrder(orderRequest) != 0) {
             return new ResponseEntity<>("주문 성공", HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>("주문 실패",HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>("주문 실패", HttpStatus.BAD_GATEWAY);
         }
     }
 
@@ -43,14 +43,17 @@ public class OrderController {
         return ResponseEntity.ok(orderService.selectOrdersByEmail(email, true));
     }*/
 
-    @PostMapping("/orderList")
+
+//
+    /*@PostMapping("/orderList")
     @Operation(summary = "주문 내역 조회", description = "email = '' 이면 멤버 조건 안걸기, orderId=0이면 orderId조건 안걸기 isRecent->최근 주문한 아이스크림 종류 10가지 주문 반환")
     public ResponseEntity<List<OrderInfo>>orderInfoListWithCon(@RequestBody OrderCon orderCon){
         return ResponseEntity.ok(orderService.selectOrdersWithCon(orderCon));
-    }
+    }*/
 
-    @PostMapping("/test")
-    public List<OrderInfo> test(@RequestBody OrderCon orderCon){
-        return orderDao.selectWithResutmap2(1);
+    @PostMapping("/orderList")
+    @Operation(summary = "주문 내역 조회", description = "email = '' 이면 멤버 조건 안걸기, orderId=0이면 orderId조건 안걸기 isRecent : true/false ->최근 주문한 아이스크림 종류 10가지 주문 반환")
+    public ResponseEntity<List<OrderInfo>> test(@RequestBody OrderCon orderCon) {
+        return ResponseEntity.ok(orderService.selectOrdersWithCon2(orderCon));
     }
 }
