@@ -25,7 +25,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/login")
-    @Operation(summary = "로그인", description = "email, pass를 받음, 로그인 성공시 MemberInfo와 MemberEmail을 담은 쿠키를 반환, 로그인 실패시 null반환")
+    @Operation(summary = "로그인", description = "string : email<br>" +
+            "string : pass를 받음<br>" +
+            "로그인 성공시 MemberInfo를 바디로 반환 MemberEmail을 담은 쿠키를 반환, 로그인 실패시 401 null반환")
     public ResponseEntity<MemberInfo> login(@RequestBody LoginMember loginMember, HttpServletResponse response) throws UnsupportedEncodingException {
         Member selected = memberService.login(loginMember.getEmail(), loginMember.getPassword());
         if (selected != null) {
@@ -39,14 +41,19 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    @Operation(summary = "회원가입", description = "성공시 true return 실패시 false")
+    @Operation(summary = "회원가입", description = "string : name<br>" +
+            "string : email<br>" +
+            "string : password<br>" +
+            "int : age<br>" +
+            "int : gender -> 남자 1, 여자 2" +
+            "<br>성공시 201 ")
     public ResponseEntity<String> join(@RequestBody InitMember initmember) {
         memberService.join(initmember);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/isUsed/{email}")
-    @Operation(summary = "email중복체크", description = "email 전달시 사용 중이면 False 아니면 True")
+    @Operation(summary = "email중복체크", description = "string : email 전달시 사용 중이면 False 아니면 True")
     public ResponseEntity<Boolean> isUsed(@PathVariable String email) {
         if (memberService.isUsedEmail(email)) {
             return ResponseEntity.ok(Boolean.TRUE);

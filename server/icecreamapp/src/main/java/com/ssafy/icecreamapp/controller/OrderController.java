@@ -21,7 +21,14 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/makeOrder")
-    @Operation(summary = "주문", description = "모두 채워줘야함 ")
+    @Operation(summary = "주문", description = "string :email<br>" +
+            "int : spoon 숟가락 수<br>" +
+            "int : dryice 드라이아이스 지속 시간" +
+            "int : forhere 매장 1, 포장 2 -> 0은 추후 조회 조건용으로 예비" +
+            "List<OrderDetailRequest>details : OrderDetailRequest의 List" +
+            "<OrderDetailRequest><br>" +
+            "int : productId 상품번호" +
+            "int : quantity 수량")
     public ResponseEntity<String> makeOrder(@RequestBody OrderRequest orderRequest) {
         if (orderService.makeOrder(orderRequest) != 0) {
             return new ResponseEntity<>("주문 성공", HttpStatus.CREATED);
@@ -52,7 +59,9 @@ public class OrderController {
     }*/
 
     @PostMapping("/orderList")
-    @Operation(summary = "주문 내역 조회", description = "email = '' 이면 멤버 조건 안걸기, orderId=0이면 orderId조건 안걸기 isRecent : true/false ->최근 주문한 아이스크림 종류 10가지 주문 반환")
+    @Operation(summary = "주문 내역 조회", description = "string : email ``일 경우 조건 X<br>" +
+            "int : order_id 0일 경우 조건 X" +
+            "boolean : isRecent true일 경우 최근 주문 목록 10개만 조회 LIMIT 10")
     public ResponseEntity<List<OrderInfo>> test(@RequestBody OrderCon orderCon) {
         return ResponseEntity.ok(orderService.selectOrdersWithCon2(orderCon));
     }

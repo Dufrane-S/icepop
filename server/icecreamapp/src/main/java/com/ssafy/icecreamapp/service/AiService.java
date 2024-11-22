@@ -7,6 +7,7 @@ import com.ssafy.icecreamapp.model.dto.Icecream;
 import com.ssafy.icecreamapp.model.dto.Member;
 import com.ssafy.icecreamapp.model.dto.OrderDetail;
 import com.ssafy.icecreamapp.model.dto.request.IceSelectCon;
+import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,8 @@ public class AiService {
 
     public List<Icecream> aiRecommand(String email) {
         Member member = memberDao.selectByEmail(email);
-        List<Icecream> icecreamList = icecreamDao.selectIcecreamsByCon(new IceSelectCon("",0,0,0));
-        List<OrderInfo> orderList = orderService.selectOrdersByEmail(email, true);
+        List<Icecream> icecreamList = icecreamDao.selectIcecreamsByCon(new IceSelectCon("", 0, 0, 0));
+        List<OrderInfo> orderList = orderService.selectOrdersWithCon2(new OrderCon(email, 0, true));
         log.info(orderList.toString());
         // 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라 개성수는 db코드를 공개해라
 
