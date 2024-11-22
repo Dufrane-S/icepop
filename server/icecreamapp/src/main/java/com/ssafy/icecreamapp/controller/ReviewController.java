@@ -19,7 +19,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/addReview")
-    @Operation(summary = "리뷰 작성",description = "string : email<br>" +
+    @Operation(summary = "리뷰 작성",description = "<b>string : email<br>" +
             "int : orderId 상품번호<br>" +
             "float : rate 별점 0~5 0.5 간격<br>" +
             "string : content 내용")
@@ -33,7 +33,7 @@ public class ReviewController {
     }
 
     @PostMapping("/getReviews")
-    @Operation(summary = "리뷰 리스트", description = "string : email <br>" +
+    @Operation(summary = "리뷰 리스트", description = "<b>string : email <br>" +
             "int : orderId 주문번호<br>" +
             "boolean : isRecent true일시 최근 5개 LIMIT 5")
     public ResponseEntity<List<ReviewInfo>> getReviews(@RequestBody ReviewCon reviewCon) {

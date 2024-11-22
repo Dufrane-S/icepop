@@ -6,6 +6,7 @@ import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import com.ssafy.icecreamapp.model.dto.request.LoginMember;
 import com.ssafy.icecreamapp.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/login")
-    @Operation(summary = "로그인", description = "string : email<br>" +
+    @Operation(summary = "로그인", description = "<b>string : email<br>" +
             "string : pass를 받음<br>" +
             "로그인 성공시 MemberInfo를 바디로 반환 MemberEmail을 담은 쿠키를 반환, 로그인 실패시 401 null반환")
     public ResponseEntity<MemberInfo> login(@RequestBody LoginMember loginMember, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -41,20 +42,22 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    @Operation(summary = "회원가입", description = "string : name<br>" +
+    @Operation(summary = "회원가입", description = "<b>string : name<br>" +
             "string : email<br>" +
             "string : password<br>" +
             "int : age<br>" +
             "int : gender -> 남자 1, 여자 2" +
-            "<br>성공시 201 ")
+            "<br>성공시 201</b> ")
     public ResponseEntity<String> join(@RequestBody InitMember initmember) {
         memberService.join(initmember);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/isUsed/{email}")
-    @Operation(summary = "email중복체크", description = "string : email 전달시 사용 중이면 False 아니면 True")
-    public ResponseEntity<Boolean> isUsed(@PathVariable String email) {
+    @Operation(summary = "email중복체크", description = "<b>string : email 전달시 사용 중이면 False 아니면 True</b>")
+    public ResponseEntity<Boolean> isUsed(
+            @Parameter(example = "test1")
+            @PathVariable String email) {
         if (memberService.isUsedEmail(email)) {
             return ResponseEntity.ok(Boolean.TRUE);
         }
@@ -63,8 +66,10 @@ public class MemberController {
     }
 
     @GetMapping("/info/{email}")
-    @Operation(summary = "회원정보", description = "email을 넣으면 회원 정보를 반환")
-    public ResponseEntity<MemberInfo> memberInfo(@PathVariable String email) {
+    @Operation(summary = "회원정보", description = "<b>email을 넣으면 회원 정보를 반환</b>")
+    public ResponseEntity<MemberInfo> memberInfo(
+            @Parameter(example = "test1")
+            @PathVariable String email) {
         return ResponseEntity.ok(memberService.infoByEmail(email));
     }
 }

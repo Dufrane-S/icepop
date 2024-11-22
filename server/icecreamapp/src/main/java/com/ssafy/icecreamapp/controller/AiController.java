@@ -3,6 +3,7 @@ package com.ssafy.icecreamapp.controller;
 import com.ssafy.icecreamapp.model.dto.Icecream;
 import com.ssafy.icecreamapp.service.AiService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,10 @@ public class AiController {
 
 
     @GetMapping("/recommand/{email}")
-    @Operation(summary = "ai추천", description = "email을 입력시 사용자 정보 및 주문 내역을 바탕으로 추천한 물품을 5개 리스트로 반환")
-    public ResponseEntity<List<Icecream>> aiRecommand(@PathVariable String email){
+    @Operation(summary = "ai추천", description = "<b>string :email을 입력시 사용자 정보 및 주문 내역을 바탕으로 추천한 물품을 5개 리스트로 반환")
+    public ResponseEntity<List<Icecream>> aiRecommand(
+            @Parameter(description = "이메일", example = "test1")
+            @PathVariable String email){
         return ResponseEntity.ok(aiService.aiRecommand(email));
     }
 }
