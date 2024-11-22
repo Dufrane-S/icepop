@@ -9,7 +9,8 @@ import com.ssafy.icepop.data.model.dto.IceCream
 import com.ssafy.smartstore_jetpack.base.ApplicationClass.Companion.ICE_CREAM_IMAGE_BASE_URL
 
 class IceCreamAdapter(
-    var iceCreamList: List<IceCream>
+    var iceCreamList: List<IceCream>,
+    private val onItemClickListener: (IceCream) -> Unit
 ) : RecyclerView.Adapter<IceCreamAdapter.IceCreamViewHolder>() {
 
     inner class IceCreamViewHolder(private val binding: ItemIcecreamBinding) :
@@ -22,6 +23,10 @@ class IceCreamAdapter(
             val imageUrl = ICE_CREAM_IMAGE_BASE_URL + iceCream.img
 
             Glide.with(binding.root).load(imageUrl).into(binding.itemIceCreamImage)
+
+            binding.root.setOnClickListener {
+                onItemClickListener(iceCream)
+            }
         }
     }
 

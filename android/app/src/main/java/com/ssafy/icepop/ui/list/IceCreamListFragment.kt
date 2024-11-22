@@ -1,6 +1,7 @@
 package com.ssafy.icepop.ui.list
 
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +19,7 @@ import com.ssafy.icepop.data.model.dto.IceCream
 import com.ssafy.icepop.data.model.dto.request.IceCreamRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentIceCreamListBinding
+import com.ssafy.icepop.ui.MainActivity
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import com.ssafy.smartstore_jetpack.base.BaseFragment
 import com.ssafy.smartstore_jetpack.util.CommonUtils
@@ -28,11 +30,18 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
     FragmentIceCreamListBinding::bind,
     R.layout.fragment_ice_cream_list
 ){
+    private lateinit var mainActivity: MainActivity
     private lateinit var iceCreamAdapter : IceCreamAdapter
 
     private val iceCreamAllList = mutableListOf<IceCream>()
     private val iceCreamListByPopularity = mutableListOf<IceCream>()
     private val iceCreamListByAI = mutableListOf<IceCream>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        mainActivity = context as MainActivity
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -101,7 +110,9 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
     }
 
     private fun initAdapter() {
-        iceCreamAdapter = IceCreamAdapter(mutableListOf())
+        iceCreamAdapter = IceCreamAdapter(mutableListOf()) {
+            mainActivity.openFragment(MainActivity.ICE_CREAM_DETAIL_FRAGMENT, it.id)
+        }
 
         binding.iceCreamRv.apply {
             adapter = iceCreamAdapter
