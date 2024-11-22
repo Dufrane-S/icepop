@@ -19,8 +19,12 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/addReview")
-    @Operation(summary = "리뷰 작성",description = "member의 email을 넣고 orderId, rate, 후기 넣기")
+    @Operation(summary = "리뷰 작성",description = "string : email<br>" +
+            "int : orderId 상품번호<br>" +
+            "float : rate 별점 0~5 0.5 간격<br>" +
+            "string : content 내용")
     public ResponseEntity<String> addReview(@RequestBody InitReview initReview) {
+        //여기서 이상한 반환하지말고 Exception 날리기
         if (reviewService.addReview(initReview) == 1) {
             return ResponseEntity.ok("리뷰 생성");
         }else{
@@ -29,7 +33,9 @@ public class ReviewController {
     }
 
     @PostMapping("/getReviews")
-    @Operation(summary = "리뷰 리스트", description = "parameter 없이 이용가능(모두 반환) isRecent : true일시 최근 5개 반환, email : member 기준 반환, orderId : orderId의 리뷰 반환")
+    @Operation(summary = "리뷰 리스트", description = "string : email <br>" +
+            "int : orderId 주문번호<br>" +
+            "boolean : isRecent true일시 최근 5개 LIMIT 5")
     public ResponseEntity<List<ReviewInfo>> getReviews(@RequestBody ReviewCon reviewCon) {
         return ResponseEntity.ok(reviewService.selectReviews(reviewCon));
     }

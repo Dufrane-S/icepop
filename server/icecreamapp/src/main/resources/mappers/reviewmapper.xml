@@ -37,6 +37,7 @@
                 AND order_id=#{reviewCon.orderId}
             </if>
         </where>
+        order by id desc
         <if test="reviewCon.isRecent==true">
             LIMIT 5
         </if>

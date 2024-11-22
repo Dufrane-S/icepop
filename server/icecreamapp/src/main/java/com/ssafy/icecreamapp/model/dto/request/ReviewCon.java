@@ -10,5 +10,5 @@ import lombok.ToString;
 public class ReviewCon {
     String email;
     int orderId;
-    Boolean isRecent;
+    boolean isRecent;
 }
