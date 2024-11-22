@@ -54,10 +54,38 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- TabLayout 스타일 -->
+    <!-- IceCreamListFragment.xml -->
     <style name="TabTextStyle">
         <item name="android:textSize">14sp</item>  <!-- 텍스트 크기 -->
         <item name="android:fontFamily">@font/meet_me</item>  <!-- 폰트 패밀리 -->
         <item name="android:textStyle">bold</item>  <!-- 텍스트 굵게 -->
+    </style>
+
+    <!-- dialog_number_picker -->
+    <style name="CustomNumberPickerStyle">
+        <item name="android:textColor">#000000</item> <!-- 텍스트 색상 검정 -->
+        <item name="android:textSize">50sp</item> <!-- 텍스트 크기 설정 -->
+    </style>
+
+    <style name="AppAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowTitleStyle">@style/AppAlertDialogTitle</item>
+        <item name="android:buttonBarButtonStyle">@style/AppAlertButtonStyle</item>
+    </style>
+
+    <style name="DialogCorners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="AppAlertDialogTitle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/meet_me</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="AppAlertButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:fontFamily">@font/font</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>
