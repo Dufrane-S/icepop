@@ -74,17 +74,19 @@ public class OrderServiceImpl implements OrderService {
             for (Icecream icecream : icecreamList) {
                 if (detail.getProductId() == icecream.getId()) {
                     int price = (int) ((icecream.getPrice() * ((100.0f - icecream.getIsEvent()) / 100.0f)) / 10 * 10); // 개별 가격 할인 원단위 절사
+                    log.info("개별 할인 절사 가격 : {}", price);
                     icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity(), member.getAge(), member.getGender());
                     sumPrice += detail.getQuantity() * price;
                     break;
                 }
             }
         }
-        sumPrice = sumPrice / 10 * 10; // 원단위 절사
 
 //      멤버 정보로 할인율 계산
         float discountRate = new MemberInfo(member).getDiscountRate();
         sumPrice = (int) (sumPrice * discountRate);
+        sumPrice = (sumPrice / 10) * 10; // 원단위 절사
+        log.info("total 절사 가격 : {}", Integer.toString(sumPrice));
 
 //      order부터 insert
         order.setPriceSum(sumPrice);

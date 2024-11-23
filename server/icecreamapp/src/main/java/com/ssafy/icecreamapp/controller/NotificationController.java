@@ -4,9 +4,7 @@ import com.ssafy.icecreamapp.model.dto.respond.NotificationInfo;
 import com.ssafy.icecreamapp.service.NotificationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("/notification")
