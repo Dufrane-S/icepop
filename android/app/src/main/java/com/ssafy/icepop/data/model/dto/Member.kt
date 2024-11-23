@@ -7,7 +7,8 @@ data class Member(
     val gender: Int,
     val level: String,
     val name: String,
-    val nextLvRemain: Int
+    val nextLvRemain: Int,
+    val img: String
 ) {
 
     constructor() : this(
@@ -17,7 +18,8 @@ data class Member(
         gender = 0,
         level = "",
         name = "",
-        nextLvRemain = 0
+        nextLvRemain = 0,
+        img = ""
     )
 
     // 보조 생성자
@@ -28,6 +30,7 @@ data class Member(
         gender = gender,
         level = "",
         name = "",
-        nextLvRemain = 0
+        nextLvRemain = 0,
+        img = ""
     )
 }
