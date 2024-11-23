@@ -14,5 +14,5 @@ public interface ReviewDao {
 
     List<Review>selectReviewsByMemberId(@Param("reviewCon") ReviewCon reviewCon, @Param("memberId") int memberId);
 
-    int updateReview(@Param("initReview") InitReview initReview);
+    int updateReview(@Param("review") Review review);
 }
