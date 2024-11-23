@@ -76,6 +76,8 @@ dependencies {
     // https://github.com/square/okhttp
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
 
+    implementation ("com.squareup.retrofit2:converter-scalars:2.3.0")
+
     // https://github.com/square/retrofit/tree/master/retrofit-converters/gson
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 

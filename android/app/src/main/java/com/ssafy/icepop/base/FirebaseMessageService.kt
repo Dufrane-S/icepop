@@ -33,7 +33,7 @@ class FirebaseMessageService : FirebaseMessagingService() {
         }
         else {
             messageTitle = remoteMessage.data.get("myTitle").toString()
-            messageContent = remoteMessage.data.get("orderId").toString()
+            messageContent = remoteMessage.data.get("myBody").toString()
 
             Log.d(TAG, "onMessageReceived: $messageTitle $messageContent")
         }
