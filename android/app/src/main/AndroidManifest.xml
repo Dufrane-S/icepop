@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- Beacon 사용을 위한 위치 데이터 허용 -->
-    <uses-permission
-        android:name="android.permission.BLUETOOTH"
-        android:maxSdkVersion="30" />
-    <uses-permission
-        android:name="android.permission.BLUETOOTH_ADMIN"
-        android:maxSdkVersion="30" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-permission
         android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
+
     <uses-permission
         android:name="android.permission.BLUETOOTH_ADMIN"
         android:maxSdkVersion="30" />
+
+
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- NFC 사용을 위한 허용 -->
@@ -24,6 +30,7 @@
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" /> <!-- 서버와의 통신을 위한 Internet 허용 -->
+
     <uses-permission android:name="android.permission.INTERNET" /> <!-- notification 전송 permission -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -39,6 +46,13 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <service android:name=".base.FirebaseMessageService" android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:theme="@style/Base.Theme.Icepop"
             android:name=".ui.auth.AuthActivity"
