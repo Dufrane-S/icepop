@@ -2,6 +2,8 @@ package com.ssafy.smartstore_jetpack.util
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.icepop.R
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import java.text.DecimalFormat
@@ -41,15 +43,11 @@ object CommonUtils {
         return (curTime - time) > ApplicationClass.ORDER_COMPLETED_TIME
     }
 
-    fun calcMaxCountByLevel(level: String) : Int {
-        return when(level) {
-            "씨앗" -> 10
-            "꽃" -> 15
-            "열매" -> 20
-            "커피콩" -> 25
-            else -> -1
-        }
+    fun setVerticalDivider(context: Context, recyclerView: RecyclerView) {
+        val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        recyclerView.addItemDecoration(dividerItemDecoration)
     }
+
 
     fun getMaleNumber(gender: String) : Int {
         return when (gender) {

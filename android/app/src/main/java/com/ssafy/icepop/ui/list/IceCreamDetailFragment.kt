@@ -87,7 +87,8 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
                 productId = iceCream.id,
                 name = iceCream.name,
                 price = iceCream.price,
-                quantity = count
+                quantity = count,
+                img = iceCream.img
             )
 
             activityViewModel.addToCart(iceCreamCartItem)

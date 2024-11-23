@@ -4,5 +4,6 @@ data class IceCreamCartItem(
     val productId: Int,
     val name: String,
     val price: Int,
-    var quantity: Int
+    var quantity: Int,
+    val img: String
 )
