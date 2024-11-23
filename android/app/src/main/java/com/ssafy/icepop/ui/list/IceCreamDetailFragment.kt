@@ -71,7 +71,7 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
 
         binding.iceCreamName.text = iceCream.name
         binding.iceCreamContent.text = iceCream.content
-        binding.iceCreamPrice.text = CommonUtils.makeComma(iceCream.price)
+        binding.iceCreamTotalPrice.text = CommonUtils.makeComma(iceCream.price)
         binding.iceCreamKcal.text = CommonUtils.makeKcal(iceCream.kcal)
         binding.iceCreamType.text = iceCream.type
         binding.iceCreamOrderCount.text = count.toString()

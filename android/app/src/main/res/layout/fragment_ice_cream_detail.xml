@@ -58,7 +58,7 @@
 
 
             <TextView
-                android:id="@+id/ice_cream_price"
+                android:id="@+id/ice_cream_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
