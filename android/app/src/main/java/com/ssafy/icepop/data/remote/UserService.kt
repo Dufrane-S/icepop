@@ -16,4 +16,7 @@ interface UserService {
 
     @GET("member/isUsed/{email}")
     suspend fun isUsedEmail(@Path("email") email: String) : Boolean
+
+    @GET("member/info/{email}")
+    suspend fun getMyInfo(@Path("email") email: String): Member
 }

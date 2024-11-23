@@ -91,4 +91,8 @@ dependencies {
 
     //framework ktx dependency 추가
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
+
+    // ViewModel 관련 라이브러리
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 }
