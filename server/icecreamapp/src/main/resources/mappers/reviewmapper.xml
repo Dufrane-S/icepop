@@ -44,9 +44,12 @@
     </select>
 
 
-    <!--<update id="updateReview" parameterType="ReviewInit">
-        update
-
-    </update>-->
+    <update id="updateReview" parameterType="Review">
+        UPDATE review
+        SET rate = #{review.rate},
+            content = #{review.content},
+            date = ${review.date}
+        WHERE order_id = #{review.orderId}
+    </update>
 
 </mapper>

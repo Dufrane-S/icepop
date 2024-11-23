@@ -51,5 +51,12 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewInfoList;
     }
 
+    @Override
+    public int updateReview(InitReview initReview) {
+        Review review = new Review(initReview);
+        review.setDate(System.currentTimeMillis());
+        return reviewDao.updateReview(review);
+    }
+
 
 }

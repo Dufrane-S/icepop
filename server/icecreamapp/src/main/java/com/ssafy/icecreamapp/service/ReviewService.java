@@ -10,4 +10,5 @@ public interface ReviewService {
 
     int addReview(InitReview initReview);
     List<ReviewInfo> selectReviews(ReviewCon reviewCon);
+    int updateReview(InitReview initReview);
 }
