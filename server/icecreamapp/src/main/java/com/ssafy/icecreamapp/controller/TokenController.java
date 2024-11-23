@@ -21,8 +21,6 @@ public class TokenController {
 
     private final FirebaseCloudMessageServiceWithData serviceWithData;
 
-    
-
     @PostMapping("/sendDataMessageTo")
     public void sendDataMessageTo(String token, String title, String body) throws IOException {
         log.info("sendMessageTo : token:{}, title:{}, body:{}", token, title, body);
