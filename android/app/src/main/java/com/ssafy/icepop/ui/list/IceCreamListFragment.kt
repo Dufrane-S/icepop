@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.NumberPicker
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.ssafy.icepop.data.model.dto.IceCream
 import com.ssafy.icepop.data.model.dto.request.IceCreamRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentIceCreamListBinding
+import com.ssafy.icepop.ui.ActivityViewModel
 import com.ssafy.icepop.ui.MainActivity
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import com.ssafy.smartstore_jetpack.base.BaseFragment
@@ -32,6 +34,8 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
 ){
     private lateinit var mainActivity: MainActivity
     private lateinit var iceCreamAdapter : IceCreamAdapter
+
+    private val activityViewModel: ActivityViewModel by activityViewModels()
 
     private val iceCreamAllList = mutableListOf<IceCream>()
     private val iceCreamListByPopularity = mutableListOf<IceCream>()
@@ -52,12 +56,21 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerObserver()
+
         initAdapter()
         initListener()
 
         getIceCreamByAI()
         getIceCreamByPopularity()
         getAllIceCream()
+    }
+
+    private fun registerObserver() {
+        activityViewModel.isCartEmpty.observe(viewLifecycleOwner) { isCartEmpty ->
+            binding.iceCreamShoppingCartFab.isEnabled = !isCartEmpty
+            binding.iceCreamShoppingCartFab.alpha = if (isCartEmpty) 0.5f else 1f
+        }
     }
 
     private fun getAllIceCream() {
@@ -126,11 +139,7 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
             setHasFixedSize(true)
         }
 
-        val dividerItemDecoration = DividerItemDecoration(
-            binding.iceCreamRv.context, DividerItemDecoration.VERTICAL
-        )
-
-        binding.iceCreamRv.addItemDecoration(dividerItemDecoration)
+        CommonUtils.setVerticalDivider(binding.iceCreamRv.context, binding.iceCreamRv)
     }
 
     private fun initListener() {
