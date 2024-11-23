@@ -8,7 +8,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.ssafy.icepop.R
+import com.ssafy.icepop.data.model.dto.Member
 import com.ssafy.icepop.data.model.dto.request.IceCreamOrderRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentIceCreamOrderBinding
@@ -173,11 +175,21 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
                 RetrofitUtil.userService.getMyInfo(email)
             }.onSuccess {
                 activityViewModel.setDiscountRate(it.discountRate)
-                Log.d(TAG, "getMyInfo: $it")
+
+                initMemberView(it)
             }.onFailure {
                 Log.d(TAG, "실패")
             }
         }
+    }
+
+    private fun initMemberView(member: Member) {
+        val imageUrl = ApplicationClass.USER_IMAGE_BASE_URL + member.img
+        Glide.with(binding.root).load(imageUrl).into(binding.userImage)
+
+        100 - (member.discountRate * 100).toInt()
+
+        binding.gradeTv.text = "${member.level} (${100 - (member.discountRate * 100).toInt()}%)할인"
     }
 
     companion object {
