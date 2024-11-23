@@ -50,6 +50,11 @@ class ActivityViewModel : ViewModel() {
         _isCartEmpty.value = currentCart.isEmpty()
     }
 
+    fun resetCart() {
+        _cartItems.value = mutableMapOf()
+        _isCartEmpty.value = true
+    }
+
     private fun calculateDiscount(total: Int, rate: Double) {
         val discount = (total * (1 - rate)).toInt()
         discountAmount.value = ((discount / 10) + 1) * 10

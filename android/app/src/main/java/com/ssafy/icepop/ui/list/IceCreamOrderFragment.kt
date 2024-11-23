@@ -132,6 +132,9 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             }.onSuccess {
                 if (it.isSuccessful) {
                     mainActivity.openFragment(MainActivity.ICE_CREAM_LIST_FRAGMENT)
+
+                    activityViewModel.resetCart()
+
                     Log.d(TAG, "makeOrder: 성공")
                 }
             }.onFailure {
