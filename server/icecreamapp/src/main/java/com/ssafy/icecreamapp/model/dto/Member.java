@@ -18,6 +18,7 @@ public class Member {
     int purchaseSum;
     int gender;
     int age;
+    String notificationToken;
 
     public Member(InitMember initMember) {
         this.name = initMember.getName();

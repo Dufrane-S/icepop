@@ -1,6 +1,7 @@
 package com.ssafy.icecreamapp.service;
 
 import com.ssafy.icecreamapp.model.dto.Member;
+import com.ssafy.icecreamapp.model.dto.request.Token;
 import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.request.InitMember;
 
@@ -14,4 +15,6 @@ public interface MemberService {
     public MemberInfo infoByEmail(String email);
 
     public MemberInfo infoById(int id);
+
+    public int updateTokenByEmail(Token token);
 }

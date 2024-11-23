@@ -1,6 +1,7 @@
 package com.ssafy.icecreamapp.controller;
 
 import com.ssafy.icecreamapp.model.dto.Member;
+import com.ssafy.icecreamapp.model.dto.request.Token;
 import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import com.ssafy.icecreamapp.model.dto.request.LoginMember;
@@ -95,4 +96,11 @@ public class MemberController {
         headers.setContentType(MediaType.IMAGE_PNG);
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
+
+    @PostMapping("/setToken")
+    public ResponseEntity<String> setToken(@RequestBody Token token){
+        memberService.updateTokenByEmail(token);
+        return ResponseEntity.ok("토큰 설정 완료 -> 회원 : " + token.getEmail());
+    }
 }
+

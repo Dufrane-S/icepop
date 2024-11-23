@@ -44,4 +44,10 @@
         WHERE email = #{email};
     </update>
 
+    <update id="updateToken">
+        UPDATE member
+        SET notification_token = #{token}
+        WHERE email = #{email};
+    </update>
+
 </mapper>

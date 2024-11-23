@@ -3,6 +3,7 @@ package com.ssafy.icecreamapp.service;
 import com.ssafy.icecreamapp.exception.NoSuchElementsException;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Member;
+import com.ssafy.icecreamapp.model.dto.request.Token;
 import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import lombok.RequiredArgsConstructor;
@@ -66,5 +67,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfo infoById(int id) {
         return new MemberInfo(memberDao.selectById(id));
+    }
+
+    @Override
+    public int updateTokenByEmail(Token token) {
+        return memberDao.updateToken(token);
     }
 }
