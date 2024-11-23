@@ -30,6 +30,7 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
 
     var count : Int = 1
     var iceCreamId : Int = -1
+    var iceCreamPrice = -1
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,12 +72,36 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
 
         binding.iceCreamName.text = iceCream.name
         binding.iceCreamContent.text = iceCream.content
-        binding.iceCreamTotalPrice.text = CommonUtils.makeComma(iceCream.price)
         binding.iceCreamKcal.text = CommonUtils.makeKcal(iceCream.kcal)
         binding.iceCreamType.text = iceCream.type
         binding.iceCreamOrderCount.text = count.toString()
 
-        binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCream.price)}"
+        //아이스크림이 이벤트를 한다.
+        if (iceCream.isEvent != 0) {
+            binding.iceCreamDetailDiscountArea.visibility = View.VISIBLE
+            // 원래 가격 표시
+            binding.iceCreamDetailOriginalPriceTv.text = CommonUtils.makeComma(iceCream.price)
+
+            val rate = iceCream.isEvent * 0.01
+
+            val discountedPrice = Math.ceil(iceCream.price * (1 - rate)).toInt()
+
+            val totalPrice = Math.floor((discountedPrice / 10.0)).toInt() * 10
+
+            iceCreamPrice = totalPrice
+
+            binding.iceCreamDetailTotalPriceTv.text = CommonUtils.makeComma(totalPrice)
+        }
+        //아이스크림 이벤트를 할 경우,
+        else {
+            binding.iceCreamDetailDiscountArea.visibility = View.GONE
+
+            iceCreamPrice = iceCream.price
+
+            binding.iceCreamDetailTotalPriceTv.text = CommonUtils.makeComma(iceCream.price)
+        }
+
+        binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCreamPrice)}"
 
         initListener(iceCream)
     }
@@ -98,14 +123,14 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
             count++
 
             binding.iceCreamOrderCount.text = count.toString()
-            binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCream.price * count)}"
+            binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCreamPrice * count)}"
         }
 
         binding.countMinusBtn.setOnClickListener {
-            if (count != 0) count--
+            if (count != 1) count--
 
             binding.iceCreamOrderCount.text = count.toString()
-            binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCream.price * count)}"
+            binding.iceCreamOrderPrice.text = "주문금액 ${CommonUtils.makeComma(iceCreamPrice * count)}"
         }
     }
 
