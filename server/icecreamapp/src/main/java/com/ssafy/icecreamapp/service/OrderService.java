@@ -10,9 +10,9 @@ public interface OrderService {
 
     int makeOrder(OrderRequest orderRequest);
 
-    List<OrderInfo> selectOrdersByEmail(String email, boolean isRecent);
+//    List<OrderInfo> selectOrdersByEmail(String email, boolean isRecent);
 
-    List<OrderInfo> selectOrdersWithCon(OrderCon orderCon);
+//    List<OrderInfo> selectOrdersWithCon(OrderCon orderCon);
 
     List<OrderInfo> selectOrdersWithCon2(OrderCon orderCon);
 }

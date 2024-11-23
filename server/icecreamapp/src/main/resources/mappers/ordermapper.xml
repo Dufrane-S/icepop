@@ -36,7 +36,8 @@
 
 
     <select id="selectWithResultmap" resultMap="OrderAndOrderDetails">
-        select o.id,o.date, o.spoon,o.dryice,o.price_sum,od.id as od_id, od.order_id, od.product_id, od.quantity,
+        select o.id, o.date, o.spoon, o.dryice, o.price_sum, o.isforhere,
+        od.id as od_id, od.order_id, od.product_id, od.quantity,
         m.email
         from `order` as o
         left join order_detail as od

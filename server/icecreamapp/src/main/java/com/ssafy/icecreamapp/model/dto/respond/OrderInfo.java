@@ -16,7 +16,7 @@ public class OrderInfo {
     private int spoon;
     private int dryice;
     private int priceSum;
+    private int isforhere;
     private String email;
-    private int purchaseSum;
     private List<OrderDetail> details;
 }

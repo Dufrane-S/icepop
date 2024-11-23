@@ -20,8 +20,9 @@ public class Order {
     int priceSum;
 
     public Order(OrderRequest orderRequest) {
-        this.date=System.currentTimeMillis();
-        this.spoon=orderRequest.getSpoon();
-        this.dryice=orderRequest.getDryice();
+        this.date = System.currentTimeMillis();
+        this.spoon = orderRequest.getSpoon();
+        this.dryice = orderRequest.getDryice();
+        this.isForHere = orderRequest.getIsForHere();
     }
 }

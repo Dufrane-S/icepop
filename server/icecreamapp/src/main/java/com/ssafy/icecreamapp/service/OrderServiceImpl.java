@@ -49,8 +49,6 @@ public class OrderServiceImpl implements OrderService {
         }
         log.info("makeOrder : {}", list);
 
-        int sumPrice = 0;
-
 //      아이스크림 정보 불러와서 계산 일일히 조회
         /*for (OrderDetail detail : list) {
             Icecream icecream = icecreamDao.selectIcecreamById(detail.getProductId());
@@ -60,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
         }*/
 
         //      아이스크림 정보 불러와서 계산 한번에
+        int sumPrice = 0;
         List<Integer> idList = new ArrayList<>();
         for (OrderDetail detail : list) {
             idList.add(detail.getProductId());
@@ -75,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
         }
-
+        sumPrice = sumPrice / 10 * 10; // 원단위 절사
 
 //      멤버 정보로 할인율 계산
         float discountRate = new MemberInfo(member).getDiscountRate();
@@ -95,7 +94,8 @@ public class OrderServiceImpl implements OrderService {
         return result;
     }
 
-    @Override
+//    주문마다 디테일을 가져오는 방법, 주문 리스트 조회 1번, 주문만큼 디테일 조회 n번
+    /*@Override
     public List<OrderInfo> selectOrdersByEmail(String email, boolean isRecent) {
         Member member = memberDao.selectByEmail(email);
         List<Order> orderList = orderDao.selectOrderByEmail(member.getId(), isRecent);
@@ -113,9 +113,12 @@ public class OrderServiceImpl implements OrderService {
             result.add(dto);
         }
         return result;
-    }
+    }*/
 
-    @Override
+//  db 내부에서 join하는 방법 resultMap을 통해 OrderInfo에 넣기 가능 db 접근 1회
+//  하지만 최근 n건 조회가 불가 -> join할 시 column이 order 갯수가 아닌 orderdetail 갯수로 나오기 때문
+//  order 3개가 각각 2개의 detail 보유시 limit 5를하면 orderdetail이 5개만 나옴
+    /*@Override
     public List<OrderInfo> selectOrdersWithCon(OrderCon orderCon) {
         int memberId = 0;
         if (!orderCon.getEmail().isEmpty()) {
@@ -127,8 +130,9 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return orderDao.selectWithResultmap(orderCon, memberId);
-    }
+    }*/
 
+    //
     @Override
     public List<OrderInfo> selectOrdersWithCon2(OrderCon orderCon) {
         int memberId = 0;
