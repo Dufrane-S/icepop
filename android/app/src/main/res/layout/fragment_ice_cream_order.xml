@@ -163,6 +163,7 @@
             android:id="@+id/ice_info_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="16dp">
 

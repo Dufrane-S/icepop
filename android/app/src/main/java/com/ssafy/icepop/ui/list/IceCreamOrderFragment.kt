@@ -99,6 +99,11 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
                     R.id.take_out_button -> TAKE_OUT
                     else -> TYPE_NOTHING
                 }
+
+                when (selectOrderType) {
+                    MARKET -> binding.iceInfoArea.visibility = View.GONE
+                    TAKE_OUT -> binding.iceInfoArea.visibility = View.VISIBLE
+                }
             }
         }
 

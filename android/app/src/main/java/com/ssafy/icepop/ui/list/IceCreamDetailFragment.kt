@@ -111,7 +111,7 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
             val iceCreamCartItem = IceCreamCartItem(
                 productId = iceCream.id,
                 name = iceCream.name,
-                price = iceCream.price,
+                price = iceCreamPrice,
                 quantity = count,
                 img = iceCream.img
             )
