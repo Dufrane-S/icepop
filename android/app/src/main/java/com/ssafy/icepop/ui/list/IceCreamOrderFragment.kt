@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.icepop.R
+import com.ssafy.icepop.data.model.dto.request.IceCreamOrderRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentIceCreamOrderBinding
 import com.ssafy.icepop.ui.ActivityViewModel
@@ -34,6 +35,8 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
 
     private val spoonUnit = 1
     private val iceUnit = 15
+
+    private var selectOrderType = MARKET
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -88,6 +91,43 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
 
             binding.iceCount.text = iceCount.toString()
         }
+
+        binding.orderTypeToggleGroup.addOnButtonCheckedListener {_, checkedId, isChecked ->
+            if (isChecked) {
+                selectOrderType = when(checkedId) {
+                    R.id.market_button -> MARKET
+                    R.id.take_out_button -> TAKE_OUT
+                    else -> TYPE_NOTHING
+                }
+            }
+        }
+
+        binding.orderBtn.setOnClickListener {
+            val email = ApplicationClass.sharedPreferencesUtil.getUser().email
+            val details = activityViewModel.cartItems.value?.values?.toList()!!
+
+            val iceCreamOrderRequest = IceCreamOrderRequest(
+                details = details,
+                dryice = iceCount,
+                email = email,
+                spoon = spoonCount,
+                isForHere = selectOrderType,
+            )
+
+            makeOrder(iceCreamOrderRequest)
+        }
+    }
+
+    private fun makeOrder(iceCreamOrderRequest: IceCreamOrderRequest) {
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.orderService.makeOrder(iceCreamOrderRequest)
+            }.onSuccess {
+                Log.d(TAG, "makeOrder: 성공")
+            }.onFailure {
+                Log.d(TAG, "makeOrder: 실패")
+            }
+        }
     }
 
     private fun registerObserver() {
@@ -135,6 +175,10 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
     }
 
     companion object {
+        private const val MARKET = 1
+        private const val TAKE_OUT = 2
+        private const val TYPE_NOTHING = -1
+
 //        @JvmStatic
 //        fun newInstance(param1: String, param2: String) =
 //            IceCreamOrderFragment().apply {

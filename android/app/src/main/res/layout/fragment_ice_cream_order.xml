@@ -54,7 +54,7 @@
             android:gravity="center" >
 
             <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/gender_toggle_group"
+                android:id="@+id/order_type_toggle_group"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 app:singleSelection="true"
@@ -312,7 +312,7 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_btn"
+            android:id="@+id/order_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="주문하기"
