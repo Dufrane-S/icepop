@@ -1,10 +1,7 @@
 package com.ssafy.icecreamapp.service;
 
 import com.ssafy.icecreamapp.exception.NoSuchElementsException;
-import com.ssafy.icecreamapp.model.dao.IcecreamDao;
-import com.ssafy.icecreamapp.model.dao.MemberDao;
-import com.ssafy.icecreamapp.model.dao.OrderDao;
-import com.ssafy.icecreamapp.model.dao.OrderDetailDao;
+import com.ssafy.icecreamapp.model.dao.*;
 import com.ssafy.icecreamapp.model.dto.*;
 import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.request.OrderDetailRequest;
@@ -16,8 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,6 +30,10 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDetailDao orderDetailDao;
     private final IcecreamDao icecreamDao;
     private final MemberDao memberDao;
+    private final FirebaseCloudMessageServiceWithData fcmService;
+    private final NotificationDao notificationDao;
+    private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
+
 
     @Override
     @Transactional
@@ -67,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
         for (OrderDetail detail : list) {
             for (Icecream icecream : icecreamList) {
                 if (detail.getProductId() == icecream.getId()) {
-                    int price = (int) (icecream.getPrice() * ((100.0f - icecream.getIsEvent()) / 100.0f));
+                    int price = (int) ((icecream.getPrice() * ((100.0f - icecream.getIsEvent()) / 100.0f)) / 10 * 10); // 개별 가격 할인 원단위 절사
                     icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity(), member.getAge(), member.getGender());
                     sumPrice += detail.getQuantity() * price;
                     break;
@@ -91,6 +97,30 @@ public class OrderServiceImpl implements OrderService {
         }
         log.info("makeOrder " + orderRequest);
         int result = memberDao.updateSum(orderRequest.getEmail(), sumPrice);
+
+        try {
+            fcmService.sendDataMessageTo("fExca8C9R-Cb_3g16LxDYL:APA91bE8Mi6KPtsxvnqzADGwnKTuc7_-xZcylK8MZjZBgQb-XlexU6nefM8tRoG36-IZcZbq1o_kro782RDhLQXYkcsOFN1g_KjV6wXpYbGFyC6E5uqFhtg",
+                    "주문 접수", order.getId() + "번 주문이 접수되었습니다.");
+
+            notificationDao.insertNotification(new Notification(memberId, order.getId(), 1));
+
+            scheduledExecutorService.schedule(() -> {
+                try {
+                    fcmService.sendDataMessageTo("fExca8C9R-Cb_3g16LxDYL:APA91bE8Mi6KPtsxvnqzADGwnKTuc7_-xZcylK8MZjZBgQb-XlexU6nefM8tRoG36-IZcZbq1o_kro782RDhLQXYkcsOFN1g_KjV6wXpYbGFyC6E5uqFhtg",
+                            "준비 완료", order.getId() + "번 주문이 준비 완료되었습니다.");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                notificationDao.insertNotification(new Notification(memberId, order.getId(), 2));
+            }, 10, TimeUnit.SECONDS);
+
+        } catch (IOException e) {
+            log.error("알림 발송 중 오류");
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+
+
         return result;
     }
 

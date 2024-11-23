@@ -1,6 +1,8 @@
 package com.ssafy.icecreamapp.controller;
 
 import com.ssafy.icecreamapp.service.FirebaseCloudMessageServiceWithData;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +14,24 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin("*")
+@Slf4j
+@RequiredArgsConstructor
 public class TokenController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(TokenController.class);
 
 
-    @Autowired
-    FirebaseCloudMessageServiceWithData serviceWithData;
+    private final FirebaseCloudMessageServiceWithData serviceWithData;
 
     
 
     @PostMapping("/sendDataMessageTo")
     public void sendDataMessageTo(String token, String title, String body) throws IOException {
-        logger.info("sendMessageTo : token:{}, title:{}, body:{}", token, title, body);
+        log.info("sendMessageTo : token:{}, title:{}, body:{}", token, title, body);
         serviceWithData.sendDataMessageTo(token, title, body);
     }
 
     @PostMapping("/broadcast-data")
     public String broadCastData(String title, String body) throws IOException {
-        logger.info("broadCast : title:{}, body:{}", title, body);
-
+        log.info("broadCast : title:{}, body:{}", title, body);
         return getMessage(serviceWithData.broadCastDataMessage(title, body));
     }
 
