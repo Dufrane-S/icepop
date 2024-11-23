@@ -19,7 +19,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/addReview")
-    @Operation(summary = "리뷰 작성",description = "<b>string : email<br>" +
+    @Operation(summary = "리뷰 작성", description = "<b>string : email<br>" +
             "int : orderId 상품번호<br>" +
             "float : rate 별점 0~5 0.5 간격<br>" +
             "string : content 내용")
@@ -27,7 +27,7 @@ public class ReviewController {
         //여기서 이상한 반환하지말고 Exception 날리기
         if (reviewService.addReview(initReview) == 1) {
             return ResponseEntity.ok("리뷰 생성");
-        }else{
+        } else {
             return new ResponseEntity<>("실패", HttpStatusCode.valueOf(400));
         }
     }
@@ -38,5 +38,14 @@ public class ReviewController {
             "boolean : isRecent true일시 최근 5개 LIMIT 5")
     public ResponseEntity<List<ReviewInfo>> getReviews(@RequestBody ReviewCon reviewCon) {
         return ResponseEntity.ok(reviewService.selectReviews(reviewCon));
+    }
+
+    @PostMapping("/updateReview")
+    @Operation(summary = "리뷰 수정", description = "<b>string : email<br>" +
+            "int : orderId 상품번호<br>" +
+            "float : rate 별점 0~5 0.5 간격<br>" +
+            "string : content 내용")
+    public ResponseEntity<Integer> updateReview(@RequestBody InitReview initReview) {
+        return ResponseEntity.ok(reviewService.updateReview(initReview));
     }
 }
