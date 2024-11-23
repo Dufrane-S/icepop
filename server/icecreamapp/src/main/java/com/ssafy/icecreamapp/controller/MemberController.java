@@ -11,10 +11,16 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -49,8 +55,11 @@ public class MemberController {
             "int : gender -> 남자 1, 여자 2" +
             "<br>성공시 201</b> ")
     public ResponseEntity<String> join(@RequestBody InitMember initmember) {
-        memberService.join(initmember);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if(memberService.join(initmember)==1){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/isUsed/{email}")
@@ -71,5 +80,19 @@ public class MemberController {
             @Parameter(example = "test1")
             @PathVariable String email) {
         return ResponseEntity.ok(memberService.infoByEmail(email));
+    }
+
+    @GetMapping("/grade-img/{img}")
+    @Operation(summary = "회원 등급 이미지 반환", description = "<b>string : img 회원 정보의 img를 넣으면 img를 반환</b>")
+    public ResponseEntity<byte[]> img(
+            @Parameter(description = "회원 정보 조회의 img", example = "seed")
+            @PathVariable String img
+    ) throws IOException {
+        Resource resource = new ClassPathResource("grade/" + img + ".png");
+        InputStream inputStream = resource.getInputStream();
+        byte[] imageBytes = inputStream.readAllBytes();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
     }
 }

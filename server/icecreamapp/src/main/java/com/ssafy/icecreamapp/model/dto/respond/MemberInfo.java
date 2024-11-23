@@ -16,6 +16,7 @@ public class MemberInfo {
     int age;
     int nextLvRemain;
     float discountRate;
+    String img;
 
     public MemberInfo(Member member) {
         this.name = member.getName();
@@ -27,11 +28,11 @@ public class MemberInfo {
         if (lev == 0) {//50000 이하
             this.level = "씨앗";
         } else if (lev == 1) {//100000이하
-            this.level = "꽃";
+            this.level = "새싹";
         } else if (lev == 2) {//150000이하
-            this.level = "열매";
+            this.level = "꽃";
         } else if (lev == 3) {//200000이하
-            this.level = "커피콩";
+            this.level = "열매";
         } else if (lev > 3) {//250000이하
             this.level = "나무";
         }
@@ -40,14 +41,19 @@ public class MemberInfo {
 
         if (this.level.equals("씨앗")) {
             this.discountRate = 0.99f;
-        } else if (this.level.equals("꽃")) {
+            this.img = "seed";
+        } else if (this.level.equals("새싹")) {
             this.discountRate = 0.97f;
-        } else if (this.level.equals("열매")) {
+            this.img = "plant";
+        } else if (this.level.equals("꽃")) {
             this.discountRate = 0.95f;
-        } else if (this.level.equals("커피콩")) {
+            this.img = "flower";
+        } else if (this.level.equals("열매")) {
             this.discountRate = 0.93f;
+            this.img = "berry";
         } else {
             this.discountRate = 0.91f;
+            this.img = "tree";
         }
 
     }

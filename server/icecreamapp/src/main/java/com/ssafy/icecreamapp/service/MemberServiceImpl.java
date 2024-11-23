@@ -7,7 +7,13 @@ import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +24,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int join(InitMember initMember) {
-        return memberDao.insert(new Member(initMember));
+        try {
+            return memberDao.insert(new Member(initMember));
+        } catch (DataAccessException e) {
+            throw e;
+            /*if (e instanceof ) {
+                log.error("이미 사용 중인 이메일");
+                return 0;
+            }*/
+        }
     }
 
     @Override
