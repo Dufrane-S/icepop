@@ -44,4 +44,9 @@
     </select>
 
 
+    <!--<update id="updateReview" parameterType="ReviewInit">
+        update
+
+    </update>-->
+
 </mapper>
