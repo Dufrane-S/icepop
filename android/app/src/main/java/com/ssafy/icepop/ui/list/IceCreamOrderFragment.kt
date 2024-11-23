@@ -123,9 +123,12 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             runCatching {
                 RetrofitUtil.orderService.makeOrder(iceCreamOrderRequest)
             }.onSuccess {
-                Log.d(TAG, "makeOrder: 성공")
+                if (it.isSuccessful) {
+                    mainActivity.openFragment(MainActivity.ICE_CREAM_LIST_FRAGMENT)
+                    Log.d(TAG, "makeOrder: 성공")
+                }
             }.onFailure {
-                Log.d(TAG, "makeOrder: 실패")
+                Log.e(TAG, "makeOrder: 실패, 예외 메시지: ${it.message}", it)
             }
         }
     }
@@ -146,12 +149,10 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             binding.orderPriceTv.text = "주문 금액: ${CommonUtils.makeComma(it)}"
         }
 
-        // 할인 금액 옵저빙
         activityViewModel.discountAmount.observe(viewLifecycleOwner) { discountAmount ->
             binding.discountPriceTv.text = "할인 금액: ${CommonUtils.makeComma(discountAmount)}"
         }
 
-        // 최종 금액 옵저빙
         activityViewModel.finalPrice.observe(viewLifecycleOwner) { finalPrice ->
             binding.totalPriceTv.text = "최종 금액: ${CommonUtils.makeComma(finalPrice)}"
         }

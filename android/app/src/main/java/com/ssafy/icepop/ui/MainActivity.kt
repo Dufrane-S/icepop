@@ -83,6 +83,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 transaction.replace(R.id.main_fragment_layout, IceCreamOrderFragment())
                     .addToBackStack(null)
             }
+            ICE_CREAM_LIST_FRAGMENT -> {
+                supportFragmentManager.popBackStack()
+                transaction.replace(R.id.main_fragment_layout, IceCreamListFragment())
+            }
 //            //장바구니
 //            1 -> {
 //                // 재주문
@@ -125,5 +129,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     companion object {
         const val ICE_CREAM_DETAIL_FRAGMENT = 1
         const val ICE_CREAM_ORDER_FRAGMENT = 2
+        const val ICE_CREAM_LIST_FRAGMENT = 3
     }
 }
