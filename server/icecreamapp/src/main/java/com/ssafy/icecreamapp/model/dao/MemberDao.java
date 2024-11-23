@@ -1,7 +1,6 @@
 package com.ssafy.icecreamapp.model.dao;
 
 import com.ssafy.icecreamapp.model.dto.Member;
-import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import com.ssafy.icecreamapp.model.dto.request.Token;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,5 +15,7 @@ public interface MemberDao {
 
     Member selectById(int id);
 
-    int updateToken(Token token);
+    int updateTokenByEmail(Token token);
+
+    Member searchByToken(Token token);
 }

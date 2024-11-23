@@ -56,9 +56,9 @@ public class MemberController {
             "int : gender -> 남자 1, 여자 2" +
             "<br>성공시 201</b> ")
     public ResponseEntity<String> join(@RequestBody InitMember initmember) {
-        if(memberService.join(initmember)==1){
+        if (memberService.join(initmember) == 1) {
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
@@ -98,7 +98,10 @@ public class MemberController {
     }
 
     @PostMapping("/setToken")
-    public ResponseEntity<String> setToken(@RequestBody Token token){
+    @Operation(summary = "토큰 저장", description = "<b>string : email<br>" +
+            "string: token<br>" +
+            "토큰을 업데이트")
+    public ResponseEntity<String> setToken(@RequestBody Token token) {
         memberService.updateTokenByEmail(token);
         return ResponseEntity.ok("토큰 설정 완료 -> 회원 : " + token.getEmail());
     }

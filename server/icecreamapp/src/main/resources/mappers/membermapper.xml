@@ -44,10 +44,15 @@
         WHERE email = #{email};
     </update>
 
-    <update id="updateToken">
+    <update id="updateTokenByEmail">
         UPDATE member
         SET notification_token = #{token}
         WHERE email = #{email};
     </update>
 
+    <select id="searchByToken">
+        select *
+        from member
+        where notification_token = #{token}
+    </select>
 </mapper>

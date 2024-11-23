@@ -11,4 +11,9 @@ public class Token {
     String email;
     @Schema(description = "토큰", example = "android_token")
     String token;
+
+    public Token(String email, String token) {
+        this.email = email;
+        this.token = token;
+    }
 }

@@ -9,12 +9,7 @@ import com.ssafy.icecreamapp.model.dto.request.InitMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -71,6 +66,11 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int updateTokenByEmail(Token token) {
-        return memberDao.updateToken(token);
+        Member member = memberDao.searchByToken(token);
+        // 같은 폰에 다른 아이디로 로그인시 토큰이 같을 경우 대비해 기존 token 제거
+        if (member != null) {
+            memberDao.updateTokenByEmail(new Token(member.getEmail(), null));
+        }
+        return memberDao.updateTokenByEmail(token);
     }
 }
