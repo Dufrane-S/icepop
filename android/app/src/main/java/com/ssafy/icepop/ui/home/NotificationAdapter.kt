@@ -12,7 +12,14 @@ class NotificationAdapter(
     inner class NotificationViewHolder(private val binding : ItemNotificationBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(notificationItem: NotificationItem) {}
+        fun bind(notificationItem: NotificationItem) {
+            if (notificationItem.type == 1) {
+                binding.notificationContent.text = "주문이 접수되었습니다.(주문번호 ${notificationItem.orderId})"
+            }
+            else {
+                binding.notificationContent.text = "주문번호 ${notificationItem.orderId}번 준비 완료되었습니다."
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
