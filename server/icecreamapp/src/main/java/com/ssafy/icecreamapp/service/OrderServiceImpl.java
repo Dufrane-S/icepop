@@ -28,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderDao orderDao;
     private final OrderDetailDao orderDetailDao;
-    private final IcecreamDao icecreamDao;
     private final MemberDao memberDao;
     private final FirebaseCloudMessageServiceWithData fcmService;
     private final NotificationDao notificationDao;
@@ -39,13 +38,11 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public int makeOrder(OrderRequest orderRequest) {
         Order order = new Order(orderRequest);
-        log.info("makeOrder : {}", orderRequest);
 
 //      이메일로 멤버 정보 획득
         Member member = memberDao.selectByEmail(orderRequest.getEmail());
         int memberId = member.getId();
         order.setMemberId(memberId);
-        log.info("makeOrder : {}", member);
 
 //      orderdetail 추출하여 합계 생성
         List<OrderDetailRequest> requestList = orderRequest.getDetails();
@@ -53,7 +50,6 @@ public class OrderServiceImpl implements OrderService {
         for (OrderDetailRequest request : requestList) {
             list.add(new OrderDetail(request));
         }
-        log.info("makeOrder : {}", list);
 
 //      아이스크림 정보 불러와서 계산 일일히 조회
         /*for (OrderDetail detail : list) {
@@ -63,33 +59,8 @@ public class OrderServiceImpl implements OrderService {
             sumPrice += detail.getQuantity() * price;
         }*/
 
-        //      아이스크림 정보 불러와서 계산 한번에
-        int sumPrice = 0;
-        List<Integer> idList = new ArrayList<>();
-        for (OrderDetail detail : list) {
-            idList.add(detail.getProductId());
-        }
-        List<Icecream> icecreamList = icecreamDao.selectIcecreamsByIds(idList);
-        for (OrderDetail detail : list) {
-            for (Icecream icecream : icecreamList) {
-                if (detail.getProductId() == icecream.getId()) {
-                    int price = (int) ((icecream.getPrice() * ((100.0f - icecream.getIsEvent()) / 100.0f)) / 10 * 10); // 개별 가격 할인 원단위 절사
-                    log.info("개별 할인 절사 가격 : {}", price);
-                    icecreamDao.updateIcecreamById(icecream.getId(), detail.getQuantity(), member.getAge(), member.getGender());
-                    sumPrice += detail.getQuantity() * price;
-                    break;
-                }
-            }
-        }
-
-//      멤버 정보로 할인율 계산
-        float discountRate = new MemberInfo(member).getDiscountRate();
-        sumPrice = (int) (sumPrice * discountRate);
-        sumPrice = (sumPrice / 10) * 10; // 원단위 절사
-        log.info("total 절사 가격 : {}", Integer.toString(sumPrice));
 
 //      order부터 insert
-        order.setPriceSum(sumPrice);
         orderDao.insertOrder(order);
 
 //      detail insert
@@ -97,8 +68,12 @@ public class OrderServiceImpl implements OrderService {
             detail.setOrderId(order.getId());
             orderDetailDao.insertDetail(detail);
         }
-        log.info("makeOrder " + orderRequest);
-        int result = memberDao.updateSum(orderRequest.getEmail(), sumPrice);
+        log.info("order : {}", order);
+        log.info("orderDetails : {}", list);
+        log.info("orderReqeust {}", orderRequest);
+
+        //member 주문 금액 update
+        int result = memberDao.updateSum(orderRequest.getEmail(), orderRequest.getDiscountSum());
 
         try {
             fcmService.sendDataMessageTo("fExca8C9R-Cb_3g16LxDYL:APA91bE8Mi6KPtsxvnqzADGwnKTuc7_-xZcylK8MZjZBgQb-XlexU6nefM8tRoG36-IZcZbq1o_kro782RDhLQXYkcsOFN1g_KjV6wXpYbGFyC6E5uqFhtg",
@@ -176,6 +151,11 @@ public class OrderServiceImpl implements OrderService {
                 throw new NoSuchElementsException("없는 사용자의 id : " + memberId);
             }
         }
-        return orderDao.selectWithResultmap2(orderCon, memberId);
+        List<OrderInfo> orderInfos= orderDao.selectWithResultmap2(orderCon, memberId);
+        // 제품 종류 몇가지인지 추가
+        for(OrderInfo orderInfo:orderInfos){
+            orderInfo.setCategoryCount(orderInfo.getDetails().size());
+        }
+        return orderInfos;
     }
 }

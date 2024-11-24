@@ -28,7 +28,10 @@ public class OrderController {
             "List<OrderDetailRequest>details : OrderDetailRequest의 List" +
             "<OrderDetailRequest><br>" +
             "int : productId 상품번호<br>" +
-            "int : quantity 수량")
+            "int : quantity 수량<br>" +
+            "int : priceSum 할인 받기 전 소비자가의 최종합 ex) 아이스크림류 id 1&2 2개 = 3500 + 3500<br>" +
+            "int : discountSum 할인 받은 가격 ex) 7000-((3500 * 0.95)+(3500*0.9)) * 0.99= 589.75 590 원단위 절사(올림)<br>" +
+            "int : resultSum 최종 결제 금액 ex) ((3500 * 0.95)+(3500 * 0.9)) * 0.99 = 6410.25 원단위 절사(버림)")
     public ResponseEntity<String> makeOrder(@RequestBody OrderRequest orderRequest) {
         if (orderService.makeOrder(orderRequest) != 0) {
             return new ResponseEntity<>("주문 성공", HttpStatus.CREATED);
@@ -62,7 +65,7 @@ public class OrderController {
     @Operation(summary = "주문 내역 조회", description = "<b>string : email ``일 경우 조건 X<br>" +
             "int : order_id 0일 경우 조건 X<br>" +
             "boolean : isRecent true일 경우 최근 주문 목록 10개만 조회 LIMIT 10")
-    public ResponseEntity<List<OrderInfo>> test(@RequestBody OrderCon orderCon) {
+    public ResponseEntity<List<OrderInfo>> orderList(@RequestBody OrderCon orderCon) {
         return ResponseEntity.ok(orderService.selectOrdersWithCon2(orderCon));
     }
 }

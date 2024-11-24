@@ -15,6 +15,7 @@ public class OrderDetail {
     int orderId;
     int productId;
     int quantity;
+    String iceName;
 
     public OrderDetail(OrderDetailRequest orderDetailRequest) {
         this.productId = orderDetailRequest.getProductId();

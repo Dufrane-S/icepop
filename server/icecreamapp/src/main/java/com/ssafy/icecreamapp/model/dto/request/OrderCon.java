@@ -16,12 +16,12 @@ public class OrderCon {
     @Schema(example = "0", description = "제품 번호")
     int orderId;
     @Schema(example = "false", description = "최근 목록 조회 여부")
-    boolean isRecent;
+    boolean recent;
 
-    public OrderCon(String email, int orderId, boolean isRecent) {
+    public OrderCon(String email, int orderId, boolean recent) {
         this.email = email;
         this.orderId = orderId;
-        this.isRecent = isRecent;
+        this.recent = recent;
     }
 }
 

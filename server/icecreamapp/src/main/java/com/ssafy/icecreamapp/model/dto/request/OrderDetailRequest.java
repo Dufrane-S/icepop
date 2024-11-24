@@ -11,6 +11,6 @@ import lombok.ToString;
 public class OrderDetailRequest {
     @Schema(example = "1", description = "제품 번호")
     int productId;
-    @Schema(example = "2", description = "제품 수량")
+    @Schema(example = "1", description = "제품 수량")
     int quantity;
 }

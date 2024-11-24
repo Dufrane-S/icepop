@@ -18,11 +18,16 @@ public class Order {
     int dryice;
     int isForHere;
     int priceSum;
+    int discountSum;
+    int resultSum;
 
     public Order(OrderRequest orderRequest) {
         this.date = System.currentTimeMillis();
         this.spoon = orderRequest.getSpoon();
         this.dryice = orderRequest.getDryice();
         this.isForHere = orderRequest.getIsForHere();
+        this.priceSum = orderRequest.getPriceSum();
+        this.discountSum = orderRequest.getDiscountSum();
+        this.resultSum = orderRequest.getResultSum();
     }
 }

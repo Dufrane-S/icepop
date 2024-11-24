@@ -11,13 +11,17 @@
          spoon,
          dryice,
          isforhere,
-         price_sum)
+         price_sum,
+         discount_sum,
+         result_sum)
         VALUES (#{memberId},
                 #{date},
                 #{spoon},
                 #{dryice},
                 #{isForHere},
-                #{priceSum})
+                #{priceSum},
+                #{discountSum},
+                #{resultSum})
     </insert>
 
 
@@ -74,8 +78,8 @@
 
 
     <select id="selectDetails" parameterType="int" resultType="OrderDetail">
-        select *
-        from order_detail
+        select od.id, od.order_id, od.product_id, od.quantity, i.name as ice_name
+        from order_detail as od left join icecream as i on od.product_id = i.id
         where order_id = #{o_id}
     </select>
 
@@ -85,7 +89,9 @@
     </resultMap>
 
     <select id="selectWithResultmap2" resultMap="detailResult">
-        select o.id, o.date, o.spoon, o.dryice, o.price_sum, o.isforhere , o.id as o_id , m.email
+        select o.id, o.date, o.spoon, o.dryice, o.price_sum, o.discount_sum, o.result_sum, o.isforhere, o.id as o_id
+
+             , m.email
         from `order` as o
         left join member as m
         on o.member_id = m.id
