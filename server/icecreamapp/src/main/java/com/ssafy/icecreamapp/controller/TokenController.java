@@ -27,13 +27,14 @@ public class TokenController {
         serviceWithData.sendDataMessageTo(token, title, body);
     }
 
-    @PostMapping("/broadcast-data")
+//  전체 메시지
+    /*@PostMapping("/broadcast-data")
     public String broadCastData(String title, String body) throws IOException {
         log.info("broadCast : title:{}, body:{}", title, body);
         return getMessage(serviceWithData.broadCastDataMessage(title, body));
-    }
+    }*/
 
-    private String getMessage(int cnt) {
+    /*private String getMessage(int cnt) {
         String msg = "";
         if(cnt > 0) {
             msg = "성공적으로 전송했습니다.";
@@ -41,6 +42,6 @@ public class TokenController {
             msg = "전송할 대상이 없거나 메시지 전송에 실패했습니다. ";
         }
         return msg;
-    }
+    }*/
 }
 
