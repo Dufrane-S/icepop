@@ -61,7 +61,7 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
         initAdapter()
         initListener()
 
-        getIceCreamByAI()
+//        getIceCreamByAI()
         getIceCreamByPopularity()
         getAllIceCream()
     }

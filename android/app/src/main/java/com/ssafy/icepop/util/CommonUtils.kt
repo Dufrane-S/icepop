@@ -13,6 +13,8 @@ import java.util.Locale
 import java.util.TimeZone
 
 object CommonUtils {
+    const val MALE = 1
+    const val FEMALE = 2
 
     //천단위 콤마
     fun makeComma(num: Int): String {
@@ -48,11 +50,17 @@ object CommonUtils {
         recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
+    fun getGenderByNumber(gender: Int) : String {
+        return when (gender) {
+            MALE -> "남"
+            else -> "여"
+        }
+    }
 
     fun getMaleNumber(gender: String) : Int {
         return when (gender) {
-            "남자" -> 1
-            else -> 2
+            "남자" -> MALE
+            else -> FEMALE
         }
     }
 
