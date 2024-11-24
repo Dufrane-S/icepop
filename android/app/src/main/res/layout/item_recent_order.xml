@@ -9,7 +9,8 @@
     android:layout_marginBottom="8dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:backgroundTint="@android:color/white"
+    app:cardBackgroundColor="@color/card_background_color"
+    app:strokeWidth="0dp"
     app:cardElevation="2dp"
     app:cardCornerRadius="16dp">
     
