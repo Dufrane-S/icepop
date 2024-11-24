@@ -16,6 +16,7 @@ public class OrderDetail {
     int productId;
     int quantity;
     String iceName;
+    String img;
 
     public OrderDetail(OrderDetailRequest orderDetailRequest) {
         this.productId = orderDetailRequest.getProductId();

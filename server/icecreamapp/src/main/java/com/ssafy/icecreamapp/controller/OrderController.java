@@ -64,7 +64,8 @@ public class OrderController {
     @PostMapping("/orderList")
     @Operation(summary = "주문 내역 조회", description = "<b>string : email ``일 경우 조건 X<br>" +
             "int : order_id 0일 경우 조건 X<br>" +
-            "boolean : isRecent true일 경우 최근 주문 목록 10개만 조회 LIMIT 10")
+            "boolean : isRecent true일 경우 최근 주문 목록 10개만 조회 LIMIT 10" +
+            "<br>단건 조회 할 때 -> email= `` , orderId=1, recent=false or ture 상관 없음")
     public ResponseEntity<List<OrderInfo>> orderList(@RequestBody OrderCon orderCon) {
         return ResponseEntity.ok(orderService.selectOrdersWithCon2(orderCon));
     }
