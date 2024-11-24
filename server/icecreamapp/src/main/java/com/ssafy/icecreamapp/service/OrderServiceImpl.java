@@ -1,12 +1,10 @@
 package com.ssafy.icecreamapp.service;
 
-import com.ssafy.icecreamapp.exception.NoSuchElementsException;
 import com.ssafy.icecreamapp.model.dao.*;
 import com.ssafy.icecreamapp.model.dto.*;
 import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.request.OrderDetailRequest;
 import com.ssafy.icecreamapp.model.dto.request.OrderRequest;
-import com.ssafy.icecreamapp.model.dto.respond.MemberInfo;
 import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
                     throw new RuntimeException(e);
                 }
                 notificationDao.insertNotification(new Notification(memberId, order.getId(), 2));
-            }, 10, TimeUnit.SECONDS);
+            }, 10 + (int) (Math.random() * 6), TimeUnit.SECONDS);
 
         } catch (IOException e) {
             log.error("알림 발송 중 오류");
@@ -148,12 +146,12 @@ public class OrderServiceImpl implements OrderService {
             if (member != null) {
                 memberId = member.getId();
             } else {
-                throw new NoSuchElementsException("없는 사용자의 id : " + memberId);
+                throw new NoSuchElementException("없는 사용자의 id : " + memberId);
             }
         }
-        List<OrderInfo> orderInfos= orderDao.selectWithResultmap2(orderCon, memberId);
+        List<OrderInfo> orderInfos = orderDao.selectWithResultmap2(orderCon, memberId);
         // 제품 종류 몇가지인지 추가
-        for(OrderInfo orderInfo:orderInfos){
+        for (OrderInfo orderInfo : orderInfos) {
             orderInfo.setCategoryCount(orderInfo.getDetails().size());
         }
         return orderInfos;
