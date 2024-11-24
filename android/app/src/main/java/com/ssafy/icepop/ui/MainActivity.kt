@@ -9,6 +9,7 @@ import com.ssafy.icepop.ui.list.IceCreamDetailFragment
 import com.ssafy.icepop.ui.list.IceCreamListFragment
 import com.ssafy.icepop.ui.list.IceCreamOrderFragment
 import com.ssafy.icepop.ui.my.MyPageFragment
+import com.ssafy.icepop.ui.order.OrderListFragment
 import com.ssafy.smartstore_jetpack.base.BaseActivity
 
 private const val TAG = "MainActivity_ssafy"
@@ -87,6 +88,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 supportFragmentManager.popBackStack()
                 transaction.replace(R.id.main_fragment_layout, IceCreamListFragment())
             }
+            ORDER_LIST_FRAGMENT -> {
+                transaction.replace(R.id.main_fragment_layout, OrderListFragment())
+                    .addToBackStack(null)
+            }
 //            //장바구니
 //            1 -> {
 //                // 재주문
@@ -130,5 +135,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         const val ICE_CREAM_DETAIL_FRAGMENT = 1
         const val ICE_CREAM_ORDER_FRAGMENT = 2
         const val ICE_CREAM_LIST_FRAGMENT = 3
+        const val ORDER_LIST_FRAGMENT = 4
     }
 }

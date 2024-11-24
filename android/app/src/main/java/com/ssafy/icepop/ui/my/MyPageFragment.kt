@@ -36,18 +36,19 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
         mainActivity = context as MainActivity
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        mainActivity.hideBottomNav(false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
+        initEvent()
         getMyInfo()
         getRecentOrder()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        mainActivity.hideBottomNav(false)
     }
 
     private fun initAdapter() {
@@ -59,6 +60,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
             adapter = recentOrderAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
+        }
+    }
+
+    private fun initEvent() {
+        binding.orderListArea.setOnClickListener {
+            mainActivity.openFragment(MainActivity.ORDER_LIST_FRAGMENT)
         }
     }
 
