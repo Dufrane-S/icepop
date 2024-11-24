@@ -1,13 +1,15 @@
 package com.ssafy.smartstore_jetpack.util
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.icepop.R
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -72,5 +74,11 @@ object CommonUtils {
             context.getString(R.string.forty_over) -> 40
             else -> -1
         }
+    }
+
+    fun formatLongToDateTime(timestamp: Long): String {
+        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm")
+            .withZone(ZoneId.systemDefault()) // 시스템 기본 시간대
+        return formatter.format(Instant.ofEpochMilli(timestamp))
     }
 }

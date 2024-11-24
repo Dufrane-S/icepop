@@ -8,5 +8,7 @@ data class IceCreamOrder(
     val id: Int,
     val isforhere: Int,
     val priceSum: Int,
+    val discountSum: Int,
+    val resultSum: Int,
     val spoon: Int
 )

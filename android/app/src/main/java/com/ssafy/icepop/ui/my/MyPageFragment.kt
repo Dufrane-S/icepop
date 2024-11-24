@@ -8,7 +8,9 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.icepop.R
+import com.ssafy.icepop.data.model.dto.IceCreamOrder
 import com.ssafy.icepop.data.model.dto.Member
+import com.ssafy.icepop.data.model.dto.request.OrderRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentMyPageBinding
 import com.ssafy.icepop.ui.MainActivity
@@ -52,7 +54,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
 
         binding.recentOrderListRv.apply {
             adapter = recentOrderAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
     }
@@ -73,7 +75,24 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
         }
     }
 
-    private fun getRecentOrder() {}
+    private fun getRecentOrder() {
+        val email = ApplicationClass.sharedPreferencesUtil.getUser().email
+
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.orderService.getOrderList(OrderRequest(email = email, recent = true))
+            }.onSuccess {
+                setNotifyRecentOrderView(it)
+            }.onFailure {
+                Log.d(TAG, "getRecentOrder: 실패")
+            }
+        }
+    }
+
+    private fun setNotifyRecentOrderView(iceCreamOrder: List<IceCreamOrder>) {
+        recentOrderAdapter.iceCreamOrderList = iceCreamOrder
+        recentOrderAdapter.notifyDataSetChanged()
+    }
 
 
     private fun initMemberView(member: Member) {

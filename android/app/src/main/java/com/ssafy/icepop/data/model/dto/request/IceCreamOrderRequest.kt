@@ -7,5 +7,8 @@ data class IceCreamOrderRequest(
     val dryice: Int,
     val email: String,
     val isForHere: Int,
-    val spoon: Int
+    val spoon: Int,
+    val priceSum: Int,
+    val discountSum: Int,
+    val resultSum: Int
 )

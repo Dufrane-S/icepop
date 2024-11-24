@@ -119,6 +119,9 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
                 email = email,
                 spoon = spoonCount,
                 isForHere = selectOrderType,
+                priceSum = activityViewModel.totalPrice.value!!,
+                discountSum = activityViewModel.discountAmount.value!!,
+                resultSum = activityViewModel.finalPrice.value!!
             )
 
             makeOrder(iceCreamOrderRequest)
