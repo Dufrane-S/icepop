@@ -193,8 +193,6 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
         val imageUrl = ApplicationClass.USER_IMAGE_BASE_URL + member.img
         Glide.with(binding.root).load(imageUrl).into(binding.userImage)
 
-        100 - (member.discountRate * 100).toInt()
-
         binding.gradeTv.text = "${member.level} (${100 - (member.discountRate * 100).toInt()}%)할인"
     }
 

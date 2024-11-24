@@ -9,6 +9,7 @@ import com.ssafy.icepop.ui.list.IceCreamDetailFragment
 import com.ssafy.icepop.ui.list.IceCreamListFragment
 import com.ssafy.icepop.ui.list.IceCreamOrderFragment
 import com.ssafy.icepop.ui.my.MyPageFragment
+import com.ssafy.icepop.ui.order.OrderDetailFragment
 import com.ssafy.icepop.ui.order.OrderListFragment
 import com.ssafy.smartstore_jetpack.base.BaseActivity
 
@@ -92,6 +93,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 transaction.replace(R.id.main_fragment_layout, OrderListFragment())
                     .addToBackStack(null)
             }
+            ORDER_DETAIL_FRAGMENT -> {
+                val fragment =  OrderDetailFragment.newInstance(value)
+                transaction.replace(R.id.main_fragment_layout, fragment)
+                    .addToBackStack(null)
+            }
 //            //장바구니
 //            1 -> {
 //                // 재주문
@@ -136,5 +142,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         const val ICE_CREAM_ORDER_FRAGMENT = 2
         const val ICE_CREAM_LIST_FRAGMENT = 3
         const val ORDER_LIST_FRAGMENT = 4
+        const val ORDER_DETAIL_FRAGMENT = 5
     }
 }

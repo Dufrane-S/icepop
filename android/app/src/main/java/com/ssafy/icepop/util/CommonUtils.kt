@@ -27,6 +27,9 @@ object CommonUtils {
     const val NOTHING_NEXT_LEVEL = "다음 단계 없음"
     const val NOTHING_EXIST_LEVEL = "단계가 존재하지 않음"
 
+    const val MARKET = 1
+    const val TAKE_OUT = 2
+
     fun getNextUserLevel(level: String) : String {
         return when(level) {
             SEED_LEVEL -> SPROUT_LEVEL

@@ -9,6 +9,7 @@ import com.ssafy.icepop.R
 import com.ssafy.icepop.data.model.dto.IceCreamCartItem
 import com.ssafy.icepop.databinding.ItemCartBinding
 import com.ssafy.smartstore_jetpack.base.ApplicationClass.Companion.ICE_CREAM_IMAGE_BASE_URL
+import com.ssafy.smartstore_jetpack.util.CommonUtils
 
 class IceCreamCartAdapter(private val cartItems: List<IceCreamCartItem>) : RecyclerView.Adapter<IceCreamCartAdapter.IceCreamCartViewHolder>() {
 
@@ -18,7 +19,7 @@ class IceCreamCartAdapter(private val cartItems: List<IceCreamCartItem>) : Recyc
             Glide.with(binding.root).load(imageUrl).into(binding.iceCreamImage)
 
             binding.iceCreamName.text = cartItem.name
-            binding.iceCreamPrice.text = "${cartItem.price} 원"
+            binding.iceCreamPrice.text = CommonUtils.makeComma(cartItem.price)
             binding.iceCreamQuantity.text = "수량: ${cartItem.quantity}"
         }
     }

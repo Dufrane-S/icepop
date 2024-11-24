@@ -45,7 +45,7 @@ class OrderListFragment : BaseFragment<FragmentOrderListBinding>(
 
     private fun initAdapter() {
         orderListAdapter = OrderListAdapter(mutableListOf()) {
-
+            mainActivity.openFragment(MainActivity.ORDER_DETAIL_FRAGMENT, it.id)
         }
 
         binding.orderListRv.apply {

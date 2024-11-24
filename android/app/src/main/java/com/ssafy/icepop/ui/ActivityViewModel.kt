@@ -6,6 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.ssafy.icepop.data.model.dto.IceCreamCartItem
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.ceil
+import kotlin.math.floor
 
 class ActivityViewModel : ViewModel() {
     private val _cartItems: MutableLiveData<MutableMap<Int, IceCreamCartItem>> = MutableLiveData(mutableMapOf())
@@ -56,12 +60,13 @@ class ActivityViewModel : ViewModel() {
     }
 
     private fun calculateDiscount(total: Int, rate: Double) {
-        val discount = (total * (1 - rate)).toInt()
-        discountAmount.value = ((discount / 10) + 1) * 10
+        val discount = ceil(total * rate / 10) * 10
+        discountAmount.value = total - discount.toInt() // 정수로 변환
     }
 
     private fun updateFinalPrice(total: Int, discount: Int) {
-        finalPrice.value = ((total - discount) / 10) * 10
+        // 할인 후 금액을 버림 처리
+        finalPrice.value = floor((total - discount) / 10.0).toInt() * 10
     }
 
     fun setDiscountRate(rate: Double) {

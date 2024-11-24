@@ -82,6 +82,8 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
             // 원래 가격 표시
             binding.iceCreamDetailOriginalPriceTv.text = CommonUtils.makeComma(iceCream.price)
 
+
+
             val rate = iceCream.isEvent * 0.01
 
             val discountedPrice = Math.ceil(iceCream.price * (1 - rate)).toInt()
