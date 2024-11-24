@@ -18,6 +18,26 @@ object CommonUtils {
     const val MALE = 1
     const val FEMALE = 2
 
+    //새싹, 꽃, 열매, 나무
+    const val SEED_LEVEL = "씨앗"
+    const val SPROUT_LEVEL = "새싹"
+    const val FLOWER_LEVEL = "꽃"
+    const val FRUIT_LEVEL = "열매"
+    const val TREE_LEVEL = "나무"
+    const val NOTHING_NEXT_LEVEL = "다음 단계 없음"
+    const val NOTHING_EXIST_LEVEL = "단계가 존재하지 않음"
+
+    fun getNextUserLevel(level: String) : String {
+        return when(level) {
+            SEED_LEVEL -> SPROUT_LEVEL
+            SPROUT_LEVEL -> FLOWER_LEVEL
+            FLOWER_LEVEL -> FRUIT_LEVEL
+            FRUIT_LEVEL -> TREE_LEVEL
+            TREE_LEVEL -> NOTHING_NEXT_LEVEL
+            else -> NOTHING_EXIST_LEVEL
+        }
+    }
+
     //천단위 콤마
     fun makeComma(num: Int): String {
         val comma = DecimalFormat("#,###")

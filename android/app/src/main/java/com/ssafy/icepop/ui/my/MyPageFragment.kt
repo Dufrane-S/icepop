@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.ssafy.icepop.R
 import com.ssafy.icepop.data.model.dto.IceCreamOrder
 import com.ssafy.icepop.data.model.dto.Member
@@ -15,6 +16,8 @@ import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentMyPageBinding
 import com.ssafy.icepop.ui.MainActivity
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
+import com.ssafy.smartstore_jetpack.base.ApplicationClass.Companion.ICE_CREAM_IMAGE_BASE_URL
+import com.ssafy.smartstore_jetpack.base.ApplicationClass.Companion.USER_IMAGE_BASE_URL
 import com.ssafy.smartstore_jetpack.base.BaseFragment
 import com.ssafy.smartstore_jetpack.util.CommonUtils
 import kotlinx.coroutines.launch
@@ -99,5 +102,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
         binding.myPageName.text = member.name
         binding.myPageAgeGenderTv.text = "${member.age}세(${CommonUtils.getGenderByNumber(member.gender)})"
         binding.myPageEmail.text = member.email
+
+        binding.levelTv.text = "${member.level} 단계"
+        binding.nextLevelTv.text =
+            "${CommonUtils.getNextUserLevel(member.level)}: + ${CommonUtils.makeComma(member.nextLvRemain)}"
+
+        val imageUrl = USER_IMAGE_BASE_URL + member.img
+
+        Glide.with(binding.root).load(imageUrl).into(binding.levelImage)
+
+        binding.gradeProgressBar.progress = (50000 - member.nextLvRemain)
     }
 }
