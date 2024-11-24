@@ -78,7 +78,7 @@
 
 
     <select id="selectDetails" parameterType="int" resultType="OrderDetail">
-        select od.id, od.order_id, od.product_id, od.quantity, i.name as ice_name, i.img
+        select od.id, od.order_id, od.product_id, od.quantity, i.name as ice_name, i.img, i.price,i.isEvent
         from order_detail as od left join icecream as i on od.product_id = i.id
         where order_id = #{o_id}
     </select>

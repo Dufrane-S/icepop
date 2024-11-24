@@ -15,6 +15,9 @@ public class OrderDetail {
     int orderId;
     int productId;
     int quantity;
+    int price;
+    int isEvent;
+    int discountedPrice;
     String iceName;
     String img;
 

@@ -6,6 +6,7 @@ import com.ssafy.icecreamapp.model.dto.respond.ReviewInfo;
 import com.ssafy.icecreamapp.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class ReviewController {
             "int : orderId 주문번호<br>" +
             "boolean : recent true일시 최근 5개 LIMIT 5")
     public ResponseEntity<List<ReviewInfo>> getReviews(@RequestBody ReviewCon reviewCon) {
-        return ResponseEntity.ok(reviewService.selectReviews(reviewCon));
+        return ResponseEntity.status(HttpStatus.CREATED).body(reviewService.selectReviews(reviewCon));
     }
 
     @PostMapping("/updateReview")

@@ -153,8 +153,13 @@ public class OrderServiceImpl implements OrderService {
         // 제품 종류 몇가지인지 추가
         for (OrderInfo orderInfo : orderInfos) {
             orderInfo.setCategoryCount(orderInfo.getDetails().size());
+            for (OrderDetail detail : orderInfo.getDetails()) {
+                float discountRate = (float) (100 - detail.getIsEvent()) / 100;
+                int resultPrice = (int) (detail.getPrice() * discountRate) / 10 * 10;
+                detail.setDiscountedPrice(resultPrice);
+            }
         }
-        if(orderCon.getOrderId()!=0 && orderInfos.isEmpty()){
+        if (orderCon.getOrderId() != 0 && orderInfos.isEmpty()) {
             throw new MyNoSuchElementException("주문 번호", Integer.toString(orderCon.getOrderId()));
         }
         return orderInfos;

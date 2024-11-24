@@ -21,23 +21,25 @@
     </insert>
 
 
-    <select id="selectReviewsByMemberId"  resultType="Review">
-        SELECT id,
-        order_id,
-        member_id,
-        rate,
-        date,
-        content
-        FROM review
+    <select id="selectReviewsByMemberId"  resultType="ReviewInfo">
+        select r.order_id,
+        r.date,
+        r.rate,
+        r.content,
+        m.email,
+        m.name
+        FROM review as r
+        left join member as m
+        on r.member_id = m.id
         <where>
             <if test="memberId!=0">
-                AND member_id=#{memberId}
+                AND r.member_id=#{memberId}
             </if>
             <if test="reviewCon.orderId!=0">
-                AND order_id=#{reviewCon.orderId}
+                AND r.order_id=#{reviewCon.orderId}
             </if>
         </where>
-        order by id desc
+        order by r.id desc
         <if test="reviewCon.isRecent==true">
             LIMIT 5
         </if>

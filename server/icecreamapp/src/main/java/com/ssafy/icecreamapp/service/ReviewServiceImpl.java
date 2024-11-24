@@ -38,19 +38,9 @@ public class ReviewServiceImpl implements ReviewService {
             member = memberDao.selectByEmail(reviewCon.getEmail());
             if (member == null) throw new MyNoSuchElementException("이메일", reviewCon.getEmail());
         }
-        List<ReviewInfo> reviewInfoList = new ArrayList<>();
-        List<Review> reviewList = reviewDao.selectReviewsByMemberId(reviewCon, member.getId());
 
-        for (Review review : reviewList) {
-            if (member.getId() != review.getMemberId()) {
-                member = memberDao.selectById(review.getMemberId());
-            }
-            ReviewInfo reviewInfo = new ReviewInfo(review);
-            reviewInfo.setMemberEmail(member.getEmail());
-            reviewInfo.setName(member.getName());
-            reviewInfoList.add(reviewInfo);
-        }
-        return reviewInfoList;
+
+        return reviewDao.selectReviewsByMemberId(reviewCon, member.getId());
     }
 
     @Override

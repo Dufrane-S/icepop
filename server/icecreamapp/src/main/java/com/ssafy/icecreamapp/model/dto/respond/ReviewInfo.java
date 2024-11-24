@@ -2,15 +2,17 @@ package com.ssafy.icecreamapp.model.dto.respond;
 
 import com.ssafy.icecreamapp.model.dto.Review;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class ReviewInfo {
     int orderId;
-    String memberEmail;
+    String email;
     long date;
     float rate;
     String name;
