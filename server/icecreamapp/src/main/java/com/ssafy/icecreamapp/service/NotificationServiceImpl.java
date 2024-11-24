@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.service;
 
+import com.ssafy.icecreamapp.exception.MyNoSuchElementException;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dao.NotificationDao;
 import com.ssafy.icecreamapp.model.dto.Member;
@@ -19,6 +20,9 @@ public class NotificationServiceImpl {
 
     public List<NotificationInfo> getNotiByEmail(String email) {
         Member member = memberDao.selectByEmail(email);
+        if (member == null) {
+            throw new MyNoSuchElementException("이메일",email);
+        }
         List<Notification> list = notificationDao.selectNotisByMemberId(member.getId());
         List<NotificationInfo> result = new ArrayList<>();
         for (Notification notification : list) {

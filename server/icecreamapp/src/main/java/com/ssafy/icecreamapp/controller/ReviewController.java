@@ -35,7 +35,7 @@ public class ReviewController {
     @PostMapping("/getReviews")
     @Operation(summary = "리뷰 리스트", description = "<b>string : email <br>" +
             "int : orderId 주문번호<br>" +
-            "boolean : isRecent true일시 최근 5개 LIMIT 5")
+            "boolean : recent true일시 최근 5개 LIMIT 5")
     public ResponseEntity<List<ReviewInfo>> getReviews(@RequestBody ReviewCon reviewCon) {
         return ResponseEntity.ok(reviewService.selectReviews(reviewCon));
     }

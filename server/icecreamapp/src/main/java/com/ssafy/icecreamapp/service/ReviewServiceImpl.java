@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.service;
 
+import com.ssafy.icecreamapp.exception.MyNoSuchElementException;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dao.ReviewDao;
 import com.ssafy.icecreamapp.model.dto.Member;
@@ -33,8 +34,9 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewInfo> selectReviews(ReviewCon reviewCon) {
         Member member = new Member();
 
-        if (reviewCon.getEmail() != null) {
+        if (reviewCon.getEmail() != "") {
             member = memberDao.selectByEmail(reviewCon.getEmail());
+            if (member == null) throw new MyNoSuchElementException("이메일", reviewCon.getEmail());
         }
         List<ReviewInfo> reviewInfoList = new ArrayList<>();
         List<Review> reviewList = reviewDao.selectReviewsByMemberId(reviewCon, member.getId());

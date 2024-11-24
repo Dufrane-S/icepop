@@ -91,16 +91,16 @@
     <select id="selectWithResultmap2" resultMap="detailResult">
         select o.id, o.date, o.spoon, o.dryice, o.price_sum, o.discount_sum, o.result_sum, o.isforhere, o.id as o_id
 
-             , m.email
+        , m.email
         from `order` as o
         left join member as m
         on o.member_id = m.id
         <where>
             <if test="memberId!=``">
-                o.member_id=#{memberId}
+                and o.member_id=#{memberId}
             </if>
-            <if test="orderCon.orderId!=0">
-                o.id =#{orderCon.orderId}
+            <if test="orderCon.orderId != 0">
+                and o.id =#{orderCon.orderId}
             </if>
         </where>
         order by o.id desc

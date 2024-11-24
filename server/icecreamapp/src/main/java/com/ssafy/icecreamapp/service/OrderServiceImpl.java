@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.service;
 
+import com.ssafy.icecreamapp.exception.MyNoSuchElementException;
 import com.ssafy.icecreamapp.model.dao.*;
 import com.ssafy.icecreamapp.model.dto.*;
 import com.ssafy.icecreamapp.model.dto.request.OrderCon;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -146,13 +146,16 @@ public class OrderServiceImpl implements OrderService {
             if (member != null) {
                 memberId = member.getId();
             } else {
-                throw new NoSuchElementException("없는 사용자의 id : " + memberId);
+                throw new MyNoSuchElementException("이메일", orderCon.getEmail());
             }
         }
         List<OrderInfo> orderInfos = orderDao.selectWithResultmap2(orderCon, memberId);
         // 제품 종류 몇가지인지 추가
         for (OrderInfo orderInfo : orderInfos) {
             orderInfo.setCategoryCount(orderInfo.getDetails().size());
+        }
+        if(orderCon.getOrderId()!=0 && orderInfos.isEmpty()){
+            throw new MyNoSuchElementException("주문 번호", Integer.toString(orderCon.getOrderId()));
         }
         return orderInfos;
     }

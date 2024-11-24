@@ -14,5 +14,5 @@ public class ReviewCon {
     @Schema(example = "0", description = "주문번호")
     int orderId;
     @Schema(example = "false", description = "최근 조회 여부")
-    boolean isRecent;
+    boolean recent;
 }
