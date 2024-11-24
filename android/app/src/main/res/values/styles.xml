@@ -88,4 +88,10 @@
         <item name="android:fontFamily">@font/font</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/hint_color</item>
+        <item name="colorControlActivated">#FFFF00</item>
+        <item name="android:colorPressedHighlight">@color/hint_color</item>
+    </style>
 </resources>

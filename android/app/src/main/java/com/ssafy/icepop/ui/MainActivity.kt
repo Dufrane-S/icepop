@@ -1,5 +1,6 @@
 package com.ssafy.icepop.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.ssafy.icepop.R
@@ -11,6 +12,7 @@ import com.ssafy.icepop.ui.list.IceCreamOrderFragment
 import com.ssafy.icepop.ui.my.MyPageFragment
 import com.ssafy.icepop.ui.order.OrderDetailFragment
 import com.ssafy.icepop.ui.order.OrderListFragment
+import com.ssafy.icepop.ui.order.OrderReviewFragment
 import com.ssafy.smartstore_jetpack.base.BaseActivity
 
 private const val TAG = "MainActivity_ssafy"
@@ -94,9 +96,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     .addToBackStack(null)
             }
             ORDER_DETAIL_FRAGMENT -> {
-                val fragment =  OrderDetailFragment.newInstance(value)
+                val fragment = OrderDetailFragment.newInstance(value)
                 transaction.replace(R.id.main_fragment_layout, fragment)
                     .addToBackStack(null)
+            }
+            ORDER_REVIEW_FRAGMENT -> {
+                val fragment = OrderReviewFragment.newInstance(value)
+                transaction.replace(R.id.main_fragment_layout, fragment)
+                    .addToBackStack(null)
+            }
+            HOME_FRAGMENT -> {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent)
             }
 //            //장바구니
 //            1 -> {
@@ -143,5 +156,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         const val ICE_CREAM_LIST_FRAGMENT = 3
         const val ORDER_LIST_FRAGMENT = 4
         const val ORDER_DETAIL_FRAGMENT = 5
+        const val ORDER_REVIEW_FRAGMENT = 6
+        const val HOME_FRAGMENT = 7
     }
 }

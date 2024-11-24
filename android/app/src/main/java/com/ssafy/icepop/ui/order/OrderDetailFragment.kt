@@ -47,7 +47,9 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding>(
 
         initAdapter()
 
+
         if (orderId != -1) {
+            initEvent()
             getMyInfo()
             getOrderDetailById(orderId)
         }
@@ -63,6 +65,12 @@ class OrderDetailFragment : BaseFragment<FragmentOrderDetailBinding>(
         }
 
         CommonUtils.setVerticalDivider(binding.orderIceCreamListRv.context, binding.orderIceCreamListRv)
+    }
+
+    private fun initEvent() {
+        binding.reviewBtn.setOnClickListener {
+            mainActivity.openFragment(MainActivity.ORDER_REVIEW_FRAGMENT, orderId)
+        }
     }
 
     private fun getOrderDetailById(id: Int) {

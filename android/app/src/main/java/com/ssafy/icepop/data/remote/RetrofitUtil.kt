@@ -8,5 +8,6 @@ class RetrofitUtil {
         val iceCreamService: IceCreamService = ApplicationClass.retrofit.create(IceCreamService::class.java)
         val orderService: OrderService = ApplicationClass.retrofit.create(OrderService::class.java)
         val notificationService: NotificationService = ApplicationClass.retrofit.create(NotificationService::class.java)
+        val reviewService: ReviewService = ApplicationClass.retrofit.create(ReviewService::class.java)
     }
 }

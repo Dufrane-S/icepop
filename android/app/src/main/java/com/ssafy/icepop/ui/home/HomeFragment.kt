@@ -21,8 +21,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding> (
         mainActivity = context as MainActivity
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
         mainActivity.hideBottomNav(false)
     }

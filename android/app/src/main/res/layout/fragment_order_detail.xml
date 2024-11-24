@@ -244,7 +244,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/order_btn"
+            android:id="@+id/review_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="후기 작성"

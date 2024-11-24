@@ -53,7 +53,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
 
     private fun initAdapter() {
         recentOrderAdapter = RecentOrderAdapter(mutableListOf()) {
-
+            mainActivity.openFragment(MainActivity.ORDER_DETAIL_FRAGMENT, it.id)
         }
 
         binding.recentOrderListRv.apply {
