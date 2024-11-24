@@ -37,7 +37,7 @@ CREATE TABLE `icecreamapp`.`member` (
   `spoon` INT NULL DEFAULT 0, #스푼
   `dryice` INT NULL DEFAULT 0, #드라이아이스
   `isforhere` INT NULL DEFAULT 0, #매장/포장
-  `dicount_sum` INT ,# 할인 합계
+  `discount_sum` INT ,# 할인 합계
   `result_sum` INT ,# 최종 합계
   `price_sum` INT ,# 합계
   PRIMARY KEY (`id`));
