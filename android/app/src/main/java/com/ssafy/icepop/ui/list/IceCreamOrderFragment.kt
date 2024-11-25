@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.ssafy.icepop.R
+import com.ssafy.icepop.data.model.dto.IceCreamCartItem
 import com.ssafy.icepop.data.model.dto.Member
 import com.ssafy.icepop.data.model.dto.request.IceCreamOrderRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
@@ -57,8 +58,8 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         initView()
+        initAdapter()
         initEvent()
         registerObserver()
 
@@ -69,6 +70,26 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
     private fun initView() {
         binding.spoonCount.text = spoonCount.toString()
         binding.iceCount.text = iceCount.toString()
+    }
+
+    private fun initAdapter() {
+        iceCreamCartAdapter = IceCreamCartAdapter(mutableListOf())
+
+        iceCreamCartAdapter.iceCreamClickListener = object : IceCreamCartAdapter.IceCreamClickListener {
+            override fun plusClick(iceCreamCartItem: IceCreamCartItem) {
+                iceCreamItemPlusClick(iceCreamCartItem)
+            }
+
+            override fun minusClick(iceCreamCartItem: IceCreamCartItem) {
+                iceCreamItemMinusClick(iceCreamCartItem)
+            }
+        }
+        binding.iceCreamCartRv.apply {
+            adapter = iceCreamCartAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        CommonUtils.setVerticalDivider(binding.iceCreamCartRv.context, binding.iceCreamCartRv)
     }
 
     private fun initEvent() {
@@ -183,12 +204,8 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
         Log.d(TAG, "registerObserver: ")
         
         activityViewModel.cartItems.observe(viewLifecycleOwner) {
-            iceCreamCartAdapter = IceCreamCartAdapter(it.values.toList())
-            binding.iceCreamCartRv.adapter = iceCreamCartAdapter
-
-            binding.iceCreamCartRv.layoutManager = LinearLayoutManager(requireContext())
-
-            CommonUtils.setVerticalDivider(binding.iceCreamCartRv.context, binding.iceCreamCartRv)
+            iceCreamCartAdapter.cartItems = it.values.toList()
+            iceCreamCartAdapter.notifyDataSetChanged()
         }
 
         activityViewModel.totalPrice.observe(viewLifecycleOwner) {
@@ -202,6 +219,16 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
         activityViewModel.finalPrice.observe(viewLifecycleOwner) { finalPrice ->
             binding.totalPriceTv.text = "최종 금액: ${CommonUtils.makeComma(finalPrice)}"
         }
+    }
+
+    private fun iceCreamItemPlusClick(iceCreamCartItem: IceCreamCartItem) {
+        val cartItem = iceCreamCartItem.copy(quantity = 1)
+
+        activityViewModel.addToCart(cartItem)
+    }
+
+    private fun iceCreamItemMinusClick(iceCreamCartItem: IceCreamCartItem) {
+        activityViewModel.removeFromCart(iceCreamCartItem.productId)
     }
 
     private fun getMyInfo() {

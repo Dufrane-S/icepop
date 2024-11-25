@@ -57,6 +57,26 @@ class ActivityViewModel : ViewModel() {
         _isCartEmpty.value = currentCart.isEmpty()
     }
 
+    fun removeFromCart(productId: Int, decrementQuantity: Int = 1) {
+        val currentCart = _cartItems.value ?: return
+
+        if (currentCart.containsKey(productId)) {
+            val item = currentCart[productId]
+            item?.let {
+                it.quantity -= decrementQuantity
+                if (it.quantity <= 0) {
+                    currentCart.remove(productId)
+                } else {
+                    currentCart[productId] = it.copy(quantity = it.quantity)
+                }
+            }
+        }
+
+        _cartItems.value = currentCart.toMap().toMutableMap()
+        _isCartEmpty.value = currentCart.isEmpty()
+    }
+
+
     fun resetCart() {
         _cartItems.value = mutableMapOf()
         _isCartEmpty.value = true
