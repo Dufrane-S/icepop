@@ -26,7 +26,7 @@
         android:text="AI가 추천하는 아이스크림과 할인 혜택을 지금 바로 만나보세요!"/>
 
     <TextView
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -34,7 +34,7 @@
         android:text="(아이스크림 목록에서 확인가능합니다.)"/>
 
     <TextView
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="32sp"
@@ -47,6 +47,7 @@
         android:layout_height="200dp"
         android:scrollbars="vertical"
         android:scrollbarFadeDuration="0"
+        android:layout_marginTop="4dp"
         android:paddingHorizontal="8dp"
         android:paddingVertical="8dp"
         android:background="@drawable/custom_notification_rv" />
@@ -60,6 +61,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="주문후기"
             android:textColor="@color/black"
             android:textSize="32sp"
