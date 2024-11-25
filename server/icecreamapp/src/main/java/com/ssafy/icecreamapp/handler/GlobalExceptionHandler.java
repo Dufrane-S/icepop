@@ -1,5 +1,6 @@
 package com.ssafy.icecreamapp.handler;
 
+import com.ssafy.icecreamapp.exception.AiResponseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleException(Exception e) {
         e.printStackTrace();
+        Map<String, Object> response = makeResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(AiResponseException.class)
+    public ResponseEntity<Map<String,Object>>handleAiResponseException(AiResponseException e){
         Map<String, Object> response = makeResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
