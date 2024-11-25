@@ -139,8 +139,7 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             val payload = Payload()
             payload.setApplicationId(ApplicationClass.APPLICATION_ID)
                 .setOrderName(orderName)
-                .setPg("kakao")
-                .setMethod("카카오페이")
+//                .setPg("")
                 .setOrderId("1234")
                 .setPrice(activityViewModel.finalPrice.value!!.toDouble())
 
