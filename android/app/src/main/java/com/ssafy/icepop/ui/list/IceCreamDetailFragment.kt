@@ -119,6 +119,8 @@ class IceCreamDetailFragment : BaseFragment<FragmentIceCreamDetailBinding> (
             )
 
             activityViewModel.addToCart(iceCreamCartItem)
+
+            mainActivity.openFragment(MainActivity.ICE_CREAM_LIST_FRAGMENT)
         }
 
         binding.countPlusBtn.setOnClickListener {

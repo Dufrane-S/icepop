@@ -211,7 +211,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="40dp"
-            android:text="주문하기"
+            android:text="장바구니 담기"
             style="@style/customMaterialButtonStyle" />
     </LinearLayout>
 
