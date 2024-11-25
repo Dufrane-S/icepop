@@ -9,17 +9,20 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Typeface
 import android.nfc.NfcAdapter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -428,6 +431,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             .setTitle("beacon 테스트")
             .setMessage("becon 내용")
 
+
         // Positive 버튼 추가
         builder.setPositiveButton("확인") { dialog, _ ->
             //comment를 추가하는 코드
@@ -435,9 +439,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             dialog.dismiss()
         }
 
+
         // AlertDialog 생성 및 표시
         val dialog = builder.create()
+
+        dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
+
         dialog.show()
+
+        val textView = dialog.findViewById<TextView>(android.R.id.message)
+        val face = ResourcesCompat.getFont(this, R.font.meet_me)
+
+        textView?.typeface = face
     }
 
     companion object {

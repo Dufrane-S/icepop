@@ -237,6 +237,8 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
             .setNegativeButton("Cancel") { _, _ -> }
             .create()
 
+        dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
+
         // 다이얼로그 표시
         dialog.show()
     }
@@ -311,6 +313,8 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
             }
             .setNegativeButton("Cancel") { _, _ -> }
             .create()
+
+        dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
 
         // 다이얼로그 표시
         dialog.show()
