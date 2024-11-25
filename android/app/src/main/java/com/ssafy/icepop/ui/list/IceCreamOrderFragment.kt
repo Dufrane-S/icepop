@@ -204,8 +204,13 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
         Log.d(TAG, "registerObserver: ")
         
         activityViewModel.cartItems.observe(viewLifecycleOwner) {
-            iceCreamCartAdapter.cartItems = it.values.toList()
-            iceCreamCartAdapter.notifyDataSetChanged()
+            if (it.values.toList().isEmpty()) {
+                mainActivity.openFragment(MainActivity.ICE_CREAM_LIST_FRAGMENT)
+            }
+            else {
+                iceCreamCartAdapter.cartItems = it.values.toList()
+                iceCreamCartAdapter.notifyDataSetChanged()
+            }
         }
 
         activityViewModel.totalPrice.observe(viewLifecycleOwner) {
