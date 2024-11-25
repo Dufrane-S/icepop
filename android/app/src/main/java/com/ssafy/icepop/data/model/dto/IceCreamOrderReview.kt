@@ -6,5 +6,5 @@ data class IceCreamOrderReview(
     val memberEmail: String,
     val name: String,
     val orderId: Int,
-    val rate: Int
+    val rate: Double
 )

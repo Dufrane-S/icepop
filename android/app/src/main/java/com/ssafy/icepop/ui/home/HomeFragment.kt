@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.icepop.R
+import com.ssafy.icepop.data.model.dto.request.ReviewListRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentHomeBinding
 import com.ssafy.icepop.ui.MainActivity
@@ -25,6 +26,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding> (
     private lateinit var mainActivity: MainActivity
 
     private lateinit var notificationAdapter: NotificationAdapter
+    private lateinit var orderReviewAdapter: OrderReviewAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -35,8 +37,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding> (
         super.onViewCreated(view, savedInstanceState)
 
         initNotificationAdapter()
+        initOrderReviewAdapter()
 
         getNotificationData()
+        getReviews()
     }
 
     override fun onResume() {
@@ -55,6 +59,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding> (
         }
     }
 
+    private fun initOrderReviewAdapter() {
+        orderReviewAdapter = OrderReviewAdapter(mutableListOf())
+
+        binding.reviewRv.apply {
+            adapter = orderReviewAdapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+        }
+    }
+
     private fun getNotificationData() {
         val email = ApplicationClass.sharedPreferencesUtil.getUser().email
 
@@ -64,6 +78,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding> (
             }.onSuccess {
                 notificationAdapter.notificationItems = it
                 notificationAdapter.notifyDataSetChanged()
+            }.onFailure {
+                Log.d(TAG, "getNotificationData: 알림 데이터 가져오기 실패")
+            }
+        }
+    }
+
+    private fun getReviews() {
+        val email = ApplicationClass.sharedPreferencesUtil.getUser().email
+
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.reviewService.getReviewList(ReviewListRequest(email = email))
+            }.onSuccess {
+                orderReviewAdapter.reviews = it
+                orderReviewAdapter.notifyDataSetChanged()
             }.onFailure {
                 Log.d(TAG, "getNotificationData: 알림 데이터 가져오기 실패")
             }
