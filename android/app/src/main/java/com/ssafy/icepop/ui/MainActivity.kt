@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -425,20 +426,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun showStoreEventDialog() {
-        val inflater = LayoutInflater.from(this)
-
-        val builder = AlertDialog.Builder(this)
-            .setTitle("beacon 테스트")
-            .setMessage("becon 내용")
-
-
-        // Positive 버튼 추가
-        builder.setPositiveButton("확인") { dialog, _ ->
+        val builder = AlertDialog.Builder(this, R.style.AppAlertDialogTheme)
+            .setTitle("아이스크림 할인 이벤트!")
+            .setMessage("\uD83C\uDF89 특별한 할인 이벤트가 시작되었습니다! \uD83C\uDF89 \n" +
+                    "다양한 메뉴와 더 큰 혜택을 함께 즐기실 수 있는 이 기회를 놓치지 마세요!\n" +
+                    "목록에서 원하는 아이스크림을 찾아보시고, 할인된 가격으로 맛있게 즐겨보세요. \uD83D\uDE0B \n" +
+                    "목록에서 살펴보아요!!"
+            )
+            .setPositiveButton("확인") { dialog, _ ->
             //comment를 추가하는 코드
             // 확인 버튼 클릭 시 처리할 코드
             dialog.dismiss()
         }
-
 
         // AlertDialog 생성 및 표시
         val dialog = builder.create()
@@ -447,10 +446,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         dialog.show()
 
+        val title = dialog.findViewById<TextView>(android.R.id.title)
         val textView = dialog.findViewById<TextView>(android.R.id.message)
         val face = ResourcesCompat.getFont(this, R.font.meet_me)
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        val customFont = ResourcesCompat.getFont(this, R.font.meet_me)  // meet_me는 custom font 파일
+
+        positiveButton.setTextColor(getColor(R.color.primary_color))
+        positiveButton.typeface = customFont
 
         textView?.typeface = face
+
+        title?.textSize = 24f
+        textView?.textSize = 18f
     }
 
     companion object {
