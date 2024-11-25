@@ -158,8 +158,9 @@
 
             <ImageView
                 android:id="@+id/level_image"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="4dp"
                 tools:src="@drawable/right_arrow" />
         </LinearLayout>
 
