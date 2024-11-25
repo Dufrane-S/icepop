@@ -36,9 +36,9 @@ public class KakaoPayController {
             "카카오 결제 창 뜸 -> 결제하기 성공시 성공 후 이동 주소/?{pgtoken}으로 이동<br>" +
             "받은 pgtoken으로 스프링 서버에 다시 요청<br>" +
             "이 때 스프링 서버에서 주문을 db에 저장하고 fcm 발송<br>" +
-            "String : partner_user_id 이메일;\n" +
-            "String : item_name  xxxx 외 n건;\n" +
-            "int : quantity 아이스크림 갯수? 종류? 둘 중 아무거나 보내도 상관없음 이용자에게 표현되지 않음;\n" +
+            "String : partner_user_id 이메일;<br>" +
+            "String : item_name  xxxx 외 n건;<br>" +
+            "int : quantity 아이스크림 갯수? 종류? 둘 중 아무거나 보내도 상관없음 이용자에게 표현되지 않음;<br>" +
             "int : total_amount 할인된 결제 합계;")
     public KakaoPayResult kakaoPay(@RequestBody KakaoPayInitRequest kakaoPayInitRequest) throws JsonProcessingException {
 
