@@ -98,4 +98,7 @@ dependencies {
     // ViewModel 관련 라이브러리
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+
+    implementation("io.github.bootpay:android:4.9.0")
+
 }

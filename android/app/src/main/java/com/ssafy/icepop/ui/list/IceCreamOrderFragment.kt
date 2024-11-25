@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -20,6 +19,9 @@ import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import com.ssafy.smartstore_jetpack.base.BaseFragment
 import com.ssafy.smartstore_jetpack.util.CommonUtils
 import kotlinx.coroutines.launch
+import kr.co.bootpay.android.Bootpay
+import kr.co.bootpay.android.events.BootpayEventListener
+import kr.co.bootpay.android.models.Payload
 
 
 private const val TAG = "IceCreamOrderFragment_ssafy"
@@ -113,6 +115,9 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             val email = ApplicationClass.sharedPreferencesUtil.getUser().email
             val details = activityViewModel.cartItems.value?.values?.toList()!!
 
+            Log.d(TAG, "initEvent: $details")
+            Log.d(TAG, "initEvent: ${details.size}")
+
             val iceCreamOrderRequest = IceCreamOrderRequest(
                 details = details,
                 dryice = iceCount,
@@ -124,7 +129,66 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
                 resultSum = activityViewModel.finalPrice.value!!
             )
 
-            makeOrder(iceCreamOrderRequest)
+            val orderName = if (details.size == 1) {
+                details[0].name
+            }
+            else {
+                "${details[0].name} 외 ${details.size - 1}종"
+            }
+
+            val payload = Payload()
+            payload.setApplicationId(ApplicationClass.APPLICATION_ID)
+                .setOrderName(orderName)
+                .setPg("kakao")
+                .setMethod("카카오페이")
+                .setOrderId("1234")
+                .setPrice(activityViewModel.finalPrice.value!!.toDouble())
+
+            val map: MutableMap<String, Any> = HashMap()
+            map["1"] = "abcdef"
+            map["2"] = "abcdef55"
+            map["3"] = 1234
+            payload.setMetadata(map)
+
+            Bootpay.init(parentFragmentManager)
+                .setPayload(payload)
+                .setEventListener(object : BootpayEventListener {
+                    override fun onCancel(data: String) {
+                        Log.d("bootpay", "cancel: $data")
+                    }
+
+                    override fun onError(data: String) {
+                        Log.d("bootpay", "error: $data")
+                    }
+
+                    override fun onClose() {
+                        Log.d("bootpay", "close")
+                        //                        Bootpay.removePaymentWindow();
+                        Bootpay.dismiss()
+                    }
+
+                    override fun onIssued(data: String) {
+                        Log.d("bootpay", "issued: $data")
+                    }
+
+                    override fun onConfirm(data: String): Boolean {
+                        Log.d("bootpay", "issued: $data")
+//                        if (checkClientValidation(data)) {
+//                            // Bootpay().transactionConfirm() // 승인 요청(방법 1), 이때는 return false 를 해야함
+//                            return true //승인 요청(방법 2), return true시 내부적으로 승인을 요청함
+//                        } else {
+//                            Bootpay.dismiss() // 결제창 닫기
+//                            return false //승인하지 않음
+//                        }
+                        return true
+                    }
+
+                    override fun onDone(data: String) {
+                        makeOrder(iceCreamOrderRequest)
+                    }
+                }).requestPayment()
+
+
         }
     }
 

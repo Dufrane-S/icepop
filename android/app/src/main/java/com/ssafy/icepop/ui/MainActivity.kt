@@ -40,6 +40,7 @@ import com.ssafy.smartstore_jetpack.util.PermissionChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kr.co.bootpay.android.BootpayAnalytics
 import org.altbeacon.beacon.Beacon
 import org.altbeacon.beacon.BeaconManager
 import org.altbeacon.beacon.BeaconParser
@@ -142,6 +143,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        BootpayAnalytics.init(this, ApplicationClass.APPLICATION_ID)
 
         lastRunTime = ApplicationClass.sharedPreferencesUtil.getLastRunTime()
 

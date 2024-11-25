@@ -18,6 +18,7 @@ class ApplicationClass : Application() {
         const val SERVER_URL = "http://192.168.219.177:8080/"
         const val ICE_CREAM_IMAGE_BASE_URL = "${SERVER_URL}ice/img/"
         const val USER_IMAGE_BASE_URL = "${SERVER_URL}member/grade-img/"
+        const val APPLICATION_ID = "6744274a31d38115ba3fc7f0"
 //        const val SERVER_URL = "http://localhost:8080/"
 //        const val MENU_IMGS_URL = "${SERVER_URL}imgs/menu/"
 //        const val IMGS_URL = "${SERVER_URL}imgs/"
