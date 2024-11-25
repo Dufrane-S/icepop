@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private final FirebaseCloudMessageServiceWithData fcmService;
     private final NotificationDao notificationDao;
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
-
+    private final IcecreamDao icecreamDao;
 
     @Override
     @Transactional
@@ -65,6 +65,8 @@ public class OrderServiceImpl implements OrderService {
         for (OrderDetail detail : list) {
             detail.setOrderId(order.getId());
             orderDetailDao.insertDetail(detail);
+            //아이스크림 판매량 업데이트
+            icecreamDao.updateIcecreamById(detail.getProductId(), detail.getQuantity(), member.getAge(), member.getGender());
         }
         log.info("order : {}", order);
         log.info("orderDetails : {}", list);
@@ -73,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
         //member 주문 금액 update
         int result = memberDao.updateSum(orderRequest.getEmail(), orderRequest.getDiscountSum());
 
-        if(member.getNotificationToken()==null){
+        if (member.getNotificationToken() == null) {
             throw new MyNoSuchElementException("토큰", member.getEmail());
         }
         try {
