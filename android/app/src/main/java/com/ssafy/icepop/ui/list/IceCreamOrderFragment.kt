@@ -265,14 +265,5 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
         private const val MARKET = 1
         private const val TAKE_OUT = 2
         private const val TYPE_NOTHING = -1
-
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            IceCreamOrderFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
     }
 }
