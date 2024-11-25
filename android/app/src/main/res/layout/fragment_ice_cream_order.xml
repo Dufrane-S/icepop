@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:text="주문 유형"
             android:textColor="@color/black"
             android:textSize="30sp" />
@@ -50,12 +50,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginVertical="15dp"
             android:gravity="center" >
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/order_type_toggle_group"
-                android:layout_width="320dp"
+                android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 app:singleSelection="true"
                 app:checkedButton="@+id/market_button">
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="15dp"
             android:text="추가 물품"
             android:textColor="@color/black"
             android:textSize="30sp" />
@@ -110,8 +110,7 @@
             android:id="@+id/spoon_info_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="16dp">
+            android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,8 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="16dp">
+            android:layout_margin="16dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -233,8 +231,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginVertical="10dp"
+            android:layout_margin="16dp"
             android:text="금액"
             android:textColor="@color/black"
             android:textSize="30sp" />
@@ -248,8 +245,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="16dp">
+            android:layout_margin="16dp">
 
             <TextView
                 android:id="@+id/order_price_tv"
