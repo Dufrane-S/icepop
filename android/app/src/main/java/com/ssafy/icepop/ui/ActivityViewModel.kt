@@ -39,6 +39,9 @@ class ActivityViewModel : ViewModel() {
         addSource(discountAmount) { updateFinalPrice(totalPrice.value ?: 0, it) }
     }
 
+    private val _orderItemClick : MutableLiveData<Boolean> = MutableLiveData(false)
+    val orderItemClick: LiveData<Boolean> get() = _orderItemClick
+
     fun addToCart(item: IceCreamCartItem) {
         val currentCart = _cartItems.value ?: mutableMapOf()
 
@@ -71,5 +74,13 @@ class ActivityViewModel : ViewModel() {
 
     fun setDiscountRate(rate: Double) {
         _discountRate.value = rate
+    }
+
+    fun setOrderItemClick() {
+        _orderItemClick.value  = true
+    }
+
+    fun resetOrderItemClick() {
+        _orderItemClick.value  = false
     }
 }

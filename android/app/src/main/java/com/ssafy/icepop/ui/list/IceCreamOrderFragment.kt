@@ -139,7 +139,6 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             val payload = Payload()
             payload.setApplicationId(ApplicationClass.APPLICATION_ID)
                 .setOrderName(orderName)
-//                .setPg("")
                 .setOrderId("1234")
                 .setPrice(activityViewModel.finalPrice.value!!.toDouble())
 
@@ -152,42 +151,13 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             Bootpay.init(parentFragmentManager)
                 .setPayload(payload)
                 .setEventListener(object : BootpayEventListener {
-                    override fun onCancel(data: String) {
-                        Log.d("bootpay", "cancel: $data")
-                    }
-
-                    override fun onError(data: String) {
-                        Log.d("bootpay", "error: $data")
-                    }
-
-                    override fun onClose() {
-                        Log.d("bootpay", "close")
-                        //                        Bootpay.removePaymentWindow();
-                        Bootpay.dismiss()
-                    }
-
-                    override fun onIssued(data: String) {
-                        Log.d("bootpay", "issued: $data")
-                    }
-
-                    override fun onConfirm(data: String): Boolean {
-                        Log.d("bootpay", "issued: $data")
-//                        if (checkClientValidation(data)) {
-//                            // Bootpay().transactionConfirm() // 승인 요청(방법 1), 이때는 return false 를 해야함
-//                            return true //승인 요청(방법 2), return true시 내부적으로 승인을 요청함
-//                        } else {
-//                            Bootpay.dismiss() // 결제창 닫기
-//                            return false //승인하지 않음
-//                        }
-                        return true
-                    }
-
-                    override fun onDone(data: String) {
-                        makeOrder(iceCreamOrderRequest)
-                    }
+                    override fun onCancel(data: String) {}
+                    override fun onError(data: String) {}
+                    override fun onClose() { Bootpay.dismiss() }
+                    override fun onIssued(data: String) {}
+                    override fun onConfirm(data: String): Boolean { return true }
+                    override fun onDone(data: String) { makeOrder(iceCreamOrderRequest) }
                 }).requestPayment()
-
-
         }
     }
 

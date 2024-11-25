@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.icepop.R
@@ -11,6 +12,7 @@ import com.ssafy.icepop.data.model.dto.IceCreamOrder
 import com.ssafy.icepop.data.model.dto.request.OrderRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentOrderListBinding
+import com.ssafy.icepop.ui.ActivityViewModel
 import com.ssafy.icepop.ui.MainActivity
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import com.ssafy.smartstore_jetpack.base.BaseFragment
@@ -22,6 +24,8 @@ class OrderListFragment : BaseFragment<FragmentOrderListBinding>(
     FragmentOrderListBinding::bind,
     R.layout.fragment_order_list
 ) {
+    private val activityViewModel: ActivityViewModel by activityViewModels()
+
     private lateinit var mainActivity: MainActivity
     private lateinit var orderListAdapter: OrderListAdapter
 
@@ -47,7 +51,7 @@ class OrderListFragment : BaseFragment<FragmentOrderListBinding>(
         orderListAdapter = OrderListAdapter(mutableListOf()) {
             mainActivity.openFragment(MainActivity.ORDER_DETAIL_FRAGMENT, it.id)
 
-            //true
+            activityViewModel.setOrderItemClick()
         }
 
         binding.orderListRv.apply {

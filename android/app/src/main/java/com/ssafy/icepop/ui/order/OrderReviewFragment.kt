@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.ssafy.icepop.R
 import com.ssafy.icepop.data.model.dto.request.ReviewPostRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.FragmentOrderReviewBinding
+import com.ssafy.icepop.ui.ActivityViewModel
 import com.ssafy.icepop.ui.MainActivity
 import com.ssafy.smartstore_jetpack.base.ApplicationClass
 import com.ssafy.smartstore_jetpack.base.BaseFragment
@@ -20,6 +22,8 @@ class OrderReviewFragment : BaseFragment<FragmentOrderReviewBinding>(
     FragmentOrderReviewBinding::bind,
     R.layout.fragment_order_review
 ) {
+    private val activityViewModel: ActivityViewModel by activityViewModels()
+
     private lateinit var mainActivity: MainActivity
 
     var orderId : Int = -1
@@ -76,6 +80,7 @@ class OrderReviewFragment : BaseFragment<FragmentOrderReviewBinding>(
                 )
             }.onSuccess {
                 showToast("작성 되었습니다.")
+                activityViewModel.resetOrderItemClick()
                 mainActivity.openFragment(MainActivity.HOME_FRAGMENT)
             }.onFailure {
                 Log.d(TAG, "postReview: 실패")

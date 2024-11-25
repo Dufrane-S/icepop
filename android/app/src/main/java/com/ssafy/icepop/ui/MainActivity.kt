@@ -18,6 +18,7 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.google.android.gms.tasks.OnCompleteListener
@@ -51,6 +52,8 @@ import org.altbeacon.beacon.Region
 
 private const val TAG = "MainActivity_ssafy"
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+
+    private val activityViewModel: ActivityViewModel by viewModels()
 
     private lateinit var nAdapter: NfcAdapter
     private lateinit var pIntent: PendingIntent
@@ -157,22 +160,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         // 뒤로 가기 버튼을 오버라이드하여 첫 번째 탭으로 이동
         onBackPressedDispatcher.addCallback(this) {
-
             if (binding.bottomNavigation.visibility == View.GONE) {
                 val className = supportFragmentManager.findFragmentById(R.id.main_fragment_layout)?.javaClass?.simpleName
+
+                val listItemClicked = activityViewModel.orderItemClick.value!!
+
+                if (listItemClicked && className == "OrderDetailFragment") {
+                    activityViewModel.resetOrderItemClick()
+                    openFragment(ORDER_LIST_FRAGMENT)
+                }
+
+                if (!listItemClicked && className =="OrderDetailFragment") {
+                    openFragment(MY_PAGE_FRAGMENT)
+                }
 
                 when (className) {
                     "IceCreamDetailFragment" -> openFragment(ICE_CREAM_LIST_FRAGMENT)
                     "IceCreamOrderFragment" -> openFragment(ICE_CREAM_LIST_FRAGMENT)
                     "OrderListFragment" -> openFragment(MY_PAGE_FRAGMENT)
-                    "OrderDetailFragment" -> openFragment(MY_PAGE_FRAGMENT)
+                    "OrderReviewFragment" -> openFragment(ORDER_DETAIL_FRAGMENT)
                 }
 
                 Log.d(TAG, "onCreate: ${supportFragmentManager.findFragmentById(R.id.main_fragment_layout)?.javaClass?.simpleName}")
                 Log.d(TAG, "onCreate: ${R.layout.fragment_ice_cream_detail}")
-            }
-            else {
-
             }
         }
 
