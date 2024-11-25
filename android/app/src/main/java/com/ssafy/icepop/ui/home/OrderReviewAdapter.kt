@@ -11,7 +11,11 @@ class OrderReviewAdapter(
 ) : RecyclerView.Adapter<OrderReviewAdapter.OrderReviewViewHolder>() {
     inner class OrderReviewViewHolder(private val binding : ItemOrderReviewBinding) :
     RecyclerView.ViewHolder(binding.root) {
-        fun bind(review : IceCreamOrderReview) {}
+        fun bind(review : IceCreamOrderReview) {
+            binding.reviewContent.text = review.content
+            binding.reviewRating.text = review.rate.toString()
+            binding.reviewUserName.text = review.name
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderReviewViewHolder {
