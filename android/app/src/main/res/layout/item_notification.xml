@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:textSize="16dp"
+        android:textSize="20sp"
         android:layout_marginVertical="10dp"
         tools:text="주문하신 메뉴가 나왔습니다." />
 </LinearLayout>

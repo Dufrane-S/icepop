@@ -25,23 +25,25 @@
         <TextView
             android:id="@+id/review_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="16dp"
+            android:layout_marginTop="16dp"
             android:gravity="start"
             android:textColor="@color/black"
             android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="체리 아이스크림 외 1개" />
 
         <LinearLayout
+            android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:gravity="end"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -49,7 +51,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -65,7 +67,9 @@
                     android:id="@+id/review_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/black"
+                    android:textSize="18sp"
                     tools:text="4,0" />
 
                 <View
@@ -76,7 +80,9 @@
                     android:id="@+id/review_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/black"
+                    android:textSize="18sp"
                     tools:text="asdfasdfasdfasdfasdfasdfasdf" />
 
             </LinearLayout>
