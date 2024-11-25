@@ -1,6 +1,7 @@
 package com.ssafy.icecreamapp.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.ssafy.icecreamapp.exception.AiResponseException;
 import com.ssafy.icecreamapp.model.dao.IcecreamDao;
 import com.ssafy.icecreamapp.model.dao.MemberDao;
 import com.ssafy.icecreamapp.model.dto.Icecream;
@@ -50,8 +51,8 @@ public class AiService {
 
         List<Icecream> icecreams = new ArrayList<>();
         String response = "";
-        boolean check = true;
-        while (check) {
+        int check = 0;
+        while (check<3) {
             try {
                 //요청
                 response = webClient.post()
@@ -73,11 +74,16 @@ public class AiService {
                     Icecream icecream = icecreamDao.selectIcecreamById(icecreamId);
                     icecreams.add(icecream);
                 }
-                check = false;
+                check=10;
             } catch (RuntimeException e) {
+                check++;
                 log.error("ai의 답변 error");
                 log.error(response);
             }
+        }
+        if(check==3){
+            log.error("Ai 응답 요청 횟수 3회 달성");
+            throw new AiResponseException("Ai 답변 오류 서버 확인");
         }
 
         return icecreams;

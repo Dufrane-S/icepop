@@ -73,15 +73,18 @@ public class OrderServiceImpl implements OrderService {
         //member 주문 금액 update
         int result = memberDao.updateSum(orderRequest.getEmail(), orderRequest.getDiscountSum());
 
+        if(member.getNotificationToken()==null){
+            throw new MyNoSuchElementException("토큰", member.getEmail());
+        }
         try {
-            fcmService.sendDataMessageTo("fExca8C9R-Cb_3g16LxDYL:APA91bE8Mi6KPtsxvnqzADGwnKTuc7_-xZcylK8MZjZBgQb-XlexU6nefM8tRoG36-IZcZbq1o_kro782RDhLQXYkcsOFN1g_KjV6wXpYbGFyC6E5uqFhtg",
+            fcmService.sendDataMessageTo(member.getNotificationToken(),
                     "주문 접수", order.getId() + "번 주문이 접수되었습니다.");
 
             notificationDao.insertNotification(new Notification(memberId, order.getId(), 1));
 
             scheduledExecutorService.schedule(() -> {
                 try {
-                    fcmService.sendDataMessageTo("fExca8C9R-Cb_3g16LxDYL:APA91bE8Mi6KPtsxvnqzADGwnKTuc7_-xZcylK8MZjZBgQb-XlexU6nefM8tRoG36-IZcZbq1o_kro782RDhLQXYkcsOFN1g_KjV6wXpYbGFyC6E5uqFhtg",
+                    fcmService.sendDataMessageTo(member.getNotificationToken(),
                             "준비 완료", order.getId() + "번 주문이 준비 완료되었습니다.");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
