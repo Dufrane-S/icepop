@@ -27,8 +27,8 @@ public class KakaoPay {
         this.quantity = kakaoPayInitRequest.getQuantity();
         this.total_amount = kakaoPayInitRequest.getTotal_amount();
         this.tax_free_amount = 0;
-        this.approval_url = "http://192.168.219.177/kakao/approved";
-        this.fail_url = "http://192.168.219.177/failed";
-        this.cancel_url = "http://192.168.219.177/canceled";
+        this.approval_url = "http://192.168.219.177:8080/kakao/approved";
+        this.fail_url = "http://192.168.219.177:8080/failed";
+        this.cancel_url = "http://192.168.219.177:8080/canceled";
     }
 }
