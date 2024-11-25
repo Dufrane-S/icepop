@@ -17,7 +17,7 @@ class FirebaseMessageService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
-        AuthActivity.uploadToken(token)
+        MainActivity.uploadToken(token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -46,7 +46,7 @@ class FirebaseMessageService : FirebaseMessagingService() {
         //클릭이 될지 안될지 모르는 인텐트 pendingintent
         val mainPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE)
 
-        val builder1 = NotificationCompat.Builder(this, AuthActivity.channel_id)
+        val builder1 = NotificationCompat.Builder(this, MainActivity.channel_id)
             .setSmallIcon(R.drawable.app_logo)
             .setContentTitle(messageTitle)
             .setContentText(messageContent)

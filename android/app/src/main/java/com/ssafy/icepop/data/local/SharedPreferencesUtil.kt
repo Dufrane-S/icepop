@@ -115,6 +115,4 @@ class SharedPreferencesUtil (context: Context) {
     fun getLastRunTime(): Long {
         return preferences.getLong(LAST_RUN_TIME, 0L)
     }
-
-
 }

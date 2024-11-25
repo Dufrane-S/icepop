@@ -60,9 +60,6 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
 
         initAdapter()
         initListener()
-
-//        getIceCreamByAI()
-        getIceCreamByPopularity()
         getAllIceCream()
     }
 
@@ -93,39 +90,48 @@ class IceCreamListFragment : BaseFragment<FragmentIceCreamListBinding> (
 
     private fun getIceCreamByPopularity() {
         val user = ApplicationClass.sharedPreferencesUtil.getUser()
-        if (iceCreamAllList.isEmpty()) {
-            lifecycleScope.launch {
-                runCatching {
-                    RetrofitUtil.iceCreamService.getAllIceCream(IceCreamRequest(age = user.age, gender = user.gender))
-                }.onSuccess {
-                    iceCreamListByPopularity.addAll(it)
-                }.onFailure {
-                    Log.d(TAG, "실패")
-                }
+
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.iceCreamService.getAllIceCream(IceCreamRequest(age = user.age, gender = user.gender))
+            }.onSuccess {
+                setNotifyRecyclerView(it)
+                iceCreamListByPopularity.addAll(it)
+            }.onFailure {
+                Log.d(TAG, "실패")
             }
-        }
-        else {
-            setNotifyRecyclerView(iceCreamListByPopularity)
         }
     }
 
     private fun getIceCreamByAI() {
         val user = ApplicationClass.sharedPreferencesUtil.getUser()
 
-        if (iceCreamListByAI.isEmpty()) {
-            lifecycleScope.launch {
-                runCatching {
-                    RetrofitUtil.iceCreamService.getIceCreamByAI(user.email)
-                }.onSuccess {
-                    iceCreamListByAI.addAll(it)
-                }.onFailure {
-                    Log.d(TAG, "실패")
-                }
+        lifecycleScope.launch {
+            runCatching {
+                RetrofitUtil.iceCreamService.getIceCreamByAI(user.email)
+            }.onSuccess {
+                setNotifyRecyclerView(iceCreamListByAI)
+                iceCreamListByAI.addAll(it)
+            }.onFailure {
+                Log.d(TAG, "실패")
             }
         }
-        else {
-            setNotifyRecyclerView(iceCreamListByAI)
-        }
+
+//        if (iceCreamListByAI.isEmpty()) {
+//            lifecycleScope.launch {
+//                runCatching {
+//                    RetrofitUtil.iceCreamService.getIceCreamByAI(user.email)
+//                }.onSuccess {
+//                    setNotifyRecyclerView(iceCreamListByAI)
+//                    iceCreamListByAI.addAll(it)
+//                }.onFailure {
+//                    Log.d(TAG, "실패")
+//                }
+//            }
+//        }
+//        else {
+//            setNotifyRecyclerView(iceCreamListByAI)
+//        }
     }
 
     private fun initAdapter() {
