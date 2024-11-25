@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.icecreamapp.model.dto.request.KakaoPayFinal;
 import com.ssafy.icecreamapp.model.dto.KakaoPay;
 import com.ssafy.icecreamapp.model.dto.request.KakaoPayInitRequest;
-import com.ssafy.icecreamapp.model.dto.request.KakaoPayResult;
+import com.ssafy.icecreamapp.model.dto.respond.KakaoPayResult;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/kakao")
@@ -36,10 +35,14 @@ public class KakaoPayController {
             "스프링 서버에서 앱으로 redirect url 전송 후 앱에서 webview로 redirect url 열기 <br>" +
             "카카오 결제 창 뜸 -> 결제하기 성공시 성공 후 이동 주소/?{pgtoken}으로 이동<br>" +
             "받은 pgtoken으로 스프링 서버에 다시 요청<br>" +
-            "이 때 스프링 서버에서 주문을 db에 저장하고 fcm 발송")
+            "이 때 스프링 서버에서 주문을 db에 저장하고 fcm 발송<br>" +
+            "String : partner_user_id 이메일;\n" +
+            "String : item_name  xxxx 외 n건;\n" +
+            "int : quantity 아이스크림 갯수? 종류? 둘 중 아무거나 보내도 상관없음 이용자에게 표현되지 않음;\n" +
+            "int : total_amount 할인된 결제 합계;")
     public KakaoPayResult kakaoPay(@RequestBody KakaoPayInitRequest kakaoPayInitRequest) throws JsonProcessingException {
 
-
+        log.info("kakaopayInitRequest"+kakaoPayInitRequest.toString());
         KakaoPay kakaoPay = new KakaoPay(kakaoPayInitRequest);
 
         //order 넣고 orderId 받아서 저장?
@@ -63,8 +66,9 @@ public class KakaoPayController {
         return kakaoPayResult;
     }
 
+    @Hidden
     @GetMapping("/approved")
-    public void approved(@RequestParam String pg_token) throws JsonProcessingException {
+    public String approved(@RequestParam String pg_token) throws JsonProcessingException {
 //      header가 없어서 현재 기술로서는 user구분이 불가능함 한 번에 하나의 주문만 처리한다고 가정해야햐함
         KakaoPay kakaoPay = kakaoPayList.get(0);
         KakaoPayFinal payFinal = new KakaoPayFinal(kakaoPay);
@@ -84,14 +88,20 @@ public class KakaoPayController {
                 .bodyToMono(JsonNode.class)
                 .block();
 
+        return "결제 성공";
     }
-    
+
+    @Hidden
     @GetMapping("/failed")
-    public void failed(){
+    public String failed(){
         kakaoPayList.clear();
+        return "결제 실패";
     }
+
+    @Hidden
     @GetMapping("/canceled")
-    public void canceled(){
+    public String canceled(){
         kakaoPayList.clear();
+        return "결제 취소";
     }
 }

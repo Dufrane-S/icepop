@@ -1,4 +1,4 @@
-package com.ssafy.icecreamapp.model.dto.request;
+package com.ssafy.icecreamapp.model.dto.respond;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Getter;

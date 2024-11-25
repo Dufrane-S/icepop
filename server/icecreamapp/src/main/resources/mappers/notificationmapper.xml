@@ -21,5 +21,6 @@
         select *
         from notification
         where member_id = #{memberId}
+        order by date desc
     </select>
 </mapper>

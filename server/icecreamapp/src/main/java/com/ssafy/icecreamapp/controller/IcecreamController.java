@@ -25,7 +25,7 @@ public class IcecreamController {
     private final IcecreamService icecreamService;
 
     @PostMapping("/list-with-con")
-    @Operation(summary = "아이스크림 리스트", description = "<b>아이스크림 종류 String : type,<br>" +
+    @Operation(summary = "아이스크림 리스트", description = "<b>아이스크림 종류 String : type 아이스크림, 케이크, 레디팩<br>" +
             "할인율 int : eventRate<br>" +
             "다 비워져있으면 모든 아이스크림 반환 <br>" +
             "int : age(남자 1, 여자 2)와 int : gender가 동시에 채워져 있을 경우 인기순 반영<br>" +
