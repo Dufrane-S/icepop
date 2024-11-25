@@ -67,6 +67,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
         binding.orderListArea.setOnClickListener {
             mainActivity.openFragment(MainActivity.ORDER_LIST_FRAGMENT)
         }
+        binding.logoutBtn.setOnClickListener {
+            ApplicationClass.sharedPreferencesUtil.deleteUser()
+            showToast("로그아웃 되었습니다.")
+            mainActivity.openFragment(MainActivity.AUTH_ACTIVITY)
+        }
     }
 
     private fun getMyInfo() {

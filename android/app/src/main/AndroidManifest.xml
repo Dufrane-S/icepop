@@ -40,21 +40,8 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.list.WebViewActivity"
-            android:exported="true"
-            android:theme="@style/Base.Theme.Icepop" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <!-- 스킴 및 호스트 지정 -->
-                <data
-                    android:scheme="kakaotalk"
-                    android:host="kakaopay" />
-            </intent-filter>
-        </activity>
+            android:name=".ui.SplashActivity"
+            android:exported="false" />
 
         <service
             android:name=".base.FirebaseMessageService"

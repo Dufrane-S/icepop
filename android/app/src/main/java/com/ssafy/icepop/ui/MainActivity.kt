@@ -31,6 +31,7 @@ import com.ssafy.icepop.R
 import com.ssafy.icepop.data.model.dto.request.TokenRequest
 import com.ssafy.icepop.data.remote.RetrofitUtil
 import com.ssafy.icepop.databinding.ActivityMainBinding
+import com.ssafy.icepop.ui.auth.AuthActivity
 import com.ssafy.icepop.ui.home.HomeFragment
 import com.ssafy.icepop.ui.list.IceCreamDetailFragment
 import com.ssafy.icepop.ui.list.IceCreamListFragment
@@ -355,6 +356,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             MY_PAGE_FRAGMENT -> {
                 transaction.replace(R.id.main_fragment_layout, MyPageFragment())
             }
+            AUTH_ACTIVITY -> {
+                val intent = Intent(this, AuthActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent)
+            }
         }
         transaction.commit()
     }
@@ -471,6 +478,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         const val ORDER_REVIEW_FRAGMENT = 6
         const val HOME_FRAGMENT = 7
         const val MY_PAGE_FRAGMENT = 8
+        const val AUTH_ACTIVITY = 9
 
         private const val BEACON_UUID = "e2c56db5-dffb-48d2-b060-d0f5a71096e0" // 우리반 모두 동일값
         private const val BEACON_MAJOR = "40011" // 우리반 모두 동일값

@@ -28,9 +28,17 @@ private const val TAG = "AuthActivity_ssafy"
 class AuthActivity : BaseActivity<ActivityAuthBinding>(ActivityAuthBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.auth_fragment_layout, LoginFragment())
-            .commit()
+
+        val userEmail = ApplicationClass.sharedPreferencesUtil.getUser().email
+
+        if (userEmail.isEmpty()) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.auth_fragment_layout, LoginFragment())
+                .commit()
+        }
+        else {
+            changeFragment(MAIN_ACTIVITY)
+        }
     }
 
     fun changeFragment(viewInt: Int) {
