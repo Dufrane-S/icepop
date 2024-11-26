@@ -426,8 +426,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun handleDialog() {
-//        val oneDayMillis = 24 * 60 * 60 * 1000L
-        val oneDayMillis = 1000L
+        val oneDayMillis = 24 * 60 * 60 * 1000L
+//        val oneDayMillis = 1000L
 
         if (System.currentTimeMillis() > lastRunTime + oneDayMillis) {
             Log.d(TAG, "handleDialog: inner")
