@@ -4,7 +4,12 @@ package com.ssafy.icepop.ui.my
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -72,6 +77,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
             showToast("로그아웃 되었습니다.")
             mainActivity.openFragment(MainActivity.AUTH_ACTIVITY)
         }
+
+        binding.levelTableTv.setOnClickListener {
+            showLevelDialog()
+        }
     }
 
     private fun getMyInfo() {
@@ -102,6 +111,47 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
                 Log.d(TAG, "getRecentOrder: 실패")
             }
         }
+    }
+
+    private fun showLevelDialog() {
+
+
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_level, null)
+
+        val builder = AlertDialog.Builder(requireContext(), R.style.AppAlertDialogTheme)
+            .setView(view)
+            .setTitle("사용자 등급관리표")
+            .setPositiveButton("확인") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        // AlertDialog 생성 및 표시
+        val dialog = builder.create()
+
+        // 다이얼로그를 표시하기 전에 크기 조정
+        dialog.setOnShowListener {
+            val window = dialog.window
+            window?.setLayout(800, 850)
+        }
+
+        dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
+
+        dialog.show()
+
+        val title = dialog.findViewById<TextView>(android.R.id.title)
+        val textView = dialog.findViewById<TextView>(android.R.id.message)
+        val face = ResourcesCompat.getFont(requireContext(), R.font.meet_me)
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        val customFont = ResourcesCompat.getFont(requireContext(), R.font.meet_me)  // meet_me는 custom font 파일
+
+        positiveButton.setTextColor(getColor(requireContext().resources, R.color.primary_color, null))
+        positiveButton.typeface = customFont
+
+        textView?.typeface = face
+
+        title?.textSize = 24f
+        textView?.textSize = 18f
     }
 
     private fun setNotifyRecentOrderView(iceCreamOrder: List<IceCreamOrder>) {

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:gravity="center">
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="end">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="씨앗"
+             android:textSize="24sp"
+             android:textColor="@color/black" />
+
+         <ImageView
+             android:src="@drawable/seed"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:gravity="center">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="새싹"
+             android:textSize="24sp"
+             android:textColor="@color/black" />
+
+         <ImageView
+             android:src="@drawable/plant"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:gravity="center">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text=" 꽃"
+             android:textSize="24sp"
+             android:textColor="@color/black"
+             android:layout_marginRight="10dp"
+             />
+
+
+         <ImageView
+             android:src="@drawable/flower"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:gravity="center">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="열매"
+             android:textSize="24sp"
+             android:textColor="@color/black" />
+
+         <ImageView
+             android:src="@drawable/berry"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+
+      </LinearLayout>
+   </LinearLayout>
+
+   <View
+       android:layout_width="16dp"
+       android:layout_height="0dp"/>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="+ 50,000원"
+          android:textSize="20sp"
+          android:textColor="@color/black"
+          android:layout_marginVertical="2dp" />
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="+ 50,000원"
+          android:textSize="20sp"
+          android:textColor="@color/black"
+          android:layout_marginVertical="2dp" />
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="+ 50,000원"
+          android:textSize="20sp"
+          android:textColor="@color/black"
+          android:layout_marginVertical="2dp" />
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="+ 50,000원"
+          android:textSize="20sp"
+          android:textColor="@color/black"
+          android:layout_marginVertical="2dp" />
+   </LinearLayout>
+
+   <View
+       android:layout_width="16dp"
+       android:layout_height="0dp"/>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="end">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="새싹"
+             android:textSize="24sp"
+             android:textColor="@color/black" />
+
+         <ImageView
+             android:src="@drawable/plant"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:gravity="center">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text=" 꽃"
+             android:textSize="24sp"
+             android:textColor="@color/black"
+             android:layout_marginRight="10dp"
+             />
+
+
+         <ImageView
+             android:src="@drawable/flower"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:gravity="center">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="열매"
+             android:textSize="24sp"
+             android:textColor="@color/black" />
+
+         <ImageView
+             android:src="@drawable/berry"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+
+      </LinearLayout>
+
+      <View
+          android:layout_width="0dp"
+          android:layout_height="8dp"/>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:gravity="center">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="나무"
+             android:textSize="24sp"
+             android:textColor="@color/black" />
+
+         <ImageView
+             android:src="@drawable/tree"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:scaleType="fitXY"
+             android:layout_marginStart="4dp" />
+      </LinearLayout>
+   </LinearLayout>
+
+</LinearLayout>
