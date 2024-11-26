@@ -150,35 +150,37 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
                 resultSum = activityViewModel.finalPrice.value!!
             )
 
-            val orderName = if (details.size == 1) {
-                details[0].name
-            }
-            else {
-                "${details[0].name} 외 ${details.size - 1}종"
-            }
+//            val orderName = if (details.size == 1) {
+//                details[0].name
+//            }
+//            else {
+//                "${details[0].name} 외 ${details.size - 1}종"
+//            }
+//
+//            val payload = Payload()
+//            payload.setApplicationId(ApplicationClass.APPLICATION_ID)
+//                .setOrderName(orderName)
+//                .setOrderId("1234")
+//                .setPrice(activityViewModel.finalPrice.value!!.toDouble())
+//
+//            val map: MutableMap<String, Any> = HashMap()
+//            map["1"] = "abcdef"
+//            map["2"] = "abcdef55"
+//            map["3"] = 1234
+//            payload.setMetadata(map)
+//
+//            Bootpay.init(parentFragmentManager)
+//                .setPayload(payload)
+//                .setEventListener(object : BootpayEventListener {
+//                    override fun onCancel(data: String) {}
+//                    override fun onError(data: String) {}
+//                    override fun onClose() { Bootpay.dismiss() }
+//                    override fun onIssued(data: String) {}
+//                    override fun onConfirm(data: String): Boolean { return true }
+//                    override fun onDone(data: String) { makeOrder(iceCreamOrderRequest) }
+//                }).requestPayment()
 
-            val payload = Payload()
-            payload.setApplicationId(ApplicationClass.APPLICATION_ID)
-                .setOrderName(orderName)
-                .setOrderId("1234")
-                .setPrice(activityViewModel.finalPrice.value!!.toDouble())
-
-            val map: MutableMap<String, Any> = HashMap()
-            map["1"] = "abcdef"
-            map["2"] = "abcdef55"
-            map["3"] = 1234
-            payload.setMetadata(map)
-
-            Bootpay.init(parentFragmentManager)
-                .setPayload(payload)
-                .setEventListener(object : BootpayEventListener {
-                    override fun onCancel(data: String) {}
-                    override fun onError(data: String) {}
-                    override fun onClose() { Bootpay.dismiss() }
-                    override fun onIssued(data: String) {}
-                    override fun onConfirm(data: String): Boolean { return true }
-                    override fun onDone(data: String) { makeOrder(iceCreamOrderRequest) }
-                }).requestPayment()
+            makeOrder(iceCreamOrderRequest)
         }
     }
 

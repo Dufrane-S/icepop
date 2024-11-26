@@ -85,11 +85,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding> (
     }
 
     private fun getReviews() {
-        val email = ApplicationClass.sharedPreferencesUtil.getUser().email
-
         lifecycleScope.launch {
             runCatching {
-                RetrofitUtil.reviewService.getReviewList(ReviewListRequest(email = email))
+                RetrofitUtil.reviewService.getReviewList(ReviewListRequest(""))
             }.onSuccess {
                 orderReviewAdapter.reviews = it
                 orderReviewAdapter.notifyDataSetChanged()

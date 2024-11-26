@@ -131,7 +131,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding> (
         // 다이얼로그를 표시하기 전에 크기 조정
         dialog.setOnShowListener {
             val window = dialog.window
-            window?.setLayout(800, 850)
+            window?.setLayout(800, 900)
         }
 
         dialog.window?.setBackgroundDrawableResource(R.drawable.dialog_background)

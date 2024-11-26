@@ -70,6 +70,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private var lastRunTime : Long = 0
 
+    private var flag = false
+
     private val region = Region(
         "estimote",
         listOf(
@@ -208,17 +210,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             checker.setOnGrantedListener{
                 //퍼미션 획득 성공일때
                 startScan()
+                flag = true
             }
 
             checker.requestPermissionLauncher.launch(runtimePermissions)
         } else { //이미 전체 권한이 있는 경우
             startScan()
+
+            flag = true
         }
     }
 
     override fun onPause() {
         super.onPause()
         nAdapter.disableForegroundDispatch(this)
+
+        Log.d(TAG, "onPause: stopMonistoring")
+
+        flag = false
 
         beaconManager.stopMonitoring(region)
         beaconManager.stopRangingBeacons(region)
@@ -423,10 +432,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         if (System.currentTimeMillis() > lastRunTime + oneDayMillis) {
             Log.d(TAG, "handleDialog: inner")
 
-            showStoreEventDialog()
+            if (flag) showStoreEventDialog()
 
             ApplicationClass.sharedPreferencesUtil.saveCurrentTime(System.currentTimeMillis())
         }
+
+        flag = false
 
         beaconManager.stopMonitoring(region)
         beaconManager.stopRangingBeacons(region)
