@@ -13,9 +13,10 @@ CREATE TABLE `icecreamapp`.`member` (
   `age` INT NULL, #나이
   `notification_token` VARCHAR(200) NULL, #안드로이드 알림 토큰
   PRIMARY KEY (`id`));
-  
- 
-  # 후기
+  CREATE INDEX idx_email ON member(email);
+
+
+# 후기
   
   DROP TABLE IF EXISTS review;
   CREATE TABLE `icecreamapp`.`review` (
