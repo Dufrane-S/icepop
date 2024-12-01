@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -26,7 +27,8 @@ public class KakaoPayController {
     public final ObjectMapper objectMapper;
 //    static private final Map<String,KakaoPay>kakaoPayMap= new HashMap<>();
     static private final List<KakaoPay>kakaoPayList = new ArrayList<>();
-    static private final String KAKAO_API_KEY="";
+    @Value("${api.kakao}")
+    private String KAKAO_API_KEY;
     private final WebClient webClient = WebClient.create();
     @PostMapping("/requestPay")
     @Operation(summary = "카카오페이 결제", description = "<b>현재 결제 성공 후 이동 주소를 localhost로 해두었기 때문에 pc 결제만 가능<br>" +
