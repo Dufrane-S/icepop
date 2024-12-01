@@ -12,6 +12,7 @@ import com.ssafy.icecreamapp.model.dto.request.OrderCon;
 import com.ssafy.icecreamapp.model.dto.respond.OrderInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -27,8 +28,8 @@ public class AiService {
     private final MemberDao memberDao;
     private final IcecreamDao icecreamDao;
     private final OrderService orderService;
-
-    String apiKey = "gpt_api_key";
+    @Value("${api.gpt}")
+    private String apiKey;
 
     public List<Icecream> aiRecommand(String email) {
         Member member = memberDao.selectByEmail(email);
@@ -52,7 +53,7 @@ public class AiService {
         List<Icecream> icecreams = new ArrayList<>();
         String response = "";
         int check = 0;
-        while (check<3) {
+        while (check < 3) {
             try {
                 //요청
                 response = webClient.post()
@@ -74,14 +75,14 @@ public class AiService {
                     Icecream icecream = icecreamDao.selectIcecreamById(icecreamId);
                     icecreams.add(icecream);
                 }
-                check=10;
+                check = 10;
             } catch (RuntimeException e) {
                 check++;
                 log.error("ai의 답변 error");
                 log.error(response);
             }
         }
-        if(check==3){
+        if (check == 3) {
             log.error("Ai 응답 요청 횟수 3회 달성");
             throw new AiResponseException("Ai 답변 오류 서버 확인");
         }
