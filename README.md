@@ -2,6 +2,9 @@
 ## 개요
 IcePop은 아이스크림 소비자용 스마트 스토어 앱으로 구매, 메뉴 확인 등의 기능을 제공합니다.
 
+## 사용 기술 스택
+### SpringBoot, MySQL, MyBatis
+
 ## 서버 실행 방법
 
 1. 최상위 폴더의 icecreamapp.jar과 icepop.sql을 다운 받습니다.
@@ -27,6 +30,8 @@ https://www.erdcloud.com/d/srt39q4vzhfyGSaCN
 5. [주문 1건당 1개의 리뷰 작성 및 수정 기능 ](https://github.com/Dufrane-S/icepop/blob/master/server/icecreamapp/src/main/java/com/ssafy/icecreamapp/service/ReviewServiceImpl.java)
 
 6. [사용자의 주문 내역과 ChatGPT Api를 이용한 사용자별 메뉴 AI 추천 기능 ](https://github.com/Dufrane-S/icepop/blob/master/server/icecreamapp/src/main/java/com/ssafy/icecreamapp/service/AiService.java)(api 키 소진으로 작동 X)
+
+
 
 
 ## 시연 영상
