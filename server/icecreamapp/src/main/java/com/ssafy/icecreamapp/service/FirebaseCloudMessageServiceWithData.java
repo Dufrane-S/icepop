@@ -11,6 +11,7 @@ import okhttp3.*;
 import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +35,8 @@ public class FirebaseCloudMessageServiceWithData {
     }
 
     public final ObjectMapper objectMapper;
-
+    @Value("${api.fcm_url}")
+    private String API_URL;
     /**
      * FCM에 push 요청을 보낼 때 인증을 위해 Header에 포함시킬 AccessToken 생성
      *
@@ -98,8 +100,9 @@ public class FirebaseCloudMessageServiceWithData {
 
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
+        log.error("url : {}",API_URL);
         Request request = new Request.Builder()
-                .url(Constants.API_URL)
+                .url(API_URL)
                 .post(requestBody)
                 // 전송 토큰 추가
                 .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())

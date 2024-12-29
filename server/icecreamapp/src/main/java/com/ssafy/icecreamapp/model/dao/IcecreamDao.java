@@ -13,7 +13,7 @@ public interface IcecreamDao {
 
     List<Icecream> selectIcecreamsByCon(IceSelectCon iceSelectCon);
 
-    void updateIcecreamById(int id, int quantity, int age, int gender);
+    int updateIcecreamById(int id, int quantity, int age, int gender);
 
     List<Icecream> selectIcecreamsByIds(List<Integer>idList);
 }

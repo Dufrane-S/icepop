@@ -39,8 +39,7 @@ public class OrderServiceImpl implements OrderService {
 
 //      이메일로 멤버 정보 획득
         Member member = memberDao.selectByEmail(orderRequest.getEmail());
-        int memberId = member.getId();
-        order.setMemberId(memberId);
+        order.setMemberId(member.getId());
 
 //      orderdetail 추출하여 합계 생성
         List<OrderDetailRequest> requestList = orderRequest.getDetails();
@@ -66,11 +65,15 @@ public class OrderServiceImpl implements OrderService {
             detail.setOrderId(order.getId());
             orderDetailDao.insertDetail(detail);
             //아이스크림 판매량 업데이트
-            icecreamDao.updateIcecreamById(detail.getProductId(), detail.getQuantity(), member.getAge(), member.getGender());
+            /*int result = icecreamDao.updateIcecreamById(detail.getProductId(), detail.getQuantity(), member.getAge(), member.getGender());
+            if(result==0){
+                throw new MyNoSuchElementException("제품 코드", Integer.toString(detail.getProductId()));
+            }*/
         }
+        asyncService.updateIcecream(list, member);
         log.info("order : {}", order);
         log.info("orderDetails : {}", list);
-        log.info("orderReqeust {}", orderRequest);
+        log.info("orderRequest {}", orderRequest);
 
         //member 주문 금액 update
         int result = memberDao.updateSum(orderRequest.getEmail(), orderRequest.getDiscountSum());
@@ -82,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
             fcmService.sendDataMessageTo(member.getNotificationToken(),
                     "주문 접수", order.getId() + "번 주문이 접수되었습니다.");
 
-            notificationDao.insertNotification(new Notification(memberId, order.getId(), 1));
+            notificationDao.insertNotification(new Notification(member.getId(), order.getId(), 1));
 
             scheduledExecutorService.schedule(() -> {
                 try {
@@ -91,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                notificationDao.insertNotification(new Notification(memberId, order.getId(), 2));
+                notificationDao.insertNotification(new Notification(member.getId(), order.getId(), 2));
             }, 10 + (int) (Math.random() * 6), TimeUnit.SECONDS);
 
         } catch (IOException e) {

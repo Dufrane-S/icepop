@@ -8,7 +8,4 @@ import java.util.List;
 public class Constants {
     public static final String FIREBASE_KEY_FILE = "firebase/firebase_service_key.json";
 
-    @Value("${api.fcm_url}")
-    public static String API_URL;
-
 }

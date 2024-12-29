@@ -169,7 +169,7 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
             map["3"] = 1234
             payload.setMetadata(map)
 
-            Bootpay.init(parentFragmentManager)
+            /*Bootpay.init(parentFragmentManager)
                 .setPayload(payload)
                 .setEventListener(object : BootpayEventListener {
                     override fun onCancel(data: String) {}
@@ -178,10 +178,10 @@ class IceCreamOrderFragment : BaseFragment<FragmentIceCreamOrderBinding>(
                     override fun onIssued(data: String) {}
                     override fun onConfirm(data: String): Boolean { return true }
                     override fun onDone(data: String) { makeOrder(iceCreamOrderRequest) }
-                }).requestPayment()
+                }).requestPayment()*/
 
             //주문하기
-//            makeOrder(iceCreamOrderRequest)
+            makeOrder(iceCreamOrderRequest)
         }
     }
 

@@ -1,2 +1,4 @@
 bfg-1.14.0.jar
 /server/icecreamapp/src/main/resources/application.properties
+server/icecreamapp/src/main/resources/firebase/firebase_service_key.json
+android/app/google-services.json
