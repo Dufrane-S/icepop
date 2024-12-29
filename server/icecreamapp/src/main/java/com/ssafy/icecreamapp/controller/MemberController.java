@@ -100,7 +100,7 @@ public class MemberController {
     @PostMapping("/setToken")
     @Operation(summary = "토큰 저장", description = "<b>string : email<br>" +
             "string: token<br>" +
-            "토큰을 업데이트")
+            "안드로이드 FCM 토큰을 업데이트")
     public ResponseEntity<String> setToken(@RequestBody Token token) {
         memberService.updateTokenByEmail(token);
         return ResponseEntity.ok("토큰 설정 완료 -> 회원 : " + token.getEmail());

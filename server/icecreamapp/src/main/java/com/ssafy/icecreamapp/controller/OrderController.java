@@ -40,6 +40,14 @@ public class OrderController {
         }
     }
 
+    @PostMapping("/orderList")
+    @Operation(summary = "주문 내역 조회", description = "<b>string : email ''일 경우 조건 X<br>" +
+            "int : order_id 0일 경우 조건 X<br>" +
+            "boolean : recent true일 경우 최근 주문 목록 10개만 조회 LIMIT 10" +
+            "<br>단건 조회 할 때 -> email= `` , orderId=1, recent=false or ture 상관 없음")
+    public ResponseEntity<List<OrderInfo>> orderList(@RequestBody OrderCon orderCon) {
+        return ResponseEntity.ok(orderService.selectOrdersWithCon2(orderCon));
+    }
     //db에 order와 orderdetail을 각각 조회하여 spring단에서 합치는 쓰레기 코드들
     /*@GetMapping("/byMember/{email}")
     @Operation(summary = "주문 목록 전부",description = "email만 넣으면 됨")
@@ -61,12 +69,4 @@ public class OrderController {
         return ResponseEntity.ok(orderService.selectOrdersWithCon(orderCon));
     }*/
 
-    @PostMapping("/orderList")
-    @Operation(summary = "주문 내역 조회", description = "<b>string : email ''일 경우 조건 X<br>" +
-            "int : order_id 0일 경우 조건 X<br>" +
-            "boolean : recent true일 경우 최근 주문 목록 10개만 조회 LIMIT 10" +
-            "<br>단건 조회 할 때 -> email= `` , orderId=1, recent=false or ture 상관 없음")
-    public ResponseEntity<List<OrderInfo>> orderList(@RequestBody OrderCon orderCon) {
-        return ResponseEntity.ok(orderService.selectOrdersWithCon2(orderCon));
-    }
 }
