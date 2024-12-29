@@ -65,12 +65,12 @@ public class OrderServiceImpl implements OrderService {
             detail.setOrderId(order.getId());
             orderDetailDao.insertDetail(detail);
             //아이스크림 판매량 업데이트
-            /*int result = icecreamDao.updateIcecreamById(detail.getProductId(), detail.getQuantity(), member.getAge(), member.getGender());
+            log.info(String.valueOf(member.getGender()));
+            int result = icecreamDao.updateIcecreamById(detail.getProductId(), detail.getQuantity(), member.getAge(), member.getGender());
             if(result==0){
                 throw new MyNoSuchElementException("제품 코드", Integer.toString(detail.getProductId()));
-            }*/
+            }
         }
-        asyncService.updateIcecream(list, member);
         log.info("order : {}", order);
         log.info("orderDetails : {}", list);
         log.info("orderRequest {}", orderRequest);
