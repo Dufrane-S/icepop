@@ -2,12 +2,14 @@ package com.ssafy.icecreamapp.model.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class IceSelectCon {
     @Schema(example = "아이스크림" ,description = "빈칸 ('')일시 모든 종류, 아이스크림, 케이크, 레디팩")
     String type;
